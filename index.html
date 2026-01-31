@@ -1860,17 +1860,31 @@ const allBooks = [
 
 // بيانات العربة
 let cart = [];
-let currentUser = null;
 let currentSort = 'default';
 let booksToShow = 4;
 let booksIncrement = 4;
 let filteredBooksList = null;
 
-// متغير لتتبع ما إذا كان Netlify Identity قد تم تهيئته
-let netlifyIdentityInitialized = false;
+// متغير لتتبع حالة Netlify Identity
+let netlifyIdentityLoaded = false;
 
 // تهيئة التطبيق
 document.addEventListener('DOMContentLoaded', function () {
+    // الانتظار حتى يتم تحميل Netlify Identity
+    if (typeof netlifyIdentity !== 'undefined') {
+        initNetlifyIdentity();
+    } else {
+        // إعادة المحاولة بعد ثانية إذا لم يتم تحميل Netlify Identity
+        setTimeout(() => {
+            if (typeof netlifyIdentity !== 'undefined') {
+                initNetlifyIdentity();
+            } else {
+                console.error('Netlify Identity لم يتم تحميله');
+                showNotification('نظام تسجيل الدخول غير متاح حالياً', 'error');
+            }
+        }, 1000);
+    }
+
     // عرض الكتب
     renderBooks();
     updateBooksCount();
@@ -1885,9 +1899,6 @@ document.addEventListener('DOMContentLoaded', function () {
             cart = [];
         }
     }
-
-    // تهيئة Netlify Identity
-    initNetlifyIdentity();
 
     // إضافة مستمعي الأحداث
     setupEventListeners();
@@ -1904,15 +1915,10 @@ document.addEventListener('DOMContentLoaded', function () {
 
 // تهيئة Netlify Identity
 function initNetlifyIdentity() {
-    // التحقق من وجود Netlify Identity
-    if (typeof netlifyIdentity === 'undefined') {
-        console.warn('Netlify Identity غير متاح');
-        return;
-    }
-
+    netlifyIdentityLoaded = true;
+    
     netlifyIdentity.on('init', user => {
         console.log('Netlify Identity initialized');
-        netlifyIdentityInitialized = true;
         
         if (user) {
             updateUserFromNetlify(user);
@@ -1926,19 +1932,21 @@ function initNetlifyIdentity() {
     netlifyIdentity.on('login', user => {
         console.log('User logged in:', user);
         updateUserFromNetlify(user);
-        showNotification(`مرحباً ${user.user_metadata?.full_name || user.email.split('@')[0]}! تم تسجيل دخولك بنجاح.`, 'success');
         
-        // إغلاق نافذة تسجيل الدخول
-        const loginModal = document.getElementById('loginModal');
-        if (loginModal) loginModal.style.display = 'none';
+        // الحصول على اسم المستخدم
+        let userName = user.email.split('@')[0];
+        if (user.user_metadata && user.user_metadata.full_name) {
+            userName = user.user_metadata.full_name;
+        }
         
-        const registerModal = document.getElementById('registerModal');
-        if (registerModal) registerModal.style.display = 'none';
+        showNotification(`مرحباً ${userName}! تم تسجيل دخولك بنجاح.`, 'success');
+        
+        // إغلاق أي نماذج مفتوحة
+        closeAllModals();
     });
 
     netlifyIdentity.on('logout', () => {
         console.log('User logged out');
-        currentUser = null;
         document.getElementById('userActions').style.display = 'flex';
         document.getElementById('userProfile').style.display = 'none';
         showNotification('تم تسجيل الخروج بنجاح.', 'info');
@@ -1948,25 +1956,28 @@ function initNetlifyIdentity() {
         console.error('Netlify Identity error:', err);
         showNotification('حدث خطأ في نظام المصادقة', 'error');
     });
+
+    netlifyIdentity.on('close', () => {
+        console.log('Netlify Identity modal closed');
+    });
 }
 
 // تحديث بيانات المستخدم من Netlify
 function updateUserFromNetlify(user) {
     if (!user) return;
     
-    currentUser = {
-        id: user.id,
-        email: user.email,
-        name: user.user_metadata?.full_name || user.email.split('@')[0],
-        avatar: user.user_metadata?.full_name ? 
-                user.user_metadata.full_name.charAt(0).toUpperCase() : 
-                user.email.charAt(0).toUpperCase()
-    };
+    let userName = user.email.split('@')[0];
+    let userAvatar = userName.charAt(0).toUpperCase();
+    
+    if (user.user_metadata && user.user_metadata.full_name) {
+        userName = user.user_metadata.full_name;
+        userAvatar = userName.charAt(0).toUpperCase();
+    }
 
     document.getElementById('userActions').style.display = 'none';
     document.getElementById('userProfile').style.display = 'flex';
-    document.getElementById('userName').textContent = currentUser.name;
-    document.getElementById('userAvatar').textContent = currentUser.avatar;
+    document.getElementById('userName').textContent = userName;
+    document.getElementById('userAvatar').textContent = userAvatar;
 }
 
 // فلاتر البحث
@@ -2102,20 +2113,16 @@ function updateBooksCount() {
 // إضافة كتاب إلى العربة
 function addToCart(bookId) {
     // التحقق من تسجيل الدخول باستخدام Netlify Identity
-    if (netlifyIdentityInitialized && typeof netlifyIdentity !== 'undefined') {
-        const user = netlifyIdentity.currentUser();
-        if (!user) {
-            showNotification('يجب تسجيل الدخول أولاً لإضافة كتب إلى عربة التسوق', 'info');
-            netlifyIdentity.open('login'); // فتح نافذة تسجيل الدخول
-            return;
-        }
-    } else {
-        // إذا لم يكن Netlify Identity متاحاً، استخدام النظام المحلي
-        if (!currentUser) {
-            showNotification('يجب تسجيل الدخول أولاً لإضافة كتب إلى عربة التسوق', 'info');
-            document.getElementById('loginBtn').click();
-            return;
-        }
+    if (!netlifyIdentityLoaded) {
+        showNotification('نظام تسجيل الدخول غير جاهز بعد، يرجى المحاولة لاحقاً', 'error');
+        return;
+    }
+
+    const user = netlifyIdentity.currentUser();
+    if (!user) {
+        showNotification('يجب تسجيل الدخول أولاً لإضافة كتب إلى عربة التسوق', 'info');
+        netlifyIdentity.open('login');
+        return;
     }
 
     const book = allBooks.find(b => b.id === bookId);
@@ -2177,6 +2184,14 @@ function showCart() {
     const cartSummary = document.getElementById('cartSummary');
 
     if (!cartModal || !cartItems) return;
+
+    // التحقق من تسجيل الدخول
+    const user = netlifyIdentity.currentUser();
+    if (!user) {
+        showNotification('يجب تسجيل الدخول لعرض عربة التسوق', 'info');
+        netlifyIdentity.open('login');
+        return;
+    }
 
     // عرض عناصر العربة
     if (cart.length === 0) {
@@ -2307,25 +2322,13 @@ function removeFromCart(itemId) {
 // إتمام عملية الشراء
 function checkoutCart() {
     // التحقق من تسجيل الدخول
-    let userLoggedIn = false;
-    
-    if (netlifyIdentityInitialized && typeof netlifyIdentity !== 'undefined') {
-        userLoggedIn = !!netlifyIdentity.currentUser();
-    } else {
-        userLoggedIn = !!currentUser;
-    }
-    
-    if (!userLoggedIn) {
+    const user = netlifyIdentity.currentUser();
+    if (!user) {
         showNotification('يجب تسجيل الدخول أولاً لإتمام الشراء', 'info');
         if (document.getElementById('closeCartModal')) {
             document.getElementById('closeCartModal').click();
         }
-        
-        if (netlifyIdentityInitialized && typeof netlifyIdentity !== 'undefined') {
-            netlifyIdentity.open('login');
-        } else {
-            document.getElementById('loginBtn').click();
-        }
+        netlifyIdentity.open('login');
         return;
     }
 
@@ -2334,117 +2337,31 @@ function checkoutCart() {
         return;
     }
 
-    // في تطبيق حقيقي، هنا نرسل الطلب للخادم
-    showNotification('شكراً لشرائك! سيتم التواصل معك قريباً لتأكيد طلبك.', 'success');
+    // جمع بيانات الطلب
+    const orderData = {
+        user: {
+            id: user.id,
+            email: user.email,
+            name: user.user_metadata?.full_name || user.email.split('@')[0]
+        },
+        items: cart,
+        total: cart.reduce((sum, item) => sum + (item.price * item.quantity), 0),
+        date: new Date().toISOString(),
+        orderId: 'ORD-' + Date.now() + '-' + Math.floor(Math.random() * 1000)
+    };
+
+    // هنا يمكنك إرسال الطلب إلى الخادم
+    console.log('بيانات الطلب:', orderData);
     
-    // إرسال بريد إلكتروني (في تطبيق حقيقي)
-    sendOrderEmail();
+    showNotification(`شكراً لشرائك! تم استلام طلبك رقم ${orderData.orderId}. سيتم التواصل معك قريباً.`, 'success');
     
-    // تفريغ العربة
+    // تفريغ العربة بعد إتمام الشراء
     cart = [];
     localStorage.setItem('cart', JSON.stringify(cart));
     updateCartCount();
     
     if (document.getElementById('closeCartModal')) {
         document.getElementById('closeCartModal').click();
-    }
-}
-
-// إرسال بريد إلكتروني بالطلب (وظيفة وهمية للتجربة)
-function sendOrderEmail() {
-    const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-    const orderDetails = cart.map(item => 
-        `${item.title} - ${item.quantity} × ${item.price} ج.م = ${item.price * item.quantity} ج.م`
-    ).join('\n');
-    
-    console.log('تفاصيل الطلب:');
-    console.log(orderDetails);
-    console.log(`الإجمالي: ${total} ج.م`);
-    
-    // في تطبيق حقيقي، هنا نرسل الطلب للخادم
-}
-
-// تسجيل الدخول (النظام المحلي - للنسخ الاحتياطي)
-function loginUser(email, password) {
-    // في تطبيق حقيقي، هنا نتواصل مع الخادم للتحقق من بيانات المستخدم
-    // لكن لأغراض العرض، سنستخدم بيانات وهمية
-    if (email === "user@example.com" && password === "password") {
-        currentUser = {
-            name: "محمد أحمد",
-            email: email,
-            avatar: "م"
-        };
-    } else {
-        // إنشاء مستخدم جديد (لأغراض العرض فقط)
-        const name = email.split('@')[0];
-        currentUser = {
-            name: name,
-            email: email,
-            avatar: name.charAt(0).toUpperCase()
-        };
-    }
-
-    // حفظ بيانات المستخدم في التخزين المحلي
-    localStorage.setItem('currentUser', JSON.stringify(currentUser));
-
-    // تحديث واجهة المستخدم
-    updateUserUI();
-
-    // إغلاق نافذة تسجيل الدخول
-    const closeLoginModalBtn = document.getElementById('closeLoginModal');
-    if (closeLoginModalBtn) closeLoginModalBtn.click();
-
-    // إشعار ترحيبي
-    showNotification(`مرحباً ${currentUser.name}! تم تسجيل دخولك بنجاح.`, 'success');
-
-    return true;
-}
-
-// تسجيل مستخدم جديد (النظام المحلي - للنسخ الاحتياطي)
-function registerUser(name, email, password) {
-    // في تطبيق حقيقي، هنا نرسل البيانات إلى الخادم
-    currentUser = {
-        name: name,
-        email: email,
-        avatar: name.charAt(0).toUpperCase()
-    };
-
-    // حفظ بيانات المستخدم في التخزين المحلي
-    localStorage.setItem('currentUser', JSON.stringify(currentUser));
-
-    // تحديث واجهة المستخدم
-    updateUserUI();
-
-    // إغلاق نافذة التسجيل
-    const closeRegisterModalBtn = document.getElementById('closeRegisterModal');
-    if (closeRegisterModalBtn) closeRegisterModalBtn.click();
-
-    // إشعار ترحيبي
-    showNotification(`مرحباً ${currentUser.name}! تم إنشاء حسابك بنجاح.`, 'success');
-
-    return true;
-}
-
-// تسجيل الخروج (النظام المحلي)
-function logoutUser() {
-    currentUser = null;
-    localStorage.removeItem('currentUser');
-
-    // تحديث واجهة المستخدم
-    document.getElementById('userActions').style.display = 'flex';
-    document.getElementById('userProfile').style.display = 'none';
-
-    // إشعار للمستخدم
-    showNotification('تم تسجيل الخروج بنجاح.', 'info');
-}
-
-// تحديث واجهة المستخدم بعد تسجيل الدخول/التسجيل (النظام المحلي)
-function updateUserUI() {
-    if (currentUser) {
-        document.getElementById('userActions').style.display = 'none';
-        document.getElementById('userProfile').style.display = 'flex';
-        document.getElementById('userName').textContent = currentUser.name;
-        document.getElementById('userAvatar').textContent = currentUser.avatar;
     }
 }
 
@@ -2511,7 +2428,7 @@ function showNotification(message, type = 'info') {
 // تغيير الفرز
 function changeSort(sortType) {
     currentSort = sortType;
-    booksToShow = 4; // إعادة تعيين عدد الكتب المعروضة عند تغيير الفرز
+    booksToShow = 4;
 
     // تحديث الأيقونات النشطة
     document.querySelectorAll('.sort-icon').forEach(icon => {
@@ -2559,6 +2476,14 @@ function loadMoreBooks() {
     showNotification('تم تحميل المزيد من الكتب', 'success');
 }
 
+// إغلاق جميع النماذج
+function closeAllModals() {
+    const modals = document.querySelectorAll('.modal');
+    modals.forEach(modal => {
+        modal.style.display = 'none';
+    });
+}
+
 // إعداد مستمعي الأحداث
 function setupEventListeners() {
     // أزرار تسجيل الدخول والتسجيل مع Netlify Identity
@@ -2566,10 +2491,10 @@ function setupEventListeners() {
     if (loginBtn) {
         loginBtn.addEventListener('click', function (e) {
             e.preventDefault();
-            if (netlifyIdentityInitialized && typeof netlifyIdentity !== 'undefined') {
+            if (netlifyIdentityLoaded) {
                 netlifyIdentity.open('login');
             } else {
-                document.getElementById('loginModal').style.display = 'flex';
+                showNotification('نظام تسجيل الدخول غير جاهز بعد', 'error');
             }
         });
     }
@@ -2578,10 +2503,21 @@ function setupEventListeners() {
     if (registerBtn) {
         registerBtn.addEventListener('click', function (e) {
             e.preventDefault();
-            if (netlifyIdentityInitialized && typeof netlifyIdentity !== 'undefined') {
+            if (netlifyIdentityLoaded) {
                 netlifyIdentity.open('signup');
             } else {
-                document.getElementById('registerModal').style.display = 'flex';
+                showNotification('نظام التسجيل غير جاهز بعد', 'error');
+            }
+        });
+    }
+
+    // زر تسجيل الخروج
+    const logoutBtn = document.getElementById('logoutBtn');
+    if (logoutBtn) {
+        logoutBtn.addEventListener('click', function (e) {
+            e.preventDefault();
+            if (netlifyIdentityLoaded) {
+                netlifyIdentity.logout();
             }
         });
     }
@@ -2641,68 +2577,6 @@ function setupEventListeners() {
             if (sortDropdownContent) sortDropdownContent.classList.remove('show');
         }
     });
-
-    // التبديل بين نماذج تسجيل الدخول والتسجيل (النظام المحلي)
-    const showRegisterForm = document.getElementById('showRegisterForm');
-    if (showRegisterForm) {
-        showRegisterForm.addEventListener('click', function (e) {
-            e.preventDefault();
-            document.getElementById('loginModal').style.display = 'none';
-            document.getElementById('registerModal').style.display = 'flex';
-        });
-    }
-
-    const showLoginForm = document.getElementById('showLoginForm');
-    if (showLoginForm) {
-        showLoginForm.addEventListener('click', function (e) {
-            e.preventDefault();
-            document.getElementById('registerModal').style.display = 'none';
-            document.getElementById('loginModal').style.display = 'flex';
-        });
-    }
-
-    // تقديم نموذج تسجيل الدخول (النظام المحلي)
-    const loginForm = document.getElementById('loginForm');
-    if (loginForm) {
-        loginForm.addEventListener('submit', function (e) {
-            e.preventDefault();
-            const email = document.getElementById('loginEmail').value;
-            const password = document.getElementById('loginPassword').value;
-
-            loginUser(email, password);
-        });
-    }
-
-    // تقديم نموذج التسجيل (النظام المحلي)
-    const registerForm = document.getElementById('registerForm');
-    if (registerForm) {
-        registerForm.addEventListener('submit', function (e) {
-            e.preventDefault();
-            const name = document.getElementById('registerName').value;
-            const email = document.getElementById('registerEmail').value;
-            const password = document.getElementById('registerPassword').value;
-            const confirmPassword = document.getElementById('confirmPassword').value;
-
-            if (password !== confirmPassword) {
-                showNotification('كلمات المرور غير متطابقة', 'error');
-                return;
-            }
-
-            registerUser(name, email, password);
-        });
-    }
-
-    // زر تسجيل الخروج (النظام المحلي)
-    const logoutBtn = document.getElementById('logoutBtn');
-    if (logoutBtn) {
-        logoutBtn.addEventListener('click', function () {
-            if (netlifyIdentityInitialized && typeof netlifyIdentity !== 'undefined') {
-                netlifyIdentity.logout();
-            } else {
-                logoutUser();
-            }
-        });
-    }
 
     // أيقونة العربة
     const cartIcon = document.getElementById('cartIcon');
@@ -2786,7 +2660,6 @@ function setupEventListeners() {
             filterBooks();
         });
         
-        // إضافة زر للبحث أيضًا
         bookSearchInput.addEventListener('keypress', function(e) {
             if (e.key === 'Enter') {
                 filterBooks();
@@ -2795,7 +2668,7 @@ function setupEventListeners() {
     }
 }
 
-// تهيئة Netlify Identity (مطلوب لصفحة netlify)
+// تهيئة Netlify Identity للروابط
 if (window.netlifyIdentity) {
     window.netlifyIdentity.on("init", user => {
         if (!user) {
