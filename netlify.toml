@@ -1,8 +1,11 @@
 [build]
-  # If you don't have a build step (webpack/vite), leave command empty ""
-  command = "npm run build"
+  command = "npm install && npm run build" # Ensures dependencies are ready
   functions = "netlify/functions"
   publish = "."
+
+[functions]
+  external_node_modules = ["axios"] # Explicitly tells Netlify to include axios
+  node_bundler = "esbuild"          # Faster, modern way to package functions
 
 [build.environment]
   NODE_VERSION = "18"
@@ -11,5 +14,3 @@
   from = "/*"
   to = "/index.html"
   status = 200
-
-# Next.js plugin removed to prevent the "publish directory" error
