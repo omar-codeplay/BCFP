@@ -1,0 +1,2425 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مركز الكتاب للنشر - متجر الكتب الإلكتروني</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* أنماط CSS عامة */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        :root {
+            --primary-color: #1a5f7a;
+            --secondary-color: #57a6c2;
+            --accent-color: #ff7b54;
+            --light-color: #f8f9fa;
+            --dark-color: #343a40;
+            --gray-color: #6c757d;
+            --border-radius: 8px;
+            --box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+        
+        body {
+            background-color: #f5f7fa;
+            color: var(--dark-color);
+            line-height: 1.6;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* أنماط رأس الصفحة */
+        header {
+            background-color: white;
+            box-shadow: var(--box-shadow);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--primary-color);
+            font-weight: 700;
+            font-size: 1.5rem;
+            text-decoration: none;
+        }
+        
+        .logo i {
+            font-size: 1.8rem;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 25px;
+        }
+        
+        nav a {
+            text-decoration: none;
+            color: var(--dark-color);
+            font-weight: 500;
+            transition: var(--transition);
+            padding: 5px 0;
+            position: relative;
+        }
+        
+        nav a:hover, nav a.active {
+            color: var(--primary-color);
+        }
+        
+        nav a.active::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 3px;
+            background-color: var(--primary-color);
+            bottom: -5px;
+            left: 0;
+            border-radius: 2px;
+        }
+        
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .cart-icon {
+            position: relative;
+            cursor: pointer;
+            font-size: 1.3rem;
+            color: var(--dark-color);
+        }
+        
+        .cart-count {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background-color: var(--accent-color);
+            color: white;
+            font-size: 0.7rem;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .user-actions {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .user-actions button {
+            padding: 8px 15px;
+            border-radius: var(--border-radius);
+            border: none;
+            cursor: pointer;
+            font-weight: 500;
+            transition: var(--transition);
+        }
+        
+        .login-btn {
+            background-color: transparent;
+            color: var(--primary-color);
+            border: 1px solid var(--primary-color) !important;
+        }
+        
+        .register-btn {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        .user-actions button:hover {
+            opacity: 0.9;
+            transform: translateY(-2px);
+        }
+        
+        /* أنماط قسم البطل */
+        .hero {
+            background: linear-gradient(135deg, rgba(26, 95, 122, 0.9), rgba(87, 166, 194, 0.9)), url('https://images.unsplash.com/photo-1507842217343-583bb7270b66?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 80px 0;
+            text-align: center;
+            border-radius: 0 0 30px 30px;
+            margin-bottom: 50px;
+        }
+        
+        .hero h1 {
+            font-size: 2.8rem;
+            margin-bottom: 20px;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto 30px;
+            opacity: 0.9;
+        }
+        
+        .rating {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 30px;
+        }
+        
+        .stars {
+            color: #FFD700;
+            font-size: 1.5rem;
+        }
+        
+        .cta-button {
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .cta-button:hover {
+            background-color: #ff6b3d;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(255, 123, 84, 0.3);
+        }
+        
+        /* أنماط الأقسام العامة */
+        section {
+            padding: 60px 0;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 40px;
+            color: var(--primary-color);
+            position: relative;
+            padding-bottom: 15px;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            width: 80px;
+            height: 4px;
+            background-color: var(--accent-color);
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            border-radius: 2px;
+        }
+        
+        /* شريط التصفية والفرز */
+        .books-toolbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            background-color: white;
+            padding: 15px 20px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+        }
+        
+        .books-count {
+            color: var(--gray-color);
+            font-size: 0.95rem;
+        }
+        
+        .sorting-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            position: relative;
+        }
+        
+        .sort-label {
+            color: var(--gray-color);
+            font-size: 0.9rem;
+        }
+        
+        .sort-dropdown {
+            position: relative;
+            display: inline-block;
+        }
+        
+        .sort-dropdown-btn {
+            background-color: white;
+            border: 1px solid #ddd;
+            border-radius: var(--border-radius);
+            padding: 8px 15px;
+            font-size: 0.9rem;
+            color: var(--dark-color);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: var(--transition);
+        }
+        
+        .sort-dropdown-btn:hover {
+            border-color: var(--primary-color);
+        }
+        
+        .sort-dropdown-content {
+            display: none;
+            position: absolute;
+            left: 0;
+            background-color: white;
+            min-width: 180px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+            border-radius: var(--border-radius);
+            z-index: 100;
+            padding: 10px 0;
+        }
+        
+        .sort-dropdown-content.show {
+            display: block;
+        }
+        
+        .sort-option {
+            padding: 10px 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .sort-option:hover {
+            background-color: rgba(26, 95, 122, 0.05);
+        }
+        
+        .sort-option.active {
+            background-color: rgba(26, 95, 122, 0.1);
+            color: var(--primary-color);
+            font-weight: 500;
+        }
+        
+        .sort-option i {
+            width: 20px;
+            text-align: center;
+        }
+        
+        /* أيقونات الفرز الصغيرة */
+        .sort-icons {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .sort-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            border: 1px solid #ddd;
+            background-color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 0.9rem;
+            color: var(--gray-color);
+        }
+        
+        .sort-icon:hover {
+            border-color: var(--primary-color);
+            color: var(--primary-color);
+        }
+        
+        .sort-icon.active {
+            background-color: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+        }
+        
+        .view-options {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .view-btn {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            border: 1px solid #ddd;
+            background-color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 0.9rem;
+        }
+        
+        .view-btn.active {
+            background-color: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+        }
+        
+        .view-btn:hover {
+            border-color: var(--primary-color);
+            color: var(--primary-color);
+        }
+        
+        /* أنماط الكتب */
+        .books-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        
+        .book-card {
+            background-color: white;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--box-shadow);
+            transition: var(--transition);
+            position: relative;
+        }
+        
+        .book-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+        }
+        
+        .book-image {
+            height: 280px;
+            background-color: #e9ecef;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .book-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        /* شارة الكتاب الجديد */
+        .new-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: var(--accent-color);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            z-index: 2;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
+        .out-of-stock-badge {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background-color: #dc3545;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            z-index: 2;
+        }
+        
+        .book-info {
+            padding: 20px;
+        }
+        
+        .book-category {
+            color: var(--secondary-color);
+            font-size: 0.9rem;
+            font-weight: 500;
+            margin-bottom: 8px;
+        }
+        
+        .book-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+            height: 55px;
+            overflow: hidden;
+            color: var(--dark-color);
+        }
+        
+        .book-author {
+            color: var(--gray-color);
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+        }
+        
+        .book-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .book-price {
+            font-weight: 700;
+            font-size: 1.3rem;
+            color: var(--primary-color);
+        }
+        
+        .add-to-cart {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 500;
+        }
+        
+        .add-to-cart:hover {
+            background-color: #0d4d65;
+        }
+        
+        /* زر عرض المزيد */
+        .load-more-container {
+            text-align: center;
+            margin-top: 40px;
+        }
+        
+        .load-more-btn {
+            background-color: white;
+            color: var(--primary-color);
+            border: 2px solid var(--primary-color);
+            padding: 12px 30px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .load-more-btn:hover {
+            background-color: var(--primary-color);
+            color: white;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(26, 95, 122, 0.3);
+        }
+        
+        .load-more-btn.hidden {
+            display: none;
+        }
+        
+        /* أنماط قسم الخدمات */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .service-card {
+            background-color: white;
+            padding: 30px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            text-align: center;
+            transition: var(--transition);
+        }
+        
+        .service-card:hover {
+            transform: translateY(-10px);
+        }
+        
+        .service-icon {
+            background-color: rgba(26, 95, 122, 0.1);
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            color: var(--primary-color);
+            font-size: 2rem;
+        }
+        
+        .service-card h3 {
+            margin-bottom: 15px;
+            color: var(--primary-color);
+        }
+        
+        /* أنماط قسم التقييمات */
+        .reviews-slider {
+            display: flex;
+            overflow-x: auto;
+            gap: 30px;
+            padding: 20px 10px 40px;
+            scrollbar-width: thin;
+        }
+        
+        .review-card {
+            min-width: 300px;
+            background-color: white;
+            padding: 25px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+        }
+        
+        .reviewer-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .reviewer-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: var(--secondary-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+            font-size: 1.2rem;
+        }
+        
+        .reviewer-name {
+            font-weight: 600;
+            font-size: 1.1rem;
+            color: var(--dark-color);
+        }
+        
+        .reviewer-location {
+            color: var(--gray-color);
+            font-size: 0.9rem;
+        }
+        
+        /* تذييل الصفحة */
+        footer {
+            background-color: var(--dark-color);
+            color: white;
+            padding: 60px 0 30px;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+        
+        .footer-logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: white;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .footer-about p {
+            margin-bottom: 20px;
+            opacity: 0.8;
+        }
+        
+        .footer-links h3, .footer-contact h3 {
+            font-size: 1.3rem;
+            margin-bottom: 25px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+        
+        .footer-links h3::after, .footer-contact h3::after {
+            content: '';
+            position: absolute;
+            width: 40px;
+            height: 3px;
+            background-color: var(--accent-color);
+            bottom: 0;
+            right: 0;
+        }
+        
+        .footer-links ul {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 12px;
+        }
+        
+        .footer-links a {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+        
+        .footer-links a:hover {
+            color: white;
+            padding-right: 5px;
+        }
+        
+        .footer-contact p {
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            opacity: 0.8;
+        }
+        
+        .newsletter-form {
+            display: flex;
+            margin-top: 20px;
+        }
+        
+        .newsletter-form input {
+            flex: 1;
+            padding: 12px 15px;
+            border: none;
+            border-radius: var(--border-radius) 0 0 var(--border-radius);
+            font-size: 1rem;
+        }
+        
+        .newsletter-form button {
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 0 20px;
+            border-radius: 0 var(--border-radius) var(--border-radius) 0;
+            cursor: pointer;
+            font-weight: 500;
+            transition: var(--transition);
+        }
+        
+        .newsletter-form button:hover {
+            background-color: #ff6b3d;
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            opacity: 0.7;
+            font-size: 0.9rem;
+        }
+        
+        /* أنماط النماذج */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .modal-content {
+            background-color: white;
+            border-radius: var(--border-radius);
+            width: 90%;
+            max-width: 500px;
+            padding: 30px;
+            position: relative;
+            animation: modalFade 0.3s;
+        }
+        
+        @keyframes modalFade {
+            from {opacity: 0; transform: translateY(-50px);}
+            to {opacity: 1; transform: translateY(0);}
+        }
+        
+        .close-modal {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--gray-color);
+            background: none;
+            border: none;
+        }
+        
+        .modal h2 {
+            color: var(--primary-color);
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--dark-color);
+        }
+        
+        .form-group input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: var(--border-radius);
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+        
+        .form-group input:focus {
+            border-color: var(--primary-color);
+            outline: none;
+        }
+        
+        .submit-btn {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            width: 100%;
+            padding: 15px;
+            border-radius: var(--border-radius);
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            margin-top: 10px;
+        }
+        
+        .submit-btn:hover {
+            background-color: #0d4d65;
+        }
+        
+        .form-footer {
+            text-align: center;
+            margin-top: 20px;
+            color: var(--gray-color);
+        }
+        
+        .form-footer a {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 500;
+        }
+        
+        /* أنماط عربة التسوق */
+        .cart-modal {
+            max-width: 800px;
+        }
+        
+        .cart-items {
+            max-height: 400px;
+            overflow-y: auto;
+            margin-bottom: 20px;
+        }
+        
+        .cart-item {
+            display: flex;
+            align-items: center;
+            padding: 15px 0;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .cart-item-image {
+            width: 80px;
+            height: 100px;
+            background-color: #e9ecef;
+            margin-left: 15px;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+        
+        .cart-item-details {
+            flex: 1;
+        }
+        
+        .cart-item-title {
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+        
+        .cart-item-author {
+            color: var(--gray-color);
+            font-size: 0.9rem;
+            margin-bottom: 10px;
+        }
+        
+        .cart-item-actions {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .quantity-btn {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            border: 1px solid #ddd;
+            background-color: white;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .cart-item-quantity {
+            font-weight: 600;
+            min-width: 30px;
+            text-align: center;
+        }
+        
+        .cart-item-price {
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-right: 20px;
+            min-width: 80px;
+            text-align: left;
+        }
+        
+        .remove-item {
+            color: #dc3545;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 1.2rem;
+        }
+        
+        .cart-summary {
+            border-top: 2px solid #eee;
+            padding-top: 20px;
+            margin-top: 20px;
+        }
+        
+        .cart-total {
+            display: flex;
+            justify-content: space-between;
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: var(--primary-color);
+        }
+        
+        .cart-actions {
+            display: flex;
+            justify-content: space-between;
+        }
+        
+        .cart-actions button {
+            padding: 12px 25px;
+            border-radius: var(--border-radius);
+            border: none;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .continue-shopping {
+            background-color: #e9ecef;
+            color: var(--dark-color);
+        }
+        
+        .checkout-btn {
+            background-color: var(--accent-color);
+            color: white;
+        }
+        
+        .cart-actions button:hover {
+            opacity: 0.9;
+            transform: translateY(-2px);
+        }
+        
+        .empty-cart {
+            text-align: center;
+            padding: 40px 20px;
+            color: var(--gray-color);
+        }
+        
+        .empty-cart i {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            color: #ddd;
+        }
+        
+        /* أنماط المستخدم المسجل */
+        .user-profile {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+        }
+        
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: var(--secondary-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+        }
+        
+        .user-name {
+            font-weight: 500;
+        }
+        
+        /* إشعارات */
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background-color: white;
+            color: var(--dark-color);
+            padding: 15px 25px;
+            border-radius: var(--border-radius);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            z-index: 3000;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            transform: translateX(150%);
+            transition: transform 0.5s ease;
+            max-width: 400px;
+        }
+        
+        .notification.show {
+            transform: translateX(0);
+        }
+        
+        .notification.success {
+            border-right: 5px solid #28a745;
+        }
+        
+        .notification.error {
+            border-right: 5px solid #dc3545;
+        }
+        
+        .notification.info {
+            border-right: 5px solid var(--primary-color);
+        }
+        
+        .notification-icon {
+            font-size: 1.5rem;
+        }
+        
+        .notification.success .notification-icon {
+            color: #28a745;
+        }
+        
+        .notification.error .notification-icon {
+            color: #dc3545;
+        }
+        
+        .notification.info .notification-icon {
+            color: var(--primary-color);
+        }
+        
+        .notification-content {
+            flex: 1;
+        }
+        
+        .notification-title {
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+        
+        .close-notification {
+            background: none;
+            border: none;
+            color: var(--gray-color);
+            cursor: pointer;
+            font-size: 1.2rem;
+        }
+        
+        /* أنماط متجاوبة */
+        @media (max-width: 992px) {
+            .header-container {
+                flex-direction: column;
+                gap: 15px;
+                padding: 15px 0;
+            }
+            
+            nav ul {
+                gap: 15px;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+            
+            .books-grid {
+                grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            }
+            
+            .books-toolbar {
+                flex-direction: column;
+                gap: 15px;
+                align-items: flex-start;
+            }
+            
+            .sorting-container {
+                width: 100%;
+                justify-content: space-between;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .hero {
+                padding: 60px 0;
+                border-radius: 0 0 20px 20px;
+            }
+            
+            .hero h1 {
+                font-size: 1.8rem;
+            }
+            
+            .hero p {
+                font-size: 1rem;
+            }
+            
+            .books-grid {
+                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+                gap: 20px;
+            }
+            
+            .book-title {
+                height: auto;
+            }
+            
+            .services-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .cart-item {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+            }
+            
+            .cart-item-image {
+                margin-left: 0;
+                width: 100%;
+                height: 150px;
+            }
+            
+            .cart-item-price {
+                margin-right: 0;
+                text-align: right;
+                width: 100%;
+            }
+            
+            .sorting-container {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+            
+            .sort-icons {
+                align-self: flex-end;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .header-actions {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .user-actions {
+                width: 100%;
+                justify-content: center;
+            }
+            
+            .books-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .modal-content {
+                padding: 20px;
+            }
+            
+            .notification {
+                left: 20px;
+                right: 20px;
+                max-width: calc(100% - 40px);
+            }
+            
+            .sort-dropdown-btn span {
+                display: none;
+            }
+            
+            .sort-dropdown-btn {
+                padding: 8px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- رأس الصفحة -->
+    <header>
+        <div class="container header-container">
+            <a href="index.html" class="logo">
+                <i class="fas fa-book-open"></i>
+                مركز الكتاب للنشر
+            </a>
+            
+            <nav>
+                <ul>
+                    <li><a href="index.html" class="active">الرئيسية</a></li>
+                    <li><a href="#books">الكتب</a></li>
+                    <li><a href="#services">الخدمات</a></li>
+                    <li><a href="#about">من نحن</a></li>
+                    <li><a href="#reviews">التقييمات</a></li>
+                    <li><a href="#contact">تواصل معنا</a></li>
+                </ul>
+            </nav>
+            
+            <div class="header-actions">
+                <div class="cart-icon" id="cartIcon">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span class="cart-count">0</span>
+                </div>
+                
+                <div class="user-actions" id="userActions">
+                    <button class="login-btn" id="loginBtn">تسجيل الدخول</button>
+                    <button class="register-btn" id="registerBtn">إنشاء حساب</button>
+                </div>
+                
+                <!-- عرض الملف الشخصي للمستخدم المسجل -->
+                <div class="user-profile" id="userProfile" style="display: none;">
+                    <div class="user-avatar" id="userAvatar">م</div>
+                    <div class="user-name" id="userName">محمد</div>
+                    <button class="logout-btn" id="logoutBtn" style="background: none; border: none; color: var(--primary-color); cursor: pointer;">
+                        <i class="fas fa-sign-out-alt"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- منطقة الإشعارات -->
+    <div id="notificationContainer"></div>
+
+    <!-- قسم البطل -->
+    <section class="hero">
+        <div class="container">
+            <div class="rating">
+                <div class="stars">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                </div>
+                <span>تقييم 4.9 من 5 (بناءً على 284 تقييم)</span>
+            </div>
+            <h1>مركز الكتاب للنشر</h1>
+            <p>تأسس مركز الكتاب للنشر عام 1989، وهي دار مصرية متخصصة في طباعة ونشر الكتب في شتى المجالات، متخصصة في نشر الكتب الأكاديمية وكتب التربية الرياضية وعلوم الرياضة. كما تتشرف الدار بطباعة المصحف الشريف بجودة عالية.</p>
+            <button class="cta-button" id="exploreBooks">
+                <i class="fas fa-book"></i>
+                استعرض إصداراتنا
+            </button>
+        </div>
+    </section>
+
+    <!-- شريط التصفية والفرز -->
+    <div class="container" id="books">
+        <div class="books-toolbar">
+            <div class="books-count">
+                عرض <span id="visibleBooks">4</span> منتج من أصل <span id="totalBooks">12</span>
+            </div>
+            
+            <div class="sorting-container">
+                <div class="sort-dropdown">
+                    <button class="sort-dropdown-btn" id="sortDropdownBtn">
+                        <i class="fas fa-sort-amount-down"></i>
+                        <span>الترتيب حسب: الافتراضي</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="sort-dropdown-content" id="sortDropdownContent">
+                        <div class="sort-option active" data-sort="default">
+                            <i class="fas fa-sort"></i>
+                            <span>الترتيب الافتراضي</span>
+                        </div>
+                        <div class="sort-option" data-sort="price-asc">
+                            <i class="fas fa-sort-amount-down-alt"></i>
+                            <span>السعر: من الأقل للأعلى</span>
+                        </div>
+                        <div class="sort-option" data-sort="price-desc">
+                            <i class="fas fa-sort-amount-down"></i>
+                            <span>السعر: من الأعلى للأقل</span>
+                        </div>
+                        <div class="sort-option" data-sort="title-asc">
+                            <i class="fas fa-sort-alpha-down"></i>
+                            <span>الاسم: أ - ي</span>
+                        </div>
+                        <div class="sort-option" data-sort="title-desc">
+                            <i class="fas fa-sort-alpha-down-alt"></i>
+                            <span>الاسم: ي - أ</span>
+                        </div>
+                        <div class="sort-option" data-sort="newest">
+                            <i class="fas fa-star"></i>
+                            <span>الأحدث</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- أيقونات الفرز الصغيرة -->
+                <div class="sort-icons">
+                    <div class="sort-icon active" title="الترتيب الافتراضي" data-sort="default">
+                        <i class="fas fa-sort"></i>
+                    </div>
+                    <div class="sort-icon" title="السعر من الأقل للأعلى" data-sort="price-asc">
+                        <i class="fas fa-sort-amount-down-alt"></i>
+                    </div>
+                    <div class="sort-icon" title="السعر من الأعلى للأقل" data-sort="price-desc">
+                        <i class="fas fa-sort-amount-down"></i>
+                    </div>
+                    <div class="sort-icon" title="الاسم من أ إلى ي" data-sort="title-asc">
+                        <i class="fas fa-sort-alpha-down"></i>
+                    </div>
+                    <div class="sort-icon" title="الاسم من ي إلى أ" data-sort="title-desc">
+                        <i class="fas fa-sort-alpha-down-alt"></i>
+                    </div>
+                    <div class="sort-icon" title="الأحدث أولاً" data-sort="newest">
+                        <i class="fas fa-star"></i>
+                    </div>
+                </div>
+                
+                <!-- خيارات العرض -->
+                <div class="view-options">
+                    <div class="view-btn active" id="gridView" title="عرض شبكي">
+                        <i class="fas fa-th-large"></i>
+                    </div>
+                    <div class="view-btn" id="listView" title="عرض قائمة">
+                        <i class="fas fa-list"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- قسم الكتب -->
+    <section id="books">
+        <div class="container">
+            <h2 class="section-title">إصداراتنا المميزة</h2>
+            <div class="books-grid" id="booksGrid">
+                <!-- سيتم إضافة الكتب ديناميكيًا باستخدام JavaScript -->
+            </div>
+            
+            <!-- زر عرض المزيد -->
+            <div class="load-more-container">
+                <button class="load-more-btn" id="loadMoreBtn">
+                    <i class="fas fa-arrow-down"></i>
+                    عرض المزيد
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- قسم الخدمات -->
+    <section id="services" style="background-color: #f0f8ff;">
+        <div class="container">
+            <h2 class="section-title">خدماتنا المتنوعة</h2>
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-print"></i>
+                    </div>
+                    <h3>الطباعة والنشر</h3>
+                    <p>نقدم خدمات متكاملة في الطباعة والتصميم وتوزيع الكتب بجودة عالية واحترافية.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-palette"></i>
+                    </div>
+                    <h3>التصميم والإخراج</h3>
+                    <p>فريق التصميم لدينا يصمم أغلفة وتصميمات داخلية جذابة تلائم محتوى الكتاب.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-quran"></i>
+                    </div>
+                    <h3>طباعة المصحف الشريف</h3>
+                    <p>نتشرف بطباعة المصحف الشريف برواية حفص عن عاصم بمقاساته المختلفة وبجودة عالية.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- قسم التقييمات -->
+    <section id="reviews">
+        <div class="container">
+            <h2 class="section-title">آراء عملائنا</h2>
+            <div class="reviews-slider">
+                <div class="review-card">
+                    <div class="reviewer-info">
+                        <div class="reviewer-avatar">ع</div>
+                        <div>
+                            <div class="reviewer-name">علي وليد</div>
+                            <div class="reviewer-location">الجيزة</div>
+                        </div>
+                    </div>
+                    <div class="stars">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <p>تجربة رائعة مع مركز الكتاب للنشر، جودة الطباعة متميزة جداً والتصميم أنيق. أنصح بالتعامل معهم لنشر الكتب الأكاديمية.</p>
+                </div>
+                <div class="review-card">
+                    <div class="reviewer-info">
+                        <div class="reviewer-avatar">ع</div>
+                        <div>
+                            <div class="reviewer-name">عمر خالد</div>
+                            <div class="reviewer-location">القاهرة</div>
+                        </div>
+                    </div>
+                    <div class="stars">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <p>دار نشر محترفة جداً، تعاملت معهم لنشر كتابي عن التربية الرياضية وكانت النتيجة رائعة. أنصح الجميع بالتعامل معهم.</p>
+                </div>
+                <div class="review-card">
+                    <div class="reviewer-info">
+                        <div class="reviewer-avatar">س</div>
+                        <div>
+                            <div class="reviewer-name">سارة أحمد</div>
+                            <div class="reviewer-location">الإسكندرية</div>
+                        </div>
+                    </div>
+                    <div class="stars">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <p>تجربة متميزة مع فريق العمل، متابعة ممتازة وجودة عالية في التصميم والطباعة. شكراً لمركز الكتاب للنشر على احترافيتهم.</p>
+                </div>
+                <div class="review-card">
+                    <div class="reviewer-info">
+                        <div class="reviewer-avatar">م</div>
+                        <div>
+                            <div class="reviewer-name">محمد علي</div>
+                            <div class="reviewer-location">المنصورة</div>
+                        </div>
+                    </div>
+                    <div class="stars">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <p>اشتريت مجموعة من الكتب الأكاديمية وكتاب المصحف الشريف، الجودة كانت ممتازة وتجاوزت توقعاتي. شكراً لكم.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- قسم من نحن -->
+    <section id="about" style="background-color: #f9f9f9;">
+        <div class="container">
+            <h2 class="section-title">من نحن</h2>
+            <div style="max-width: 800px; margin: 0 auto; text-align: center;">
+                <p style="font-size: 1.2rem; margin-bottom: 20px;">
+                    دار نشر مصرية متخصصة فى نشر العلوم والمعرفة وتتميز باصدارات التربية البدنية وحازت بشرف طباعة المصحف الشريف برواية حفص عن عاصم بمقاساته المختلفة.
+                </p>
+                <p style="font-size: 1.1rem; margin-bottom: 30px;">
+                    منذ عام 1989 ونحن نعمل بتفانٍ لتقديم أفضل الخدمات في مجال النشر والطباعة، مع التركيز على الجودة والدقة في كل تفاصيل العمل. نفتخر بتقديم محتوى معرفي وثقافي يليق بقرائنا الكرام.
+                </p>
+                <div style="display: flex; justify-content: center; gap: 30px; flex-wrap: wrap; margin-top: 40px;">
+                    <div style="text-align: center;">
+                        <div style="font-size: 2.5rem; font-weight: 700; color: var(--primary-color);">34+</div>
+                        <div style="color: var(--gray-color);">سنة من الخبرة</div>
+                    </div>
+                    <div style="text-align: center;">
+                        <div style="font-size: 2.5rem; font-weight: 700; color: var(--primary-color);">5000+</div>
+                        <div style="color: var(--gray-color);">كتاب منشور</div>
+                    </div>
+                    <div style="text-align: center;">
+                        <div style="font-size: 2.5rem; font-weight: 700; color: var(--primary-color);">10000+</div>
+                        <div style="color: var(--gray-color);">عميل راضٍ</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- تذييل الصفحة -->
+    <footer id="contact">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-about">
+                    <div class="footer-logo">
+                        <i class="fas fa-book-open"></i>
+                        مركز الكتاب للنشر
+                    </div>
+                    <p>دار نشر مصرية رائدة منذ عام 1989، متخصصة في نشر الكتب الأكاديمية وكتب التربية الرياضية وعلوم الرياضة. كما نتشرف بطباعة المصحف الشريف بجودة عالية.</p>
+                    <div class="newsletter-form">
+                        <input type="email" placeholder="أدخل بريدك الإلكتروني هنا">
+                        <button>إرسال</button>
+                    </div>
+                </div>
+                
+                <div class="footer-links">
+                    <h3>روابط سريعة</h3>
+                    <ul>
+                        <li><a href="index.html">الرئيسية</a></li>
+                        <li><a href="#books">الكتب</a></li>
+                        <li><a href="#services">الخدمات</a></li>
+                        <li><a href="#about">من نحن</a></li>
+                        <li><a href="#reviews">التقييمات</a></li>
+                        <li><a href="#contact">تواصل معنا</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-contact">
+                    <h3>تواصل معنا</h3>
+                    <p><i class="fas fa-envelope"></i> Markazelkitab@gmail.com</p>
+                    <p><i class="fas fa-phone"></i> +20-101-852-6963</p>
+                    <p><i class="fas fa-map-marker-alt"></i> القاهرة، مصر</p>
+                    <p style="margin-top: 20px;">نشر مركز الكتاب للنشر منذ 1989، خبرة وإبداع.</p>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                © 2025 مركز الكتاب للنشر. جميع الحقوق محفوظة.
+            </div>
+        </div>
+    </footer>
+
+    <!-- نافذة تسجيل الدخول -->
+    <div class="modal" id="loginModal">
+        <div class="modal-content">
+            <button class="close-modal" id="closeLoginModal">&times;</button>
+            <h2>تسجيل الدخول</h2>
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="loginEmail">البريد الإلكتروني</label>
+                    <input type="email" id="loginEmail" required>
+                </div>
+                <div class="form-group">
+                    <label for="loginPassword">كلمة المرور</label>
+                    <input type="password" id="loginPassword" required>
+                </div>
+                <button type="submit" class="submit-btn">تسجيل الدخول</button>
+                <div class="form-footer">
+                    ليس لديك حساب؟ <a href="#" id="showRegisterForm">إنشاء حساب</a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- نافذة إنشاء حساب -->
+    <div class="modal" id="registerModal">
+        <div class="modal-content">
+            <button class="close-modal" id="closeRegisterModal">&times;</button>
+            <h2>إنشاء حساب جديد</h2>
+            <form id="registerForm">
+                <div class="form-group">
+                    <label for="registerName">الاسم الكامل</label>
+                    <input type="text" id="registerName" required>
+                </div>
+                <div class="form-group">
+                    <label for="registerEmail">البريد الإلكتروني</label>
+                    <input type="email" id="registerEmail" required>
+                </div>
+                <div class="form-group">
+                    <label for="registerPassword">كلمة المرور</label>
+                    <input type="password" id="registerPassword" required>
+                </div>
+                <div class="form-group">
+                    <label for="confirmPassword">تأكيد كلمة المرور</label>
+                    <input type="password" id="confirmPassword" required>
+                </div>
+                <button type="submit" class="submit-btn">إنشاء حساب</button>
+                <div class="form-footer">
+                    لديك حساب بالفعل؟ <a href="#" id="showLoginForm">تسجيل الدخول</a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- نافذة عربة التسوق -->
+    <div class="modal" id="cartModal">
+        <div class="modal-content cart-modal">
+            <button class="close-modal" id="closeCartModal">&times;</button>
+            <h2>عربة التسوق</h2>
+            <div class="cart-items" id="cartItems">
+                <!-- سيتم إضافة عناصر العربة ديناميكيًا -->
+            </div>
+            <div class="cart-summary" id="cartSummary">
+                <!-- سيتم إضافة ملخص الطلب ديناميكيًا -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // بيانات الكتب
+        const allBooks = [
+            {
+                id: 1,
+                title: "التربية البدنية الحديثة",
+                author: "د. محمد أحمد",
+                category: "التربية الرياضية",
+                price: 75,
+                image: "https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+                isNew: false,
+                inStock: true,
+                year: 2022,
+                rating: 4.5
+            },
+            {
+                id: 2,
+                title: "علم النفس الرياضي",
+                author: "د. خالد سليم",
+                category: "العلوم الرياضية",
+                price: 60,
+                image: "https://images.unsplash.com/photo-1513475382585-d06e58bcb0e0?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+                isNew: true,
+                inStock: true,
+                year: 2023,
+                rating: 4.2
+            },
+            {
+                id: 3,
+                title: "مباديء التدريب الرياضي",
+                author: "د. أحمد فاروق",
+                category: "التربية الرياضية",
+                price: 80,
+                image: "https://images.unsplash.com/photo-1518611012118-696072aa579a?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+                isNew: false,
+                inStock: true,
+                year: 2021,
+                rating: 4.7
+            },
+            {
+                id: 4,
+                title: "المصحف الشريف برواية حفص",
+                author: "مجمع الملك فهد لطباعة المصحف",
+                category: "المصاحف",
+                price: 120,
+                image: "https://images.unsplash.com/photo-1604594849809-dfedbc827105?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+                isNew: true,
+                inStock: true,
+                year: 2023,
+                rating: 5.0
+            },
+            {
+                id: 5,
+                title: "التشريح الوصفي للرياضيين",
+                author: "د. سامي راشد",
+                category: "العلوم الرياضية",
+                price: 95,
+                image: "https://images.unsplash.com/photo-1541963463532-d68292c34b19?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+                isNew: false,
+                inStock: true,
+                year: 2020,
+                rating: 4.3
+            },
+            {
+                id: 6,
+                title: "اللياقة البدنية والصحة",
+                author: "د. نادية محمود",
+                category: "التربية الرياضية",
+                price: 55,
+                image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+                isNew: true,
+                inStock: true,
+                year: 2023,
+                rating: 4.0
+            },
+            {
+                id: 7,
+                title: "الإدارة الرياضية الحديثة",
+                author: "د. عماد الدين حسن",
+                category: "الإدارة الرياضية",
+                price: 70,
+                image: "https://images.unsplash.com/photo-1552058544-f2b08422138a?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+                isNew: true,
+                inStock: false,
+                year: 2023,
+                rating: 4.1
+            },
+            {
+                id: 8,
+                title: "التغذية للرياضيين",
+                author: "د. ياسمين علي",
+                category: "العلوم الرياضية",
+                price: 65,
+                image: "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+                isNew: false,
+                inStock: true,
+                year: 2021,
+                rating: 4.4
+            },
+            {
+                id: 9,
+                title: "تاريخ الرياضة في العالم العربي",
+                author: "د. حسن مرسي",
+                category: "تاريخ الرياضة",
+                price: 85,
+                image: "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+                isNew: true,
+                inStock: true,
+                year: 2023,
+                rating: 4.6
+            },
+            {
+                id: 10,
+                title: "فلسفة التربية الرياضية",
+                author: "د. علي عبد الرحمن",
+                category: "التربية الرياضية",
+                price: 90,
+                image: "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+                isNew: false,
+                inStock: true,
+                year: 2020,
+                rating: 4.3
+            },
+            {
+                id: 11,
+                title: "الإصابات الرياضية والعلاج الطبيعي",
+                author: "د. مها السيد",
+                category: "العلوم الرياضية",
+                price: 110,
+                image: "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+                isNew: true,
+                inStock: true,
+                year: 2023,
+                rating: 4.8
+            },
+            {
+                id: 12,
+                title: "مناهج البحث في التربية الرياضية",
+                author: "د. وليد جابر",
+                category: "البحث العلمي",
+                price: 75,
+                image: "https://images.unsplash.com/photo-1532094349884-543bc11b234d?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+                isNew: false,
+                inStock: true,
+                year: 2021,
+                rating: 4.0
+            }
+        ];
+
+        // بيانات العربة
+        let cart = [];
+        let currentUser = null;
+        let currentSort = 'default';
+        let booksToShow = 4; // عدد الكتب التي يتم عرضها في البداية
+        let booksIncrement = 4; // عدد الكتب الإضافية عند الضغط على "عرض المزيد"
+
+        // تهيئة التطبيق
+        document.addEventListener('DOMContentLoaded', function() {
+            // عرض الكتب
+            renderBooks();
+            
+            // تحديث عدد الكتب
+            updateBooksCount();
+            
+            // إضافة مستخدم تجريبي (للتجربة فقط)
+            if (localStorage.getItem('currentUser')) {
+                currentUser = JSON.parse(localStorage.getItem('currentUser'));
+                updateUserUI();
+            }
+            
+            // تحميل العربة من التخزين المحلي
+            if (localStorage.getItem('cart')) {
+                cart = JSON.parse(localStorage.getItem('cart'));
+                updateCartCount();
+            }
+            
+            // إضافة مستمعي الأحداث
+            setupEventListeners();
+        });
+
+        // عرض الكتب
+        function renderBooks() {
+            const booksGrid = document.getElementById('booksGrid');
+            booksGrid.innerHTML = '';
+            
+            // فرز الكتب حسب الخيار المحدد
+            let sortedBooks = [...allBooks];
+            
+            switch(currentSort) {
+                case 'price-asc':
+                    sortedBooks.sort((a, b) => a.price - b.price);
+                    break;
+                case 'price-desc':
+                    sortedBooks.sort((a, b) => b.price - a.price);
+                    break;
+                case 'title-asc':
+                    sortedBooks.sort((a, b) => a.title.localeCompare(b.title));
+                    break;
+                case 'title-desc':
+                    sortedBooks.sort((a, b) => b.title.localeCompare(a.title));
+                    break;
+                case 'newest':
+                    sortedBooks.sort((a, b) => b.year - a.year);
+                    break;
+                default:
+                    // الترتيب الافتراضي (الأحدث أولاً)
+                    sortedBooks.sort((a, b) => b.year - a.year);
+            }
+            
+            // أخذ الكتب الأولى للعرض
+            const booksToDisplay = sortedBooks.slice(0, booksToShow);
+            
+            booksToDisplay.forEach(book => {
+                const bookCard = document.createElement('div');
+                bookCard.className = 'book-card';
+                
+                // إنشاء النجوم للتقييم
+                const ratingStars = getRatingStars(book.rating);
+                
+                bookCard.innerHTML = `
+                    <div class="book-image">
+                        <img src="${book.image}" alt="${book.title}">
+                        ${book.isNew ? '<div class="new-badge">جديد</div>' : ''}
+                        ${!book.inStock ? '<div class="out-of-stock-badge">نفذ من المخزون</div>' : ''}
+                    </div>
+                    <div class="book-info">
+                        <div class="book-category">${book.category}</div>
+                        <h3 class="book-title">${book.title}</h3>
+                        <div class="book-author">${book.author}</div>
+                        <div style="display: flex; align-items: center; gap: 5px; margin-bottom: 10px;">
+                            <div class="stars">${ratingStars}</div>
+                            <span style="color: var(--gray-color); font-size: 0.9rem;">${book.rating}</span>
+                        </div>
+                        <div class="book-footer">
+                            <div class="book-price">${book.price} ج.م</div>
+                            <button class="add-to-cart" data-id="${book.id}" ${!book.inStock ? 'disabled style="opacity: 0.5; cursor: not-allowed;"' : ''}>
+                                <i class="fas fa-cart-plus"></i>
+                                ${book.inStock ? 'أضف للسلة' : 'نفذ من المخزون'}
+                            </button>
+                        </div>
+                    </div>
+                `;
+                
+                booksGrid.appendChild(bookCard);
+            });
+            
+            // تحديث زر "عرض المزيد"
+            updateLoadMoreButton(sortedBooks.length);
+            
+            // إضافة مستمعي الأحداث لأزرار إضافة إلى السلة
+            document.querySelectorAll('.add-to-cart').forEach(button => {
+                button.addEventListener('click', function() {
+                    const bookId = parseInt(this.getAttribute('data-id'));
+                    addToCart(bookId);
+                });
+            });
+        }
+
+        // تحديث زر "عرض المزيد"
+        function updateLoadMoreButton(totalBooks) {
+            const loadMoreBtn = document.getElementById('loadMoreBtn');
+            
+            if (booksToShow >= totalBooks) {
+                loadMoreBtn.classList.add('hidden');
+            } else {
+                loadMoreBtn.classList.remove('hidden');
+            }
+        }
+
+        // عرض المزيد من الكتب
+        function loadMoreBooks() {
+            booksToShow += booksIncrement;
+            renderBooks();
+            updateBooksCount();
+            
+            // تمرير الصفحة إلى قسم الكتب بعد تحميل المزيد
+            document.getElementById('books').scrollIntoView({ behavior: 'smooth', block: 'start' });
+            
+            // إظهار إشعار
+            showNotification('تم تحميل المزيد من الكتب', 'success');
+        }
+
+        // الحصول على نجوم التقييم
+        function getRatingStars(rating) {
+            let stars = '';
+            const fullStars = Math.floor(rating);
+            const hasHalfStar = rating % 1 >= 0.5;
+            
+            for (let i = 0; i < fullStars; i++) {
+                stars += '<i class="fas fa-star"></i>';
+            }
+            
+            if (hasHalfStar) {
+                stars += '<i class="fas fa-star-half-alt"></i>';
+            }
+            
+            const emptyStars = 5 - fullStars - (hasHalfStar ? 1 : 0);
+            for (let i = 0; i < emptyStars; i++) {
+                stars += '<i class="far fa-star"></i>';
+            }
+            
+            return stars;
+        }
+
+        // تحديث عدد الكتب
+        function updateBooksCount() {
+            document.getElementById('visibleBooks').textContent = Math.min(booksToShow, allBooks.length);
+            document.getElementById('totalBooks').textContent = allBooks.length;
+        }
+
+        // إضافة كتاب إلى العربة
+        function addToCart(bookId) {
+            // التحقق من تسجيل الدخول
+            if (!currentUser) {
+                showNotification('يجب تسجيل الدخول أولاً لإضافة كتب إلى عربة التسوق', 'info');
+                document.getElementById('loginBtn').click();
+                return;
+            }
+            
+            const book = allBooks.find(b => b.id === bookId);
+            
+            // التحقق من توفر الكتاب
+            if (!book.inStock) {
+                showNotification('عذراً، هذا الكتاب غير متوفر في المخزون حالياً', 'error');
+                return;
+            }
+            
+            // التحقق إذا كان الكتاب موجوداً في العربة
+            const existingItem = cart.find(item => item.id === bookId);
+            
+            if (existingItem) {
+                existingItem.quantity += 1;
+            } else {
+                cart.push({
+                    id: book.id,
+                    title: book.title,
+                    author: book.author,
+                    price: book.price,
+                    image: book.image,
+                    quantity: 1
+                });
+            }
+            
+            // تحديث التخزين المحلي
+            localStorage.setItem('cart', JSON.stringify(cart));
+            
+            // تحديث عرض عداد العربة
+            updateCartCount();
+            
+            // إظهار إشعار ناجح
+            showNotification(`تم إضافة "${book.title}" إلى عربة التسوق`, 'success');
+        }
+
+        // تحديث عداد العربة
+        function updateCartCount() {
+            const cartCount = document.querySelector('.cart-count');
+            const totalItems = cart.reduce((total, item) => total + item.quantity, 0);
+            cartCount.textContent = totalItems;
+        }
+
+        // عرض عربة التسوق
+        function showCart() {
+            const cartModal = document.getElementById('cartModal');
+            const cartItems = document.getElementById('cartItems');
+            const cartSummary = document.getElementById('cartSummary');
+            
+            // عرض عناصر العربة
+            if (cart.length === 0) {
+                cartItems.innerHTML = `
+                    <div class="empty-cart">
+                        <i class="fas fa-shopping-cart"></i>
+                        <h3>عربة التسوق فارغة</h3>
+                        <p>لم تقم بإضافة أي منتجات إلى عربة التسوق بعد.</p>
+                    </div>
+                `;
+                cartSummary.innerHTML = '';
+            } else {
+                cartItems.innerHTML = '';
+                
+                cart.forEach(item => {
+                    const cartItem = document.createElement('div');
+                    cartItem.className = 'cart-item';
+                    cartItem.innerHTML = `
+                        <div class="cart-item-image">
+                            <img src="${item.image}" alt="${item.title}" style="width:100%; height:100%; object-fit:cover;">
+                        </div>
+                        <div class="cart-item-details">
+                            <div class="cart-item-title">${item.title}</div>
+                            <div class="cart-item-author">${item.author}</div>
+                            <div class="cart-item-actions">
+                                <button class="quantity-btn decrease-btn" data-id="${item.id}">-</button>
+                                <span class="cart-item-quantity">${item.quantity}</span>
+                                <button class="quantity-btn increase-btn" data-id="${item.id}">+</button>
+                                <button class="remove-item" data-id="${item.id}">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="cart-item-price">${item.price * item.quantity} ج.م</div>
+                    `;
+                    
+                    cartItems.appendChild(cartItem);
+                });
+                
+                // حساب الإجمالي
+                const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+                
+                // عرض ملخص الطلب
+                cartSummary.innerHTML = `
+                    <div class="cart-total">
+                        <span>الإجمالي:</span>
+                        <span>${total} ج.م</span>
+                    </div>
+                    <div class="cart-actions">
+                        <button class="continue-shopping" id="continueShopping">مواصلة التسوق</button>
+                        <button class="checkout-btn" id="checkoutBtn">إتمام الشراء</button>
+                    </div>
+                `;
+                
+                // إضافة مستمعي الأحداث للأزرار في العربة
+                document.querySelectorAll('.decrease-btn').forEach(btn => {
+                    btn.addEventListener('click', function() {
+                        const itemId = parseInt(this.getAttribute('data-id'));
+                        updateCartItemQuantity(itemId, -1);
+                    });
+                });
+                
+                document.querySelectorAll('.increase-btn').forEach(btn => {
+                    btn.addEventListener('click', function() {
+                        const itemId = parseInt(this.getAttribute('data-id'));
+                        updateCartItemQuantity(itemId, 1);
+                    });
+                });
+                
+                document.querySelectorAll('.remove-item').forEach(btn => {
+                    btn.addEventListener('click', function() {
+                        const itemId = parseInt(this.getAttribute('data-id'));
+                        removeFromCart(itemId);
+                    });
+                });
+                
+                document.getElementById('continueShopping').addEventListener('click', function() {
+                    document.getElementById('closeCartModal').click();
+                });
+                
+                document.getElementById('checkoutBtn').addEventListener('click', function() {
+                    if (!currentUser) {
+                        showNotification('يجب تسجيل الدخول أولاً لإتمام الشراء', 'info');
+                        document.getElementById('closeCartModal').click();
+                        document.getElementById('loginBtn').click();
+                        return;
+                    }
+                    
+                    showNotification('شكراً لشرائك! سيتم التواصل معك قريباً لتأكيد طلبك.', 'success');
+                    cart = [];
+                    localStorage.setItem('cart', JSON.stringify(cart));
+                    updateCartCount();
+                    document.getElementById('closeCartModal').click();
+                });
+            }
+            
+            // عرض نافذة العربة
+            cartModal.style.display = 'flex';
+        }
+
+        // تحديث كمية عنصر في العربة
+        function updateCartItemQuantity(itemId, change) {
+            const itemIndex = cart.findIndex(item => item.id === itemId);
+            
+            if (itemIndex !== -1) {
+                cart[itemIndex].quantity += change;
+                
+                // إذا كانت الكمية صفر أو أقل، إزالة العنصر من العربة
+                if (cart[itemIndex].quantity <= 0) {
+                    cart.splice(itemIndex, 1);
+                }
+                
+                // تحديث التخزين المحلي والعرض
+                localStorage.setItem('cart', JSON.stringify(cart));
+                updateCartCount();
+                showCart();
+            }
+        }
+
+        // إزالة عنصر من العربة
+        function removeFromCart(itemId) {
+            cart = cart.filter(item => item.id !== itemId);
+            localStorage.setItem('cart', JSON.stringify(cart));
+            updateCartCount();
+            showCart();
+            showNotification('تم إزالة المنتج من عربة التسوق', 'info');
+        }
+
+        // تسجيل الدخول
+        function loginUser(email, password) {
+            // في تطبيق حقيقي، هنا نتواصل مع الخادم للتحقق من بيانات المستخدم
+            // لكن لأغراض العرض، سنستخدم بيانات وهمية
+            
+            if (email === "user@example.com" && password === "password") {
+                currentUser = {
+                    name: "محمد أحمد",
+                    email: email,
+                    avatar: "م"
+                };
+            } else {
+                // إنشاء مستخدم جديد (لأغراض العرض فقط)
+                const name = email.split('@')[0];
+                currentUser = {
+                    name: name,
+                    email: email,
+                    avatar: name.charAt(0)
+                };
+            }
+            
+            // حفظ بيانات المستخدم في التخزين المحلي
+            localStorage.setItem('currentUser', JSON.stringify(currentUser));
+            
+            // تحديث واجهة المستخدم
+            updateUserUI();
+            
+            // إغلاق نافذة تسجيل الدخول
+            document.getElementById('closeLoginModal').click();
+            
+            // إشعار ترحيبي
+            showNotification(`مرحباً ${currentUser.name}! تم تسجيل دخولك بنجاح.`, 'success');
+            
+            return true;
+        }
+
+        // تسجيل مستخدم جديد
+        function registerUser(name, email, password) {
+            // في تطبيق حقيقي، هنا نرسل البيانات إلى الخادم
+            // لكن لأغراض العرض، سنستخدم بيانات وهمية
+            
+            currentUser = {
+                name: name,
+                email: email,
+                avatar: name.charAt(0)
+            };
+            
+            // حفظ بيانات المستخدم في التخزين المحلي
+            localStorage.setItem('currentUser', JSON.stringify(currentUser));
+            
+            // تحديث واجهة المستخدم
+            updateUserUI();
+            
+            // إغلاق نافذة التسجيل
+            document.getElementById('closeRegisterModal').click();
+            
+            // إشعار ترحيبي
+            showNotification(`مرحباً ${currentUser.name}! تم إنشاء حسابك بنجاح.`, 'success');
+            
+            return true;
+        }
+
+        // تسجيل الخروج
+        function logoutUser() {
+            currentUser = null;
+            localStorage.removeItem('currentUser');
+            
+            // تحديث واجهة المستخدم
+            document.getElementById('userActions').style.display = 'flex';
+            document.getElementById('userProfile').style.display = 'none';
+            
+            // إشعار للمستخدم
+            showNotification('تم تسجيل الخروج بنجاح.', 'info');
+        }
+
+        // تحديث واجهة المستخدم بعد تسجيل الدخول/التسجيل
+        function updateUserUI() {
+            if (currentUser) {
+                document.getElementById('userActions').style.display = 'none';
+                document.getElementById('userProfile').style.display = 'flex';
+                document.getElementById('userName').textContent = currentUser.name;
+                document.getElementById('userAvatar').textContent = currentUser.avatar;
+            }
+        }
+
+        // إظهار إشعار
+        function showNotification(message, type = 'info') {
+            const notificationContainer = document.getElementById('notificationContainer');
+            
+            const notification = document.createElement('div');
+            notification.className = `notification ${type}`;
+            
+            let icon = 'info-circle';
+            if (type === 'success') icon = 'check-circle';
+            if (type === 'error') icon = 'exclamation-circle';
+            
+            notification.innerHTML = `
+                <div class="notification-icon">
+                    <i class="fas fa-${icon}"></i>
+                </div>
+                <div class="notification-content">
+                    <div class="notification-title">${type === 'success' ? 'تم بنجاح' : type === 'error' ? 'خطأ' : 'ملاحظة'}</div>
+                    <div>${message}</div>
+                </div>
+                <button class="close-notification">
+                    <i class="fas fa-times"></i>
+                </button>
+            `;
+            
+            notificationContainer.appendChild(notification);
+            
+            // إظهار الإشعار
+            setTimeout(() => {
+                notification.classList.add('show');
+            }, 10);
+            
+            // إضافة مستمع حدث لإغلاق الإشعار
+            notification.querySelector('.close-notification').addEventListener('click', function() {
+                notification.classList.remove('show');
+                setTimeout(() => {
+                    notification.remove();
+                }, 500);
+            });
+            
+            // إغلاق الإشعار تلقائياً بعد 5 ثواني
+            setTimeout(() => {
+                if (notification.parentNode) {
+                    notification.classList.remove('show');
+                    setTimeout(() => {
+                        if (notification.parentNode) {
+                            notification.remove();
+                        }
+                    }, 500);
+                }
+            }, 5000);
+        }
+
+        // تغيير الفرز
+        function changeSort(sortType) {
+            currentSort = sortType;
+            booksToShow = 4; // إعادة تعيين عدد الكتب المعروضة عند تغيير الفرز
+            
+            // تحديث الأيقونات النشطة
+            document.querySelectorAll('.sort-icon').forEach(icon => {
+                icon.classList.remove('active');
+            });
+            document.querySelector(`.sort-icon[data-sort="${sortType}"]`).classList.add('active');
+            
+            // تحديث القائمة المنسدلة
+            document.querySelectorAll('.sort-option').forEach(option => {
+                option.classList.remove('active');
+            });
+            document.querySelector(`.sort-option[data-sort="${sortType}"]`).classList.add('active');
+            
+            // تحديث نص الزر
+            const sortText = document.querySelector(`.sort-option[data-sort="${sortType}"] span`).textContent;
+            document.querySelector('#sortDropdownBtn span').textContent = `الترتيب حسب: ${sortText.split(': ')[1] || sortText}`;
+            
+            // إعادة عرض الكتب
+            renderBooks();
+            updateBooksCount();
+            
+            // إغلاق القائمة المنسدلة
+            document.getElementById('sortDropdownContent').classList.remove('show');
+        }
+
+        // إعداد مستمعي الأحداث
+        function setupEventListeners() {
+            // أزرار تسجيل الدخول والتسجيل
+            document.getElementById('loginBtn').addEventListener('click', function() {
+                document.getElementById('loginModal').style.display = 'flex';
+            });
+            
+            document.getElementById('registerBtn').addEventListener('click', function() {
+                document.getElementById('registerModal').style.display = 'flex';
+            });
+            
+            // إغلاق النماذج
+            document.getElementById('closeLoginModal').addEventListener('click', function() {
+                document.getElementById('loginModal').style.display = 'none';
+            });
+            
+            document.getElementById('closeRegisterModal').addEventListener('click', function() {
+                document.getElementById('registerModal').style.display = 'none';
+            });
+            
+            document.getElementById('closeCartModal').addEventListener('click', function() {
+                document.getElementById('cartModal').style.display = 'none';
+            });
+            
+            // زر استعراض الكتب في قسم البطل
+            document.getElementById('exploreBooks').addEventListener('click', function() {
+                document.getElementById('books').scrollIntoView({ behavior: 'smooth' });
+            });
+            
+            // إغلاق النماذج بالنقر خارجها
+            window.addEventListener('click', function(event) {
+                if (event.target === document.getElementById('loginModal')) {
+                    document.getElementById('loginModal').style.display = 'none';
+                }
+                if (event.target === document.getElementById('registerModal')) {
+                    document.getElementById('registerModal').style.display = 'none';
+                }
+                if (event.target === document.getElementById('cartModal')) {
+                    document.getElementById('cartModal').style.display = 'none';
+                }
+                
+                // إغلاق قائمة الفرز عند النقر خارجها
+                if (!event.target.matches('.sort-dropdown-btn') && !event.target.closest('.sort-dropdown-content')) {
+                    document.getElementById('sortDropdownContent').classList.remove('show');
+                }
+            });
+            
+            // التبديل بين نماذج تسجيل الدخول والتسجيل
+            document.getElementById('showRegisterForm').addEventListener('click', function(e) {
+                e.preventDefault();
+                document.getElementById('loginModal').style.display = 'none';
+                document.getElementById('registerModal').style.display = 'flex';
+            });
+            
+            document.getElementById('showLoginForm').addEventListener('click', function(e) {
+                e.preventDefault();
+                document.getElementById('registerModal').style.display = 'none';
+                document.getElementById('loginModal').style.display = 'flex';
+            });
+            
+            // تقديم نموذج تسجيل الدخول
+            document.getElementById('loginForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                const email = document.getElementById('loginEmail').value;
+                const password = document.getElementById('loginPassword').value;
+                
+                loginUser(email, password);
+            });
+            
+            // تقديم نموذج التسجيل
+            document.getElementById('registerForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                const name = document.getElementById('registerName').value;
+                const email = document.getElementById('registerEmail').value;
+                const password = document.getElementById('registerPassword').value;
+                const confirmPassword = document.getElementById('confirmPassword').value;
+                
+                if (password !== confirmPassword) {
+                    showNotification('كلمات المرور غير متطابقة', 'error');
+                    return;
+                }
+                
+                registerUser(name, email, password);
+            });
+            
+            // زر تسجيل الخروج
+            document.getElementById('logoutBtn').addEventListener('click', function() {
+                logoutUser();
+            });
+            
+            // أيقونة العربة
+            document.getElementById('cartIcon').addEventListener('click', function() {
+                showCart();
+            });
+            
+            // زر "عرض المزيد"
+            document.getElementById('loadMoreBtn').addEventListener('click', function() {
+                loadMoreBooks();
+            });
+            
+            // قائمة الفرز المنسدلة
+            document.getElementById('sortDropdownBtn').addEventListener('click', function(e) {
+                e.stopPropagation();
+                document.getElementById('sortDropdownContent').classList.toggle('show');
+            });
+            
+            // خيارات الفرز في القائمة المنسدلة
+            document.querySelectorAll('.sort-option').forEach(option => {
+                option.addEventListener('click', function() {
+                    const sortType = this.getAttribute('data-sort');
+                    changeSort(sortType);
+                });
+            });
+            
+            // أيقونات الفرز الصغيرة
+            document.querySelectorAll('.sort-icon').forEach(icon => {
+                icon.addEventListener('click', function() {
+                    const sortType = this.getAttribute('data-sort');
+                    changeSort(sortType);
+                });
+            });
+            
+            // خيارات العرض
+            document.getElementById('gridView').addEventListener('click', function() {
+                document.getElementById('gridView').classList.add('active');
+                document.getElementById('listView').classList.remove('active');
+            });
+            
+            document.getElementById('listView').addEventListener('click', function() {
+                document.getElementById('listView').classList.add('active');
+                document.getElementById('gridView').classList.remove('active');
+                showNotification('عرض القائمة غير متاح حالياً، سيتم تفعيله قريباً', 'info');
+            });
+            
+            // إرسال النموذج في التذييل
+            document.querySelector('.newsletter-form button').addEventListener('click', function() {
+                const emailInput = document.querySelector('.newsletter-form input');
+                if (emailInput.value) {
+                    showNotification('شكراً على اشتراكك في نشرتنا البريدية!', 'success');
+                    emailInput.value = '';
+                } else {
+                    showNotification('يرجى إدخال بريدك الإلكتروني', 'error');
+                }
+            });
+        }
+    </script>
+</body>
+</html>
