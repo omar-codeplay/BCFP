@@ -1301,6 +1301,9 @@
                     <li><a href="#about">من نحن</a></li>
                     <li><a href="#reviews">التقييمات</a></li>
                     <li><a href="#contact">تواصل معنا</a></li>
+                    <!-- إضافة الروابط الجديدة -->
+                    <li><a href="cart.html">عربة التسوق</a></li>
+                    <li><a href="orders.html">طلباتي</a></li>
                 </ul>
             </nav>
 
@@ -1625,6 +1628,9 @@
                         <li><a href="#about">من نحن</a></li>
                         <li><a href="#reviews">التقييمات</a></li>
                         <li><a href="#contact">تواصل معنا</a></li>
+                        <!-- إضافة الروابط الجديدة -->
+                        <li><a href="cart.html">عربة التسوق</a></li>
+                        <li><a href="orders.html">طلباتي</a></li>
                     </ul>
                 </div>
 
@@ -2263,7 +2269,7 @@ function showCart() {
                 </div>
                 <div class="cart-actions">
                     <button class="continue-shopping" id="continueShopping">مواصلة التسوق</button>
-                   <a href="cart.html"> <button class="checkout-btn" id="checkoutBtn">إتمام الشراء</button>
+                    <button class="checkout-btn" id="checkoutBtn">إتمام الشراء</button>
                 </div>
             `;
         }
@@ -2340,8 +2346,7 @@ function removeFromCart(itemId) {
     showNotification('تم إزالة المنتج من عربة التسوق', 'info');
 }
 
-
-// إتمام عملية الشراء
+// إتمام عملية الشراء - تم التعديل لتوجيه المستخدم إلى cart.html
 function checkoutCart() {
     // التحقق من تسجيل الدخول
     if (typeof netlifyIdentity !== 'undefined') {
@@ -2364,24 +2369,9 @@ function checkoutCart() {
     const closeCartModalBtn = document.getElementById('closeCartModal');
     if (closeCartModalBtn) closeCartModalBtn.click();
     
-    // توجيه المستخدم إلى صفحة عربة التسوق
+    // توجيه المستخدم إلى صفحة عربة التسوق (cart.html)
     window.location.href = 'cart.html';
 }
-
-    // جمع بيانات الطلب
-    const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-    const orderId = 'ORD-' + Date.now() + '-' + Math.floor(Math.random() * 1000);
-    
-    showNotification(`شكراً لشرائك! تم استلام طلبك رقم ${orderId}. سيتم التواصل معك قريباً.`, 'success');
-    
-    // تفريغ العربة بعد إتمام الشراء
-    cart = [];
-    localStorage.setItem('cart', JSON.stringify(cart));
-    updateCartCount();
-    
-    const closeCartModalBtn = document.getElementById('closeCartModal');
-    if (closeCartModalBtn) closeCartModalBtn.click();
-
 
 // إظهار إشعار
 function showNotification(message, type = 'info') {
@@ -2596,12 +2586,13 @@ function setupEventListeners() {
         }
     });
 
-    // أيقونة العربة
+    // أيقونة العربة - تم التعديل للانتقال إلى صفحة العربة
     const cartIcon = document.getElementById('cartIcon');
     if (cartIcon) {
         cartIcon.addEventListener('click', function () {
             console.log('Cart icon clicked');
-            showCart();
+            // الانتقال إلى صفحة عربة التسوق
+            window.location.href = 'cart.html';
         });
     }
 
