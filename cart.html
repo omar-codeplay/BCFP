@@ -1,0 +1,1705 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>عربة التسوق - مركز الكتاب للنشر</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+
+    <style>
+        /* أنماط CSS عامة */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        :root {
+            --primary-color: #1a5f7a;
+            --secondary-color: #57a6c2;
+            --accent-color: #ff7b54;
+            --light-color: #f8f9fa;
+            --dark-color: #343a40;
+            --gray-color: #6c757d;
+            --border-radius: 8px;
+            --box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+
+        body {
+            background-color: #f5f7fa;
+            color: var(--dark-color);
+            line-height: 1.6;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* أنماط رأس الصفحة */
+        header {
+            background-color: white;
+            box-shadow: var(--box-shadow);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--primary-color);
+            font-weight: 700;
+            font-size: 1.5rem;
+            text-decoration: none;
+        }
+
+        .logo i {
+            font-size: 1.8rem;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 25px;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: var(--dark-color);
+            font-weight: 500;
+            transition: var(--transition);
+            padding: 5px 0;
+            position: relative;
+        }
+
+        nav a:hover,
+        nav a.active {
+            color: var(--primary-color);
+        }
+
+        nav a.active::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 3px;
+            background-color: var(--primary-color);
+            bottom: -5px;
+            left: 0;
+            border-radius: 2px;
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .cart-icon {
+            position: relative;
+            cursor: pointer;
+            font-size: 1.3rem;
+            color: var(--dark-color);
+        }
+
+        .cart-count {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background-color: var(--accent-color);
+            color: white;
+            font-size: 0.7rem;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .user-actions {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .user-actions button {
+            padding: 8px 15px;
+            border-radius: var(--border-radius);
+            border: none;
+            cursor: pointer;
+            font-weight: 500;
+            transition: var(--transition);
+        }
+
+        .login-btn {
+            background-color: transparent;
+            color: var(--primary-color);
+            border: 1px solid var(--primary-color) !important;
+        }
+
+        .register-btn {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .user-actions button:hover {
+            opacity: 0.9;
+            transform: translateY(-2px);
+        }
+
+        /* أنماط قسم البطل */
+        .hero {
+            background: linear-gradient(135deg, rgba(26, 95, 122, 0.9), rgba(87, 166, 194, 0.9)), url('https://images.unsplash.com/photo-1507842217343-583bb7270b66?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 60px 0;
+            text-align: center;
+            border-radius: 0 0 30px 30px;
+            margin-bottom: 40px;
+        }
+
+        .hero h1 {
+            font-size: 2.2rem;
+            margin-bottom: 15px;
+        }
+
+        .hero p {
+            font-size: 1.1rem;
+            max-width: 800px;
+            margin: 0 auto 20px;
+            opacity: 0.9;
+        }
+
+        /* أنماط الأقسام العامة */
+        section {
+            padding: 40px 0;
+        }
+
+        .section-title {
+            text-align: right;
+            margin-bottom: 30px;
+            color: var(--primary-color);
+            position: relative;
+            padding-bottom: 10px;
+            font-size: 1.5rem;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            width: 60px;
+            height: 4px;
+            background-color: var(--accent-color);
+            bottom: 0;
+            right: 0;
+            border-radius: 2px;
+        }
+
+        /* أنماط منطقة المستخدم */
+        .user-welcome {
+            background-color: white;
+            padding: 20px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            margin-bottom: 30px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .user-avatar-large {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background-color: var(--secondary-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+            font-size: 1.5rem;
+        }
+
+        .user-info h2 {
+            color: var(--primary-color);
+            margin-bottom: 5px;
+        }
+
+        .user-info p {
+            color: var(--gray-color);
+        }
+
+        /* أنماط محتوى عربة التسوق */
+        .cart-container {
+            display: grid;
+            grid-template-columns: 1fr 350px;
+            gap: 30px;
+        }
+
+        @media (max-width: 992px) {
+            .cart-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* أنماط عناصر العربة */
+        .cart-items-container {
+            background-color: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            padding: 25px;
+        }
+
+        .cart-item {
+            display: flex;
+            align-items: center;
+            padding: 20px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .cart-item:last-child {
+            border-bottom: none;
+        }
+
+        .cart-item-image {
+            width: 100px;
+            height: 130px;
+            background-color: #e9ecef;
+            margin-left: 20px;
+            border-radius: 5px;
+            overflow: hidden;
+            flex-shrink: 0;
+        }
+
+        .cart-item-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .cart-item-details {
+            flex: 1;
+        }
+
+        .cart-item-title {
+            font-weight: 600;
+            margin-bottom: 5px;
+            font-size: 1.2rem;
+        }
+
+        .cart-item-author {
+            color: var(--gray-color);
+            font-size: 0.95rem;
+            margin-bottom: 10px;
+        }
+
+        .cart-item-actions {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .quantity-controls {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background-color: #f8f9fa;
+            border-radius: var(--border-radius);
+            padding: 5px 15px;
+        }
+
+        .quantity-btn {
+            background: none;
+            border: none;
+            font-size: 1.2rem;
+            cursor: pointer;
+            color: var(--primary-color);
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+        }
+
+        .quantity-btn:hover {
+            background-color: rgba(26, 95, 122, 0.1);
+        }
+
+        .cart-item-quantity {
+            font-weight: 600;
+            min-width: 30px;
+            text-align: center;
+        }
+
+        .remove-item {
+            color: #dc3545;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 1.2rem;
+            padding: 8px;
+            border-radius: 50%;
+            transition: var(--transition);
+        }
+
+        .remove-item:hover {
+            background-color: rgba(220, 53, 69, 0.1);
+        }
+
+        .cart-item-price {
+            font-weight: 700;
+            color: var(--primary-color);
+            min-width: 100px;
+            text-align: left;
+            font-size: 1.2rem;
+        }
+
+        /* أنماط ملخص الطلب */
+        .order-summary-container {
+            background-color: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            padding: 25px;
+            position: sticky;
+            top: 100px;
+            height: fit-content;
+        }
+
+        .order-summary-title {
+            font-size: 1.3rem;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+        }
+
+        .summary-row.total {
+            font-weight: 700;
+            font-size: 1.3rem;
+            color: var(--primary-color);
+            border-top: 2px solid #eee;
+            padding-top: 15px;
+            margin-top: 15px;
+        }
+
+        .checkout-btn {
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            width: 100%;
+            padding: 18px;
+            border-radius: var(--border-radius);
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            margin-top: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .checkout-btn:hover {
+            background-color: #ff6b3d;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(255, 123, 84, 0.3);
+        }
+
+        .checkout-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .continue-shopping-btn {
+            background-color: white;
+            color: var(--primary-color);
+            border: 2px solid var(--primary-color);
+            width: 100%;
+            padding: 15px;
+            border-radius: var(--border-radius);
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            margin-top: 15px;
+            text-align: center;
+            text-decoration: none;
+            display: block;
+        }
+
+        .continue-shopping-btn:hover {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        /* عربة فارغة */
+        .empty-cart {
+            text-align: center;
+            padding: 60px 20px;
+            background-color: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            grid-column: 1 / -1;
+        }
+
+        .empty-cart i {
+            font-size: 4rem;
+            color: #ddd;
+            margin-bottom: 20px;
+            display: block;
+        }
+
+        .empty-cart h3 {
+            color: var(--gray-color);
+            margin-bottom: 15px;
+            font-size: 1.5rem;
+        }
+
+        .empty-cart p {
+            color: var(--gray-color);
+            margin-bottom: 25px;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .shop-now-btn {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            font-size: 1rem;
+            font-weight: 600;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+        }
+
+        .shop-now-btn:hover {
+            background-color: #0d4d65;
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        /* نماذج الدفع */
+        .payment-form {
+            background-color: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            padding: 25px;
+            margin-top: 30px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--dark-color);
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: var(--border-radius);
+            font-size: 1rem;
+            transition: var(--transition);
+            font-family: inherit;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            border-color: var(--primary-color);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(26, 95, 122, 0.1);
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        @media (max-width: 768px) {
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .payment-methods {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 15px;
+            margin-top: 10px;
+        }
+
+        .payment-method {
+            border: 2px solid #ddd;
+            border-radius: var(--border-radius);
+            padding: 15px;
+            cursor: pointer;
+            transition: var(--transition);
+            text-align: center;
+        }
+
+        .payment-method:hover {
+            border-color: var(--primary-color);
+        }
+
+        .payment-method.selected {
+            border-color: var(--primary-color);
+            background-color: rgba(26, 95, 122, 0.05);
+        }
+
+        .payment-method i {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            display: block;
+            color: var(--primary-color);
+        }
+
+        .payment-method span {
+            font-weight: 500;
+        }
+
+        /* تذييل الصفحة */
+        footer {
+            background-color: var(--dark-color);
+            color: white;
+            padding: 60px 0 30px;
+            margin-top: 60px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: white;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .footer-about p {
+            margin-bottom: 20px;
+            opacity: 0.8;
+        }
+
+        .footer-links h3,
+        .footer-contact h3 {
+            font-size: 1.3rem;
+            margin-bottom: 25px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .footer-links h3::after,
+        .footer-contact h3::after {
+            content: '';
+            position: absolute;
+            width: 40px;
+            height: 3px;
+            background-color: var(--accent-color);
+            bottom: 0;
+            right: 0;
+        }
+
+        .footer-links ul {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 12px;
+        }
+
+        .footer-links a {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .footer-links a:hover {
+            color: white;
+            padding-right: 5px;
+        }
+
+        .footer-contact p {
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            opacity: 0.8;
+        }
+
+        .newsletter-form {
+            display: flex;
+            margin-top: 20px;
+        }
+
+        .newsletter-form input {
+            flex: 1;
+            padding: 12px 15px;
+            border: none;
+            border-radius: var(--border-radius) 0 0 var(--border-radius);
+            font-size: 1rem;
+        }
+
+        .newsletter-form button {
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 0 20px;
+            border-radius: 0 var(--border-radius) var(--border-radius) 0;
+            cursor: pointer;
+            font-weight: 500;
+            transition: var(--transition);
+        }
+
+        .newsletter-form button:hover {
+            background-color: #ff6b3d;
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            opacity: 0.7;
+            font-size: 0.9rem;
+        }
+
+        /* إشعارات */
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background-color: white;
+            color: var(--dark-color);
+            padding: 15px 25px;
+            border-radius: var(--border-radius);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            z-index: 3000;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            transform: translateX(150%);
+            transition: transform 0.5s ease;
+            max-width: 400px;
+        }
+
+        .notification.show {
+            transform: translateX(0);
+        }
+
+        .notification.success {
+            border-right: 5px solid #28a745;
+        }
+
+        .notification.error {
+            border-right: 5px solid #dc3545;
+        }
+
+        .notification.info {
+            border-right: 5px solid var(--primary-color);
+        }
+
+        .notification-icon {
+            font-size: 1.5rem;
+        }
+
+        .notification.success .notification-icon {
+            color: #28a745;
+        }
+
+        .notification.error .notification-icon {
+            color: #dc3545;
+        }
+
+        .notification.info .notification-icon {
+            color: var(--primary-color);
+        }
+
+        .notification-content {
+            flex: 1;
+        }
+
+        .notification-title {
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .close-notification {
+            background: none;
+            border: none;
+            color: var(--gray-color);
+            cursor: pointer;
+            font-size: 1.2rem;
+        }
+
+        /* أنماط المستخدم المسجل */
+        .user-profile {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: var(--secondary-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+        }
+
+        .user-name {
+            font-weight: 500;
+        }
+
+        /* أنماط متجاوبة */
+        @media (max-width: 992px) {
+            .header-container {
+                flex-direction: column;
+                gap: 15px;
+                padding: 15px 0;
+            }
+
+            nav ul {
+                gap: 15px;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .cart-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero {
+                padding: 50px 0;
+                border-radius: 0 0 20px 20px;
+            }
+
+            .hero h1 {
+                font-size: 1.8rem;
+            }
+
+            .hero p {
+                font-size: 1rem;
+            }
+
+            .cart-item {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+            }
+
+            .cart-item-image {
+                margin-left: 0;
+                width: 100%;
+                height: 200px;
+            }
+
+            .cart-item-price {
+                align-self: flex-end;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .header-actions {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .user-actions {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- رأس الصفحة -->
+    <header>
+        <div class="container header-container">
+            <a href="index.html" class="logo">
+                <i class="fas fa-book-open"></i>
+                مركز الكتاب للنشر
+            </a>
+
+            <nav>
+                <ul>
+                    <li><a href="index.html">الرئيسية</a></li>
+                    <li><a href="index.html#books">الكتب</a></li>
+                    <li><a href="index.html#services">الخدمات</a></li>
+                    <li><a href="index.html#about">من نحن</a></li>
+                    <li><a href="orders.html">طلباتي</a></li>
+                    <li><a href="cart.html" class="active">عربة التسوق</a></li>
+                </ul>
+            </nav>
+
+            <div class="header-actions">
+                <div class="cart-icon" id="cartIcon">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span class="cart-count">0</span>
+                </div>
+
+                <div class="user-actions" id="userActions">
+                    <button class="login-btn" id="loginBtn">تسجيل الدخول</button>
+                    <button class="register-btn" id="registerBtn">إنشاء حساب</button>
+                </div>
+
+                <!-- عرض الملف الشخصي للمستخدم المسجل -->
+                <div class="user-profile" id="userProfile" style="display: none;">
+                    <div class="user-avatar" id="userAvatar">م</div>
+                    <div class="user-name" id="userName">محمد</div>
+                    <button class="logout-btn" id="logoutBtn"
+                        style="background: none; border: none; color: var(--primary-color); cursor: pointer;">
+                        <i class="fas fa-sign-out-alt"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- منطقة الإشعارات -->
+    <div id="notificationContainer"></div>
+
+    <!-- قسم البطل -->
+    <section class="hero">
+        <div class="container">
+            <h1>عربة التسوق</h1>
+            <p>راجع مشترياتك وأكمل عملية الشراء</p>
+        </div>
+    </section>
+
+    <!-- قسم عربة التسوق -->
+    <section>
+        <div class="container">
+            <div id="cartContent">
+                <!-- سيتم عرض محتوى العربة هنا ديناميكياً -->
+            </div>
+        </div>
+    </section>
+
+    <!-- تذييل الصفحة -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-about">
+                    <div class="footer-logo">
+                        <i class="fas fa-book-open"></i>
+                        مركز الكتاب للنشر
+                    </div>
+                    <p>دار نشر مصرية رائدة منذ عام 1989، متخصصة في نشر الكتب الأكاديمية وكتب التربية الرياضية وعلوم
+                        الرياضة. كما نتشرف بطباعة المصحف الشريف بجودة عالية.</p>
+                    <div class="newsletter-form">
+                        <input type="email" placeholder="أدخل بريدك الإلكتروني هنا ">
+                        <button type="submit">إرسال</button>
+                    </div>
+                </div>
+
+                <div class="footer-links">
+                    <h3>روابط سريعة</h3>
+                    <ul>
+                        <li><a href="index.html">الرئيسية</a></li>
+                        <li><a href="index.html#books">الكتب</a></li>
+                        <li><a href="index.html#services">الخدمات</a></li>
+                        <li><a href="index.html#about">من نحن</a></li>
+                        <li><a href="orders.html">طلباتي</a></li>
+                        <li><a href="cart.html">عربة التسوق</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-contact">
+                    <h3>تواصل معنا</h3>
+                    <p><i class="fas fa-envelope"></i> Markazelkitab@gmail.com</p>
+                    <p><i class="fas fa-phone"></i> +20-101-852-6963</p>
+                    <p><i class="fas fa-map-marker-alt"></i> القاهرة، مصر</p>
+                    <p style="margin-top: 20px;">نشر مركز الكتاب للنشر منذ 1989، خبرة وإبداع.</p>
+                </div>
+            </div>
+
+            <div class="copyright">
+                © 2025 مركز الكتاب للنشر. جميع الحقوق محفوظة.
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // بيانات الكتب (مثل الموجودة في index.html)
+        const allBooks = [
+            {
+                id: 1,
+                title: "التربية البدنية الحديثة",
+                author: "د. محمد أحمد",
+                category: "التربية الرياضية",
+                price: 75,
+                image: "https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+                isNew: false,
+                inStock: true,
+                year: 2022,
+                rating: 4.5
+            },
+            {
+                id: 2,
+                title: "علم النفس الرياضي",
+                author: "د. خالد سليم",
+                category: "العلوم الرياضية",
+                price: 60,
+                image: "https://images.unsplash.com/photo-1513475382585-d06e58bcb0e0?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+                isNew: true,
+                inStock: true,
+                year: 2023,
+                rating: 4.2
+            },
+            {
+                id: 3,
+                title: "مباديء التدريب الرياضي",
+                author: "د. أحمد فاروق",
+                category: "التربية الرياضية",
+                price: 80,
+                image: "https://images.unsplash.com/photo-1518611012118-696072aa579a?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+                isNew: false,
+                inStock: true,
+                year: 2021,
+                rating: 4.7
+            },
+            {
+                id: 4,
+                title: "المصحف الشريف برواية حفص",
+                author: "مجمع الملك فهد لطباعة المصحف",
+                category: "المصاحف",
+                price: 120,
+                image: "https://images.unsplash.com/photo-1604594849809-dfedbc827105?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+                isNew: true,
+                inStock: true,
+                year: 2023,
+                rating: 5.0
+            },
+            {
+                id: 5,
+                title: "التشريح الوصفي للرياضيين",
+                author: "د. سامي راشد",
+                category: "العلوم الرياضية",
+                price: 95,
+                image: "https://images.unsplash.com/photo-1541963463532-d68292c34b19?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+                isNew: false,
+                inStock: true,
+                year: 2020,
+                rating: 4.3
+            },
+            {
+                id: 6,
+                title: "اللياقة البدنية والصحة",
+                author: "د. نادية محمود",
+                category: "التربية الرياضية",
+                price: 55,
+                image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+                isNew: true,
+                inStock: true,
+                year: 2023,
+                rating: 4.0
+            },
+            {
+                id: 7,
+                title: "الإدارة الرياضية الحديثة",
+                author: "د. عماد الدين حسن",
+                category: "الإدارة الرياضية",
+                price: 70,
+                image: "https://images.unsplash.com/photo-1552058544-f2b08422138a?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+                isNew: true,
+                inStock: false,
+                year: 2023,
+                rating: 4.1
+            },
+            {
+                id: 8,
+                title: "التغذية للرياضيين",
+                author: "د. ياسمين علي",
+                category: "العلوم الرياضية",
+                price: 65,
+                image: "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+                isNew: false,
+                inStock: true,
+                year: 2021,
+                rating: 4.4
+            },
+            {
+                id: 9,
+                title: "تاريخ الرياضة في العالم العربي",
+                author: "د. حسن مرسي",
+                category: "تاريخ الرياضة",
+                price: 85,
+                image: "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+                isNew: true,
+                inStock: true,
+                year: 2023,
+                rating: 4.6
+            },
+            {
+                id: 10,
+                title: "فلسفة التربية الرياضية",
+                author: "د. علي عبد الرحمن",
+                category: "التربية الرياضية",
+                price: 90,
+                image: "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+                isNew: false,
+                inStock: true,
+                year: 2020,
+                rating: 4.3
+            },
+            {
+                id: 11,
+                title: "الإصابات الرياضية والعلاج الطبيعي",
+                author: "د. مها السيد",
+                category: "العلوم الرياضية",
+                price: 110,
+                image: "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+                isNew: true,
+                inStock: true,
+                year: 2023,
+                rating: 4.8
+            },
+            {
+                id: 12,
+                title: "مناهج البحث في التربية الرياضية",
+                author: "د. وليد جابر",
+                category: "البحث العلمي",
+                price: 75,
+                image: "https://images.unsplash.com/photo-1532094349884-543bc11b234d?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+                isNew: false,
+                inStock: true,
+                year: 2021,
+                rating: 4.0
+            }
+        ];
+
+        // بيانات العربة
+        let cart = [];
+
+        // تهيئة التطبيق
+        document.addEventListener('DOMContentLoaded', function () {
+            console.log('Cart page loaded');
+            
+            // تهيئة Netlify Identity
+            initNetlifyIdentity();
+            
+            // تحميل العربة من التخزين المحلي
+            loadCartFromStorage();
+            
+            // عرض محتوى العربة
+            renderCartContent();
+            
+            // إعداد مستمعي الأحداث
+            setupEventListeners();
+        });
+
+        // تهيئة Netlify Identity
+        function initNetlifyIdentity() {
+            console.log('Initializing Netlify Identity...');
+            
+            if (typeof netlifyIdentity === 'undefined') {
+                console.warn('Netlify Identity widget not loaded');
+                return;
+            }
+
+            // تحديث واجهة المستخدم بناءً على حالة المصادقة الحالية
+            updateAuthUI();
+
+            netlifyIdentity.on('init', user => {
+                console.log('Netlify Identity initialized, user:', user);
+                updateAuthUI();
+            });
+
+            netlifyIdentity.on('login', user => {
+                console.log('User logged in:', user);
+                updateAuthUI();
+                
+                // الحصول على اسم المستخدم
+                let userName = user.email.split('@')[0];
+                if (user.user_metadata && user.user_metadata.full_name) {
+                    userName = user.user_metadata.full_name;
+                }
+                
+                showNotification(`مرحباً ${userName}! تم تسجيل دخولك بنجاح.`, 'success');
+            });
+
+            netlifyIdentity.on('logout', () => {
+                console.log('User logged out');
+                updateAuthUI();
+                showNotification('تم تسجيل الخروج بنجاح.', 'info');
+                // إعادة توجيه المستخدم إلى الصفحة الرئيسية
+                setTimeout(() => {
+                    window.location.href = 'index.html';
+                }, 1500);
+            });
+
+            netlifyIdentity.on('error', err => {
+                console.error('Netlify Identity error:', err);
+                showNotification('حدث خطأ في نظام المصادقة', 'error');
+            });
+        }
+
+        // تحديث واجهة المستخدم بناءً على حالة المصادقة
+        function updateAuthUI() {
+            console.log('Updating auth UI...');
+            
+            const userActions = document.getElementById('userActions');
+            const userProfile = document.getElementById('userProfile');
+            
+            if (!userActions || !userProfile) {
+                console.error('User UI elements not found');
+                return;
+            }
+            
+            const user = netlifyIdentity.currentUser();
+            console.log('Current user:', user);
+            
+            if (user) {
+                // المستخدم مسجل الدخول
+                userActions.style.display = 'none';
+                userProfile.style.display = 'flex';
+                
+                // تحديث اسم المستخدم والصورة
+                let userName = user.email.split('@')[0];
+                let userAvatar = userName.charAt(0).toUpperCase();
+                
+                if (user.user_metadata && user.user_metadata.full_name) {
+                    userName = user.user_metadata.full_name;
+                    userAvatar = userName.charAt(0).toUpperCase();
+                }
+                
+                const userNameElement = document.getElementById('userName');
+                const userAvatarElement = document.getElementById('userAvatar');
+                
+                if (userNameElement) userNameElement.textContent = userName;
+                if (userAvatarElement) userAvatarElement.textContent = userAvatar;
+                
+                console.log('User logged in, showing profile:', userName);
+            } else {
+                // المستخدم غير مسجل الدخول
+                userActions.style.display = 'flex';
+                userProfile.style.display = 'none';
+                console.log('User not logged in, showing login/register buttons');
+            }
+        }
+
+        // تحميل العربة من التخزين المحلي
+        function loadCartFromStorage() {
+            if (localStorage.getItem('cart')) {
+                try {
+                    cart = JSON.parse(localStorage.getItem('cart'));
+                    updateCartCount();
+                } catch (e) {
+                    console.error('خطأ في تحميل العربة:', e);
+                    cart = [];
+                }
+            }
+        }
+
+        // تحديث عداد العربة
+        function updateCartCount() {
+            const cartCount = document.querySelector('.cart-count');
+            if (cartCount) {
+                const totalItems = cart.reduce((total, item) => total + item.quantity, 0);
+                cartCount.textContent = totalItems;
+            }
+        }
+
+        // عرض محتوى العربة
+        function renderCartContent() {
+            const cartContent = document.getElementById('cartContent');
+            if (!cartContent) return;
+            
+            if (cart.length === 0) {
+                // عرض عربة فارغة
+                cartContent.innerHTML = `
+                    <div class="empty-cart">
+                        <i class="fas fa-shopping-cart"></i>
+                        <h3>عربة التسوق فارغة</h3>
+                        <p>لم تقم بإضافة أي منتجات إلى عربة التسوق بعد.</p>
+                        <a href="index.html#books" class="shop-now-btn">
+                            <i class="fas fa-book"></i>
+                            ابدأ التسوق الآن
+                        </a>
+                    </div>
+                `;
+            } else {
+                // عرض عناصر العربة وملخص الطلب
+                cartContent.innerHTML = `
+                    <div class="cart-container">
+                        <div class="cart-items-container">
+                            <h2 class="section-title">عناصر العربة (${cart.length})</h2>
+                            <div id="cartItemsList">
+                                <!-- سيتم عرض عناصر العربة هنا -->
+                            </div>
+                        </div>
+                        
+                        <div class="order-summary-container">
+                            <div class="order-summary-title">ملخص الطلب</div>
+                            <div id="orderSummary">
+                                <!-- سيتم عرض ملخص الطلب هنا -->
+                            </div>
+                            <div id="checkoutSection">
+                                <!-- سيتم عرض قسم إتمام الشراء هنا -->
+                            </div>
+                        </div>
+                    </div>
+                `;
+                
+                // عرض عناصر العربة
+                renderCartItems();
+                
+                // عرض ملخص الطلب
+                renderOrderSummary();
+                
+                // عرض قسم إتمام الشراء
+                renderCheckoutSection();
+            }
+        }
+
+        // عرض عناصر العربة
+        function renderCartItems() {
+            const cartItemsList = document.getElementById('cartItemsList');
+            if (!cartItemsList) return;
+            
+            cartItemsList.innerHTML = '';
+            
+            cart.forEach(item => {
+                const cartItem = document.createElement('div');
+                cartItem.className = 'cart-item';
+                cartItem.setAttribute('data-id', item.id);
+                
+                cartItem.innerHTML = `
+                    <div class="cart-item-image">
+                        <img src="${item.image}" alt="${item.title}" onerror="this.src='https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80'">
+                    </div>
+                    <div class="cart-item-details">
+                        <div class="cart-item-title">${item.title}</div>
+                        <div class="cart-item-author">${item.author}</div>
+                        <div class="cart-item-actions">
+                            <div class="quantity-controls">
+                                <button class="quantity-btn decrease-btn" data-id="${item.id}">
+                                    <i class="fas fa-minus"></i>
+                                </button>
+                                <span class="cart-item-quantity">${item.quantity}</span>
+                                <button class="quantity-btn increase-btn" data-id="${item.id}">
+                                    <i class="fas fa-plus"></i>
+                                </button>
+                            </div>
+                            <button class="remove-item" data-id="${item.id}">
+                                <i class="fas fa-trash"></i>
+                                <span>إزالة</span>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="cart-item-price">${item.price * item.quantity} ج.م</div>
+                `;
+                
+                cartItemsList.appendChild(cartItem);
+            });
+            
+            // إضافة مستمعي الأحداث للأزرار
+            setupCartItemEventListeners();
+        }
+
+        // عرض ملخص الطلب
+        function renderOrderSummary() {
+            const orderSummary = document.getElementById('orderSummary');
+            if (!orderSummary) return;
+            
+            // حساب الإجماليات
+            const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            const shipping = subtotal > 200 ? 0 : 20; // شحن مجاني للطلبات فوق 200 جنيه
+            const total = subtotal + shipping;
+            
+            orderSummary.innerHTML = `
+                <div class="summary-row">
+                    <span>الإجمالي الجزئي:</span>
+                    <span>${subtotal} ج.م</span>
+                </div>
+                <div class="summary-row">
+                    <span>رسوم الشحن:</span>
+                    <span>${shipping === 0 ? 'مجاني' : shipping + ' ج.م'}</span>
+                </div>
+                ${shipping > 0 && subtotal < 200 ? `
+                    <div class="summary-row" style="color: var(--accent-color); font-size: 0.9rem;">
+                        <span>أنفق ${200 - subttotal} ج.م أكثر للحصول على شحن مجاني</span>
+                    </div>
+                ` : ''}
+                <div class="summary-row total">
+                    <span>المبلغ الإجمالي:</span>
+                    <span>${total} ج.م</span>
+                </div>
+            `;
+        }
+
+        // عرض قسم إتمام الشراء
+        function renderCheckoutSection() {
+            const checkoutSection = document.getElementById('checkoutSection');
+            if (!checkoutSection) return;
+            
+            checkoutSection.innerHTML = `
+                <button class="checkout-btn" id="proceedCheckoutBtn">
+                    <i class="fas fa-lock"></i>
+                    إتمام عملية الشراء
+                </button>
+                <a href="index.html#books" class="continue-shopping-btn">
+                    <i class="fas fa-arrow-right"></i>
+                    مواصلة التسوق
+                </a>
+            `;
+            
+            // إضافة مستمع الحدث لزر إتمام الشراء
+            const proceedCheckoutBtn = document.getElementById('proceedCheckoutBtn');
+            if (proceedCheckoutBtn) {
+                proceedCheckoutBtn.addEventListener('click', function() {
+                    proceedToCheckout();
+                });
+            }
+        }
+
+        // إعداد مستمعي الأحداث لعناصر العربة
+        function setupCartItemEventListeners() {
+            // أزرار زيادة الكمية
+            document.querySelectorAll('.increase-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const itemId = parseInt(this.getAttribute('data-id'));
+                    updateCartItemQuantity(itemId, 1);
+                });
+            });
+            
+            // أزرار تقليل الكمية
+            document.querySelectorAll('.decrease-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const itemId = parseInt(this.getAttribute('data-id'));
+                    updateCartItemQuantity(itemId, -1);
+                });
+            });
+            
+            // أزرار إزالة العنصر
+            document.querySelectorAll('.remove-item').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const itemId = parseInt(this.getAttribute('data-id'));
+                    removeFromCart(itemId);
+                });
+            });
+        }
+
+        // تحديث كمية عنصر في العربة
+        function updateCartItemQuantity(itemId, change) {
+            const itemIndex = cart.findIndex(item => item.id === itemId);
+            
+            if (itemIndex !== -1) {
+                cart[itemIndex].quantity += change;
+                
+                // إذا كانت الكمية صفر أو أقل، إزالة العنصر من العربة
+                if (cart[itemIndex].quantity <= 0) {
+                    cart.splice(itemIndex, 1);
+                    showNotification('تم إزالة المنتج من عربة التسوق', 'info');
+                }
+                
+                // تحديث التخزين المحلي والعرض
+                saveCartToStorage();
+                updateCartCount();
+                renderCartContent();
+            }
+        }
+
+        // إزالة عنصر من العربة
+        function removeFromCart(itemId) {
+            cart = cart.filter(item => item.id !== itemId);
+            saveCartToStorage();
+            updateCartCount();
+            renderCartContent();
+            showNotification('تم إزالة المنتج من عربة التسوق', 'info');
+        }
+
+        // حفظ العربة إلى التخزين المحلي
+        function saveCartToStorage() {
+            try {
+                localStorage.setItem('cart', JSON.stringify(cart));
+            } catch (e) {
+                console.error('خطأ في حفظ العربة:', e);
+            }
+        }
+
+        // المتابعة إلى إتمام الشراء
+        function proceedToCheckout() {
+            // التحقق من تسجيل الدخول
+            if (typeof netlifyIdentity !== 'undefined') {
+                const user = netlifyIdentity.currentUser();
+                if (!user) {
+                    showNotification('يجب تسجيل الدخول أولاً لإتمام عملية الشراء', 'info');
+                    netlifyIdentity.open('login');
+                    return;
+                }
+            }
+            
+            if (cart.length === 0) {
+                showNotification('عربة التسوق فارغة', 'error');
+                return;
+            }
+            
+            // جمع بيانات الطلب
+            const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            const shipping = subtotal > 200 ? 0 : 20;
+            const total = subtotal + shipping;
+            
+            // إنشاء رقم طلب فريد
+            const orderId = 'ORD-' + Date.now() + '-' + Math.floor(Math.random() * 1000);
+            const orderNumber = 'S-' + (Math.floor(Math.random() * 900) + 100);
+            
+            // إنشاء الطلب
+            const order = {
+                id: orderId,
+                orderNumber: orderNumber,
+                date: new Date().toLocaleDateString('ar-EG', {
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric'
+                }),
+                status: 'processing',
+                statusText: 'قيد المعالجة',
+                items: cart.map(item => ({
+                    id: item.id,
+                    title: item.title,
+                    author: item.author,
+                    price: item.price,
+                    quantity: item.quantity,
+                    image: item.image
+                })),
+                subtotal: subtotal,
+                shipping: shipping,
+                total: total
+            };
+            
+            // حفظ الطلب في localStorage (في الواقع التطبيق، سترسله إلى الخادم)
+            let orders = [];
+            if (localStorage.getItem('orders')) {
+                try {
+                    orders = JSON.parse(localStorage.getItem('orders'));
+                } catch (e) {
+                    console.error('خطأ في تحميل الطلبات:', e);
+                }
+            }
+            
+            orders.unshift(order); // إضافة الطلب الجديد في البداية
+            localStorage.setItem('orders', JSON.stringify(orders));
+            
+            // تفريغ العربة بعد إتمام الشراء
+            cart = [];
+            saveCartToStorage();
+            updateCartCount();
+            
+            // عرض رسالة النجاح والتوجيه إلى صفحة الطلبات
+            showNotification(`شكراً لشرائك! تم إنشاء طلبك رقم ${orderNumber}. سيتم التواصل معك قريباً.`, 'success');
+            
+            // التوجيه إلى صفحة الطلبات بعد ثانيتين
+            setTimeout(() => {
+                window.location.href = 'orders.html';
+            }, 2000);
+        }
+
+        // إظهار إشعار
+        function showNotification(message, type = 'info') {
+            const notificationContainer = document.getElementById('notificationContainer');
+            if (!notificationContainer) return;
+            
+            // إزالة الإشعارات القديمة
+            const oldNotifications = notificationContainer.querySelectorAll('.notification');
+            oldNotifications.forEach(notification => {
+                if (notification.parentNode === notificationContainer) {
+                    notification.remove();
+                }
+            });
+
+            const notification = document.createElement('div');
+            notification.className = `notification ${type}`;
+
+            let icon = 'info-circle';
+            if (type === 'success') icon = 'check-circle';
+            if (type === 'error') icon = 'exclamation-circle';
+
+            notification.innerHTML = `
+                <div class="notification-icon">
+                    <i class="fas fa-${icon}"></i>
+                </div>
+                <div class="notification-content">
+                    <div class="notification-title">${type === 'success' ? 'تم بنجاح' : type === 'error' ? 'خطأ' : 'ملاحظة'}</div>
+                    <div>${message}</div>
+                </div>
+                <button class="close-notification">
+                    <i class="fas fa-times"></i>
+                </button>
+            `;
+
+            notificationContainer.appendChild(notification);
+
+            setTimeout(() => {
+                notification.classList.add('show');
+            }, 10);
+
+            notification.querySelector('.close-notification').addEventListener('click', function () {
+                notification.classList.remove('show');
+                setTimeout(() => {
+                    if (notification.parentNode) {
+                        notification.remove();
+                    }
+                }, 300);
+            });
+
+            setTimeout(() => {
+                if (notification.parentNode) {
+                    notification.classList.remove('show');
+                    setTimeout(() => {
+                        if (notification.parentNode) {
+                            notification.remove();
+                        }
+                    }, 300);
+                }
+            }, 4000);
+        }
+
+        // إعداد مستمعي الأحداث العامة
+        function setupEventListeners() {
+            console.log('Setting up event listeners...');
+            
+            // أزرار تسجيل الدخول والتسجيل مع Netlify Identity
+            const loginBtn = document.getElementById('loginBtn');
+            if (loginBtn) {
+                loginBtn.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    console.log('Login button clicked');
+                    if (typeof netlifyIdentity !== 'undefined') {
+                        netlifyIdentity.open('login');
+                    } else {
+                        showNotification('نظام تسجيل الدخول غير متاح حالياً', 'error');
+                    }
+                });
+            }
+
+            const registerBtn = document.getElementById('registerBtn');
+            if (registerBtn) {
+                registerBtn.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    console.log('Register button clicked');
+                    if (typeof netlifyIdentity !== 'undefined') {
+                        netlifyIdentity.open('signup');
+                    } else {
+                        showNotification('نظام التسجيل غير متاح حالياً', 'error');
+                    }
+                });
+            }
+
+            // زر تسجيل الخروج
+            const logoutBtn = document.getElementById('logoutBtn');
+            if (logoutBtn) {
+                logoutBtn.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    console.log('Logout button clicked');
+                    if (typeof netlifyIdentity !== 'undefined') {
+                        netlifyIdentity.logout();
+                    }
+                });
+            }
+
+            // أيقونة العربة
+            const cartIcon = document.getElementById('cartIcon');
+            if (cartIcon) {
+                cartIcon.addEventListener('click', function () {
+                    // تحديث العربة أولاً
+                    loadCartFromStorage();
+                    // الانتقال إلى أعلى الصفحة
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                });
+            }
+
+            // إرسال النموذج في التذييل
+            const newsletterButton = document.querySelector('.newsletter-form button');
+            if (newsletterButton) {
+                newsletterButton.addEventListener('click', function () {
+                    const emailInput = document.querySelector('.newsletter-form input');
+                    if (emailInput && emailInput.value) {
+                        showNotification('شكراً على اشتراكك في نشرتنا البريدية!', 'success');
+                        emailInput.value = '';
+                    } else {
+                        showNotification('يرجى إدخال بريدك الإلكتروني', 'error');
+                    }
+                });
+            }
+        }
+
+        // تهيئة Netlify Identity للروابط
+        if (window.netlifyIdentity) {
+            window.netlifyIdentity.on("init", user => {
+                console.log('Netlify Identity init from widget');
+                if (!user) {
+                    window.netlifyIdentity.on("login", () => {
+                        console.log('User logged in from widget');
+                        // تحديث الصفحة بعد تسجيل الدخول
+                        setTimeout(() => {
+                            window.location.reload();
+                        }, 500);
+                    });
+                }
+            });
+        }
+    </script>
+</body>
+</html>

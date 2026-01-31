@@ -2263,7 +2263,7 @@ function showCart() {
                 </div>
                 <div class="cart-actions">
                     <button class="continue-shopping" id="continueShopping">مواصلة التسوق</button>
-                    <button class="checkout-btn" id="checkoutBtn">إتمام الشراء</button>
+                   <a href="cart.html"> <button class="checkout-btn" id="checkoutBtn">إتمام الشراء</button>
                 </div>
             `;
         }
@@ -2340,6 +2340,7 @@ function removeFromCart(itemId) {
     showNotification('تم إزالة المنتج من عربة التسوق', 'info');
 }
 
+
 // إتمام عملية الشراء
 function checkoutCart() {
     // التحقق من تسجيل الدخول
@@ -2359,6 +2360,14 @@ function checkoutCart() {
         return;
     }
 
+    // إغلاق نافذة العربة
+    const closeCartModalBtn = document.getElementById('closeCartModal');
+    if (closeCartModalBtn) closeCartModalBtn.click();
+    
+    // توجيه المستخدم إلى صفحة عربة التسوق
+    window.location.href = 'cart.html';
+}
+
     // جمع بيانات الطلب
     const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
     const orderId = 'ORD-' + Date.now() + '-' + Math.floor(Math.random() * 1000);
@@ -2372,7 +2381,7 @@ function checkoutCart() {
     
     const closeCartModalBtn = document.getElementById('closeCartModal');
     if (closeCartModalBtn) closeCartModalBtn.click();
-}
+
 
 // إظهار إشعار
 function showNotification(message, type = 'info') {
