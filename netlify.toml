@@ -1,4 +1,5 @@
 [build]
+  # If you don't have a build step (webpack/vite), leave command empty ""
   command = "npm run build"
   functions = "netlify/functions"
   publish = "."
@@ -11,5 +12,4 @@
   to = "/index.html"
   status = 200
 
-[[plugins]]
-  package = "@netlify/plugin-nextjs"
+# Next.js plugin removed to prevent the "publish directory" error
