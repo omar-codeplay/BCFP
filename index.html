@@ -5,9 +5,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>مركز الكتاب للنشر - متجر الكتب الإلكتروني</title>
+    <!-- Netlify Identity أولاً -->
+    <script src="https://identity.netlify.com/v1/netlify-identity-widget.js" defer></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
-    <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+    <script src="books.js" defer></script>
 
     <style>
         /* أنماط CSS عامة */
@@ -57,6 +58,10 @@
             justify-content: space-between;
             align-items: center;
             padding: 15px 0;
+        }
+
+        .header-top {
+            display: none;
         }
 
         .logo {
@@ -161,6 +166,30 @@
         .user-actions button:hover {
             opacity: 0.9;
             transform: translateY(-2px);
+        }
+
+        /* زر القائمة للهواتف */
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: var(--primary-color);
+            cursor: pointer;
+            padding: 5px 10px;
+        }
+
+        /* أنماط Netlify Identity */
+        #netlify-identity-widget {
+            z-index: 10000 !important;
+        }
+
+        .netlify-identity-modal {
+            position: fixed !important;
+            top: 50% !important;
+            left: 50% !important;
+            transform: translate(-50%, -50%) !important;
+            z-index: 10001 !important;
         }
 
         /* أنماط قسم البطل */
@@ -767,276 +796,6 @@
             font-size: 0.9rem;
         }
 
-        /* أنماط النماذج */
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.7);
-            z-index: 2000;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .modal-content {
-            background-color: white;
-            border-radius: var(--border-radius);
-            width: 90%;
-            max-width: 500px;
-            padding: 30px;
-            position: relative;
-            animation: modalFade 0.3s;
-        }
-
-        @keyframes modalFade {
-            from {
-                opacity: 0;
-                transform: translateY(-50px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .close-modal {
-            position: absolute;
-            top: 15px;
-            left: 15px;
-            font-size: 1.5rem;
-            cursor: pointer;
-            color: var(--gray-color);
-            background: none;
-            border: none;
-        }
-
-        .modal h2 {
-            color: var(--primary-color);
-            margin-bottom: 20px;
-            text-align: center;
-        }
-
-        .form-group {
-            margin-bottom: 20px;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: 500;
-            color: var(--dark-color);
-        }
-
-        .form-group input {
-            width: 100%;
-            padding: 12px 15px;
-            border: 1px solid #ddd;
-            border-radius: var(--border-radius);
-            font-size: 1rem;
-            transition: var(--transition);
-        }
-
-        .form-group input:focus {
-            border-color: var(--primary-color);
-            outline: none;
-        }
-
-        .submit-btn {
-            background-color: var(--primary-color);
-            color: white;
-            border: none;
-            width: 100%;
-            padding: 15px;
-            border-radius: var(--border-radius);
-            font-size: 1.1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: var(--transition);
-            margin-top: 10px;
-        }
-
-        .submit-btn:hover {
-            background-color: #0d4d65;
-        }
-
-        .form-footer {
-            text-align: center;
-            margin-top: 20px;
-            color: var(--gray-color);
-        }
-
-        .form-footer a {
-            color: var(--primary-color);
-            text-decoration: none;
-            font-weight: 500;
-        }
-
-        /* أنماط عربة التسوق */
-        .cart-modal {
-            max-width: 800px;
-        }
-
-        .cart-items {
-            max-height: 400px;
-            overflow-y: auto;
-            margin-bottom: 20px;
-        }
-
-        .cart-item {
-            display: flex;
-            align-items: center;
-            padding: 15px 0;
-            border-bottom: 1px solid #eee;
-        }
-
-        .cart-item-image {
-            width: 80px;
-            height: 100px;
-            background-color: #e9ecef;
-            margin-left: 15px;
-            border-radius: 5px;
-            overflow: hidden;
-        }
-
-        .cart-item-details {
-            flex: 1;
-        }
-
-        .cart-item-title {
-            font-weight: 600;
-            margin-bottom: 5px;
-        }
-
-        .cart-item-author {
-            color: var(--gray-color);
-            font-size: 0.9rem;
-            margin-bottom: 10px;
-        }
-
-        .cart-item-actions {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .quantity-btn {
-            width: 30px;
-            height: 30px;
-            border-radius: 50%;
-            border: 1px solid #ddd;
-            background-color: white;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .cart-item-quantity {
-            font-weight: 600;
-            min-width: 30px;
-            text-align: center;
-        }
-
-        .cart-item-price {
-            font-weight: 700;
-            color: var(--primary-color);
-            margin-right: 20px;
-            min-width: 80px;
-            text-align: left;
-        }
-
-        .remove-item {
-            color: #dc3545;
-            background: none;
-            border: none;
-            cursor: pointer;
-            font-size: 1.2rem;
-        }
-
-        .cart-summary {
-            border-top: 2px solid #eee;
-            padding-top: 20px;
-            margin-top: 20px;
-        }
-
-        .cart-total {
-            display: flex;
-            justify-content: space-between;
-            font-size: 1.3rem;
-            font-weight: 700;
-            margin-bottom: 20px;
-            color: var(--primary-color);
-        }
-
-        .cart-actions {
-            display: flex;
-            justify-content: space-between;
-        }
-
-        .cart-actions button {
-            padding: 12px 25px;
-            border-radius: var(--border-radius);
-            border: none;
-            font-weight: 600;
-            cursor: pointer;
-            transition: var(--transition);
-        }
-
-        .continue-shopping {
-            background-color: #e9ecef;
-            color: var(--dark-color);
-        }
-
-        .checkout-btn {
-            background-color: var(--accent-color);
-            color: white;
-        }
-
-        .cart-actions button:hover {
-            opacity: 0.9;
-            transform: translateY(-2px);
-        }
-
-        .empty-cart {
-            text-align: center;
-            padding: 40px 20px;
-            color: var(--gray-color);
-        }
-
-        .empty-cart i {
-            font-size: 3rem;
-            margin-bottom: 20px;
-            color: #ddd;
-        }
-
-        /* أنماط المستخدم المسجل */
-        .user-profile {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            cursor: pointer;
-        }
-
-        .user-avatar {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background-color: var(--secondary-color);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-weight: 600;
-        }
-
-        .user-name {
-            font-weight: 500;
-        }
-
         /* إشعارات */
         .notification {
             position: fixed;
@@ -1110,7 +869,6 @@
             display: flex;
             justify-content: center;
             background-color: #f8f9fa;
-            /* لون خلفية هادئ */
         }
 
         .search-container {
@@ -1132,7 +890,6 @@
 
         #bookSearchInput:focus {
             border-color: #27ae60;
-            /* اللون الأخضر الخاص بالموقع */
             box-shadow: 0 4px 12px rgba(39, 174, 96, 0.2);
         }
 
@@ -1151,12 +908,6 @@
             color: #666;
             text-align: center;
         }
-
-        /* تحسين شكل الكروت عند الإخفاء */
-        .hidden-card {
-            display: none !important;
-        }
-
 
         /* أنماط متجاوبة */
         @media (max-width: 992px) {
@@ -1193,6 +944,74 @@
         }
 
         @media (max-width: 768px) {
+            .header-top {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                width: 100%;
+            }
+
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            /* إخفاء القائمة العادية على الهواتف */
+            nav {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 280px;
+                height: 100vh;
+                background-color: white;
+                box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
+                z-index: 1001;
+                transition: right 0.3s ease;
+                overflow-y: auto;
+                padding-top: 70px;
+            }
+
+            nav.active {
+                right: 0;
+            }
+
+            nav ul {
+                flex-direction: column;
+                padding: 0;
+                margin: 0;
+                width: 100%;
+            }
+
+            nav li {
+                width: 100%;
+                border-bottom: 1px solid #eee;
+            }
+
+            nav a {
+                display: block;
+                padding: 15px 20px;
+                width: 100%;
+                text-align: right;
+            }
+
+            nav a.active::after {
+                display: none;
+            }
+
+            .nav-overlay {
+                display: none;
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background-color: rgba(0, 0, 0, 0.5);
+                z-index: 1000;
+            }
+
+            .nav-overlay.active {
+                display: block;
+            }
+
             .hero {
                 padding: 60px 0;
                 border-radius: 0 0 20px 20px;
@@ -1246,6 +1065,20 @@
             .sort-icons {
                 align-self: flex-end;
             }
+
+            .header-actions {
+                width: 100%;
+                justify-content: space-between;
+            }
+
+            .user-actions {
+                display: flex !important;
+                order: 1;
+            }
+
+            .cart-icon {
+                order: 2;
+            }
         }
 
         @media (max-width: 576px) {
@@ -1263,10 +1096,6 @@
                 grid-template-columns: 1fr;
             }
 
-            .modal-content {
-                padding: 20px;
-            }
-
             .notification {
                 left: 20px;
                 right: 20px;
@@ -1280,6 +1109,11 @@
             .sort-dropdown-btn {
                 padding: 8px;
             }
+
+            .user-actions button {
+                padding: 10px 15px;
+                font-size: 0.9rem;
+            }
         }
     </style>
 </head>
@@ -1288,12 +1122,25 @@
     <!-- رأس الصفحة -->
     <header>
         <div class="container header-container">
-            <a href="index.html" class="logo">
+            <!-- الجزء العلوي للهواتف -->
+            <div class="header-top">
+                <a href="index.html" class="logo">
+                    <i class="fas fa-book-open"></i>
+                    مركز الكتاب للنشر
+                </a>
+                <button class="mobile-menu-btn" id="mobileMenuBtn">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+
+            <!-- الشعار (للشاشات الكبيرة) -->
+            <a href="index.html" class="logo desktop-logo">
                 <i class="fas fa-book-open"></i>
                 مركز الكتاب للنشر
             </a>
 
-            <nav>
+            <!-- القائمة الرئيسية -->
+            <nav id="mainNav">
                 <ul>
                     <li><a href="index.html" class="active">الرئيسية</a></li>
                     <li><a href="#books">الكتب</a></li>
@@ -1301,24 +1148,25 @@
                     <li><a href="#about">من نحن</a></li>
                     <li><a href="#reviews">التقييمات</a></li>
                     <li><a href="#contact">تواصل معنا</a></li>
-                    <!-- إضافة الروابط الجديدة -->
                     <li><a href="cart.html">عربة التسوق</a></li>
                     <li><a href="orders.html">طلباتي</a></li>
                 </ul>
             </nav>
 
+            <!-- الأزرار والأيقونات -->
             <div class="header-actions">
                 <div class="cart-icon" id="cartIcon">
                     <i class="fas fa-shopping-cart"></i>
                     <span class="cart-count">0</span>
                 </div>
 
+                <!-- أزرار تسجيل الدخول/التسجيل -->
                 <div class="user-actions" id="userActions">
                     <button class="login-btn" id="loginBtn">تسجيل الدخول</button>
                     <button class="register-btn" id="registerBtn">إنشاء حساب</button>
                 </div>
 
-                <!-- عرض الملف الشخصي للمستخدم المسجل -->
+                <!-- الملف الشخصي للمستخدم المسجل -->
                 <div class="user-profile" id="userProfile" style="display: none;">
                     <div class="user-avatar" id="userAvatar">م</div>
                     <div class="user-name" id="userName">محمد</div>
@@ -1330,6 +1178,9 @@
             </div>
         </div>
     </header>
+
+    <!-- طبقة التعتيم للقائمة المتنقلة -->
+    <div class="nav-overlay" id="navOverlay"></div>
 
     <!-- منطقة الإشعارات -->
     <div id="notificationContainer"></div>
@@ -1358,25 +1209,27 @@
         </div>
     </section>
 
+    <!-- شريط البحث -->
     <div class="search-section">
         <div class="search-container">
             <i class="fas fa-search search-icon"></i>
-            <input type="text" id="bookSearchInput" placeholder="ابحث باسم الكتاب أو المؤلف..." onkeyup="filterBooks()">
+            <input type="text" id="bookSearchInput" placeholder="ابحث باسم الكتاب أو المؤلف...">
             <div id="searchStats" class="search-stats"></div>
         </div>
     </div>
+
     <!-- شريط التصفية والفرز -->
     <div class="container" id="books">
         <div class="books-toolbar">
             <div class="books-count">
-                عرض <span id="visibleBooks">4</span> منتج من أصل <span id="totalBooks">12</span>
+                عرض <span id="visibleBooks">8</span> منتج من أصل <span id="totalBooks">12</span>
             </div>
 
             <div class="sorting-container">
                 <div class="sort-dropdown">
                     <button class="sort-dropdown-btn" id="sortDropdownBtn">
                         <i class="fas fa-sort-amount-down"></i>
-                        <span>الترتيب حسب: الافتراضي</span>
+                        <span id="sortDropdownText">الترتيب حسب: الافتراضي</span>
                         <i class="fas fa-chevron-down"></i>
                     </button>
                     <div class="sort-dropdown-content" id="sortDropdownContent">
@@ -1404,6 +1257,10 @@
                             <i class="fas fa-star"></i>
                             <span>الأحدث</span>
                         </div>
+                        <div class="sort-option" data-sort="rating-desc">
+                            <i class="fas fa-star"></i>
+                            <span>الأعلى تقييماً</span>
+                        </div>
                     </div>
                 </div>
 
@@ -1425,6 +1282,9 @@
                         <i class="fas fa-sort-alpha-down-alt"></i>
                     </div>
                     <div class="sort-icon" title="الأحدث أولاً" data-sort="newest">
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <div class="sort-icon" title="الأعلى تقييماً" data-sort="rating-desc">
                         <i class="fas fa-star"></i>
                     </div>
                 </div>
@@ -1628,7 +1488,6 @@
                         <li><a href="#about">من نحن</a></li>
                         <li><a href="#reviews">التقييمات</a></li>
                         <li><a href="#contact">تواصل معنا</a></li>
-                        <!-- إضافة الروابط الجديدة -->
                         <li><a href="cart.html">عربة التسوق</a></li>
                         <li><a href="orders.html">طلباتي</a></li>
                     </ul>
@@ -1649,1049 +1508,635 @@
         </div>
     </footer>
 
-    <!-- نافذة تسجيل الدخول -->
-    <div class="modal" id="loginModal">
-        <div class="modal-content">
-            <button class="close-modal" id="closeLoginModal">&times;</button>
-            <h2>تسجيل الدخول</h2>
-            <form id="loginForm">
-                <div class="form-group">
-                    <label for="loginEmail">البريد الإلكتروني</label>
-                    <input type="email" id="loginEmail" required>
-                </div>
-                <div class="form-group">
-                    <label for="loginPassword">كلمة المرور</label>
-                    <input type="password" id="loginPassword" required>
-                </div>
-                <button type="submit" class="submit-btn">تسجيل الدخول</button>
-                <div class="form-footer">
-                    ليس لديك حساب؟ <a href="#" id="showRegisterForm">إنشاء حساب</a>
-                </div>
-            </form>
-        </div>
-    </div>
-
-    <!-- نافذة إنشاء حساب -->
-    <div class="modal" id="registerModal">
-        <div class="modal-content">
-            <button class="close-modal" id="closeRegisterModal">&times;</button>
-            <h2>إنشاء حساب جديد</h2>
-            <form id="registerForm">
-                <div class="form-group">
-                    <label for="registerName">الاسم الكامل</label>
-                    <input type="text" id="registerName" required>
-                </div>
-                <div class="form-group">
-                    <label for="registerEmail">البريد الإلكتروني</label>
-                    <input type="email" id="registerEmail" required>
-                </div>
-                <div class="form-group">
-                    <label for="registerPassword">كلمة المرور</label>
-                    <input type="password" id="registerPassword" required>
-                </div>
-                <div class="form-group">
-                    <label for="confirmPassword">تأكيد كلمة المرور</label>
-                    <input type="password" id="confirmPassword" required>
-                </div>
-                <button type="submit" class="submit-btn">إنشاء حساب</button>
-                <div class="form-footer">
-                    لديك حساب بالفعل؟ <a href="#" id="showLoginForm">تسجيل الدخول</a>
-                </div>
-            </form>
-        </div>
-    </div>
-
-    <!-- نافذة عربة التسوق -->
-    <div class="modal" id="cartModal">
-        <div class="modal-content cart-modal">
-            <button class="close-modal" id="closeCartModal">&times;</button>
-            <h2>عربة التسوق</h2>
-            <div class="cart-items" id="cartItems">
-                <!-- سيتم إضافة عناصر العربة ديناميكيًا -->
-            </div>
-            <div class="cart-summary" id="cartSummary">
-                <!-- سيتم إضافة ملخص الطلب ديناميكيًا -->
-            </div>
-        </div>
-    </div>
-
+    <!-- JavaScript -->
     <script>
-       // بيانات الكتب
-const allBooks = [
-    {
-        id: 1,
-        title: "التربية البدنية الحديثة",
-        author: "د. محمد أحمد",
-        category: "التربية الرياضية",
-        price: 75,
-        image: "https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
-        isNew: false,
-        inStock: true,
-        year: 2022,
-        rating: 4.5
-    },
-    {
-        id: 2,
-        title: "علم النفس الرياضي",
-        author: "د. خالد سليم",
-        category: "العلوم الرياضية",
-        price: 60,
-        image: "https://images.unsplash.com/photo-1513475382585-d06e58bcb0e0?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
-        isNew: true,
-        inStock: true,
-        year: 2023,
-        rating: 4.2
-    },
-    {
-        id: 3,
-        title: "مباديء التدريب الرياضي",
-        author: "د. أحمد فاروق",
-        category: "التربية الرياضية",
-        price: 80,
-        image: "https://images.unsplash.com/photo-1518611012118-696072aa579a?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
-        isNew: false,
-        inStock: true,
-        year: 2021,
-        rating: 4.7
-    },
-    {
-        id: 4,
-        title: "المصحف الشريف برواية حفص",
-        author: "مجمع الملك فهد لطباعة المصحف",
-        category: "المصاحف",
-        price: 120,
-        image: "https://images.unsplash.com/photo-1604594849809-dfedbc827105?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
-        isNew: true,
-        inStock: true,
-        year: 2023,
-        rating: 5.0
-    },
-    {
-        id: 5,
-        title: "التشريح الوصفي للرياضيين",
-        author: "د. سامي راشد",
-        category: "العلوم الرياضية",
-        price: 95,
-        image: "https://images.unsplash.com/photo-1541963463532-d68292c34b19?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
-        isNew: false,
-        inStock: true,
-        year: 2020,
-        rating: 4.3
-    },
-    {
-        id: 6,
-        title: "اللياقة البدنية والصحة",
-        author: "د. نادية محمود",
-        category: "التربية الرياضية",
-        price: 55,
-        image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
-        isNew: true,
-        inStock: true,
-        year: 2023,
-        rating: 4.0
-    },
-    {
-        id: 7,
-        title: "الإدارة الرياضية الحديثة",
-        author: "د. عماد الدين حسن",
-        category: "الإدارة الرياضية",
-        price: 70,
-        image: "https://images.unsplash.com/photo-1552058544-f2b08422138a?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
-        isNew: true,
-        inStock: false,
-        year: 2023,
-        rating: 4.1
-    },
-    {
-        id: 8,
-        title: "التغذية للرياضيين",
-        author: "د. ياسمين علي",
-        category: "العلوم الرياضية",
-        price: 65,
-        image: "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
-        isNew: false,
-        inStock: true,
-        year: 2021,
-        rating: 4.4
-    },
-    {
-        id: 9,
-        title: "تاريخ الرياضة في العالم العربي",
-        author: "د. حسن مرسي",
-        category: "تاريخ الرياضة",
-        price: 85,
-        image: "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
-        isNew: true,
-        inStock: true,
-        year: 2023,
-        rating: 4.6
-    },
-    {
-        id: 10,
-        title: "فلسفة التربية الرياضية",
-        author: "د. علي عبد الرحمن",
-        category: "التربية الرياضية",
-        price: 90,
-        image: "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
-        isNew: false,
-        inStock: true,
-        year: 2020,
-        rating: 4.3
-    },
-    {
-        id: 11,
-        title: "الإصابات الرياضية والعلاج الطبيعي",
-        author: "د. مها السيد",
-        category: "العلوم الرياضية",
-        price: 110,
-        image: "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
-        isNew: true,
-        inStock: true,
-        year: 2023,
-        rating: 4.8
-    },
-    {
-        id: 12,
-        title: "مناهج البحث في التربية الرياضية",
-        author: "د. وليد جابر",
-        category: "البحث العلمي",
-        price: 75,
-        image: "https://images.unsplash.com/photo-1532094349884-543bc11b234d?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
-        isNew: false,
-        inStock: true,
-        year: 2021,
-        rating: 4.0
-    }
-];
+        // بيانات العربة
+        let cart = [];
+        let currentSort = 'default';
+        let booksToShow = 8;
+        let booksIncrement = 4;
+        let filteredBooksList = null;
 
-// بيانات العربة
-let cart = [];
-let currentSort = 'default';
-let booksToShow = 4;
-let booksIncrement = 4;
-let filteredBooksList = null;
+        // تهيئة التطبيق
+        document.addEventListener('DOMContentLoaded', function () {
+            console.log('DOM loaded, initializing...');
 
-// تهيئة التطبيق
-document.addEventListener('DOMContentLoaded', function () {
-    console.log('DOM loaded, initializing...');
-    
-    // عرض الكتب
-    renderBooks();
-    updateBooksCount();
+            // التحقق من تحميل بيانات الكتب
+            if (typeof allBooks === 'undefined') {
+                console.error('بيانات الكتب غير محملة!');
+                showNotification('حدث خطأ في تحميل بيانات الكتب', 'error');
+                return;
+            }
 
-    // تحميل العربة من التخزين المحلي
-    if (localStorage.getItem('cart')) {
-        try {
-            cart = JSON.parse(localStorage.getItem('cart'));
-            updateCartCount();
-        } catch (e) {
-            console.error('خطأ في تحميل العربة:', e);
-            cart = [];
+            console.log(`تم تحميل ${allBooks.length} كتاب`);
+
+            // عرض الكتب
+            renderBooks();
+            updateBooksCount();
+
+            // تحميل العربة من التخزين المحلي
+            if (localStorage.getItem('cart')) {
+                try {
+                    cart = JSON.parse(localStorage.getItem('cart'));
+                    updateCartCount();
+                } catch (e) {
+                    console.error('خطأ في تحميل العربة:', e);
+                    cart = [];
+                }
+            }
+
+            // إضافة مستمعي الأحداث
+            setupEventListeners();
+
+            // استخدام event delegation لأزرار إضافة إلى السلة
+            document.getElementById('booksGrid').addEventListener('click', function (e) {
+                if (e.target.closest('.add-to-cart')) {
+                    const button = e.target.closest('.add-to-cart');
+                    const bookId = parseInt(button.getAttribute('data-id'));
+                    addToCart(bookId);
+                }
+            });
+
+            // تهيئة Netlify Identity
+            initNetlifyIdentity();
+        });
+
+        // تهيئة Netlify Identity
+        function initNetlifyIdentity() {
+            console.log('Initializing Netlify Identity...');
+
+            if (typeof netlifyIdentity === 'undefined') {
+                console.warn('Netlify Identity widget not loaded');
+                showNotification('نظام تسجيل الدخول غير متاح حالياً', 'error');
+                return;
+            }
+
+            // تحديث واجهة المستخدم بناءً على حالة المصادقة الحالية
+            updateAuthUI();
+
+            netlifyIdentity.on('init', user => {
+                console.log('Netlify Identity initialized, user:', user);
+                updateAuthUI();
+            });
+
+            netlifyIdentity.on('login', user => {
+                console.log('User logged in:', user);
+                updateAuthUI();
+
+                // الحصول على اسم المستخدم
+                let userName = user.email.split('@')[0];
+                if (user.user_metadata && user.user_metadata.full_name) {
+                    userName = user.user_metadata.full_name;
+                }
+
+                showNotification(`مرحباً ${userName}! تم تسجيل دخولك بنجاح.`, 'success');
+            });
+
+            netlifyIdentity.on('logout', () => {
+                console.log('User logged out');
+                updateAuthUI();
+                showNotification('تم تسجيل الخروج بنجاح.', 'info');
+            });
+
+            netlifyIdentity.on('error', err => {
+                console.error('Netlify Identity error:', err);
+                showNotification('حدث خطأ في نظام المصادقة', 'error');
+            });
         }
-    }
 
-    // إضافة مستمعي الأحداث
-    setupEventListeners();
+        // تحديث واجهة المستخدم بناءً على حالة المصادقة
+        function updateAuthUI() {
+            console.log('Updating auth UI...');
 
-    // استخدام event delegation لأزرار إضافة إلى السلة
-    document.getElementById('booksGrid').addEventListener('click', function (e) {
-        if (e.target.closest('.add-to-cart')) {
-            const button = e.target.closest('.add-to-cart');
-            const bookId = parseInt(button.getAttribute('data-id'));
-            addToCart(bookId);
+            const userActions = document.getElementById('userActions');
+            const userProfile = document.getElementById('userProfile');
+
+            if (!userActions || !userProfile) {
+                console.error('User UI elements not found');
+                return;
+            }
+
+            if (typeof netlifyIdentity === 'undefined') {
+                userActions.style.display = 'flex';
+                userProfile.style.display = 'none';
+                return;
+            }
+
+            const user = netlifyIdentity.currentUser();
+            console.log('Current user:', user);
+
+            if (user) {
+                // المستخدم مسجل الدخول
+                userActions.style.display = 'none';
+                userProfile.style.display = 'flex';
+
+                // تحديث اسم المستخدم والصورة
+                let userName = user.email.split('@')[0];
+                let userAvatar = userName.charAt(0).toUpperCase();
+
+                if (user.user_metadata && user.user_metadata.full_name) {
+                    userName = user.user_metadata.full_name;
+                    userAvatar = userName.charAt(0).toUpperCase();
+                }
+
+                const userNameElement = document.getElementById('userName');
+                const userAvatarElement = document.getElementById('userAvatar');
+
+                if (userNameElement) userNameElement.textContent = userName;
+                if (userAvatarElement) userAvatarElement.textContent = userAvatar;
+
+                console.log('User logged in, showing profile:', userName);
+            } else {
+                // المستخدم غير مسجل الدخول
+                userActions.style.display = 'flex';
+                userProfile.style.display = 'none';
+                console.log('User not logged in, showing login/register buttons');
+            }
         }
-    });
 
-    // تهيئة Netlify Identity إذا كان متاحاً
-    initNetlifyIdentity();
-});
+        // فلاتر البحث
+        function filterBooks() {
+            const searchValue = document.getElementById('bookSearchInput').value.toLowerCase();
+            const stats = document.getElementById('searchStats');
 
-// تهيئة Netlify Identity
-function initNetlifyIdentity() {
-    console.log('Initializing Netlify Identity...');
-    
-    if (typeof netlifyIdentity === 'undefined') {
-        console.warn('Netlify Identity widget not loaded');
-        return;
-    }
+            if (searchValue.trim() === "") {
+                filteredBooksList = null;
+                if (stats) stats.innerText = "";
+            } else {
+                filteredBooksList = allBooks.filter(book =>
+                    book.title.toLowerCase().includes(searchValue) ||
+                    book.author.toLowerCase().includes(searchValue) ||
+                    book.category.toLowerCase().includes(searchValue)
+                );
+                if (stats) stats.innerText = `تم العثور على ${filteredBooksList.length} نتيجة`;
+            }
 
-    // تحديث واجهة المستخدم بناءً على حالة المصادقة الحالية
-    updateAuthUI();
-
-    netlifyIdentity.on('init', user => {
-        console.log('Netlify Identity initialized, user:', user);
-        updateAuthUI();
-    });
-
-    netlifyIdentity.on('login', user => {
-        console.log('User logged in:', user);
-        updateAuthUI();
-        
-        // الحصول على اسم المستخدم
-        let userName = user.email.split('@')[0];
-        if (user.user_metadata && user.user_metadata.full_name) {
-            userName = user.user_metadata.full_name;
+            renderBooks();
         }
-        
-        showNotification(`مرحباً ${userName}! تم تسجيل دخولك بنجاح.`, 'success');
-    });
 
-    netlifyIdentity.on('logout', () => {
-        console.log('User logged out');
-        updateAuthUI();
-        showNotification('تم تسجيل الخروج بنجاح.', 'info');
-    });
+        // استبدل دالة renderBooks() الكاملة بهذا الكود:
+        function renderBooks() {
+            const booksGrid = document.getElementById('booksGrid');
+            if (!booksGrid) return;
 
-    netlifyIdentity.on('error', err => {
-        console.error('Netlify Identity error:', err);
-        showNotification('حدث خطأ في نظام المصادقة', 'error');
-    });
+            booksGrid.innerHTML = '';
 
-    // فتح Netlify Identity تلقائياً عند تحميل الصفحة
-    setTimeout(() => {
-        if (typeof netlifyIdentity !== 'undefined') {
-            console.log('Netlify Identity is ready');
-        }
-    }, 1000);
-}
+            let listToRender = filteredBooksList ? [...filteredBooksList] : [...allBooks];
 
-// تحديث واجهة المستخدم بناءً على حالة المصادقة
-function updateAuthUI() {
-    console.log('Updating auth UI...');
-    
-    const userActions = document.getElementById('userActions');
-    const userProfile = document.getElementById('userProfile');
-    
-    if (!userActions || !userProfile) {
-        console.error('User UI elements not found');
-        return;
-    }
-    
-    const user = netlifyIdentity.currentUser();
-    console.log('Current user:', user);
-    
-    if (user) {
-        // المستخدم مسجل الدخول
-        userActions.style.display = 'none';
-        userProfile.style.display = 'flex';
-        
-        // تحديث اسم المستخدم والصورة
-        let userName = user.email.split('@')[0];
-        let userAvatar = userName.charAt(0).toUpperCase();
-        
-        if (user.user_metadata && user.user_metadata.full_name) {
-            userName = user.user_metadata.full_name;
-            userAvatar = userName.charAt(0).toUpperCase();
-        }
-        
-        const userNameElement = document.getElementById('userName');
-        const userAvatarElement = document.getElementById('userAvatar');
-        
-        if (userNameElement) userNameElement.textContent = userName;
-        if (userAvatarElement) userAvatarElement.textContent = userAvatar;
-        
-        console.log('User logged in, showing profile:', userName);
-    } else {
-        // المستخدم غير مسجل الدخول
-        userActions.style.display = 'flex';
-        userProfile.style.display = 'none';
-        console.log('User not logged in, showing login/register buttons');
-    }
-}
+            // نظام الفرز المصلح
+            switch (currentSort) {
+                case 'price-asc':
+                    listToRender.sort((a, b) => a.price - b.price);
+                    break;
+                case 'price-desc':
+                    listToRender.sort((a, b) => b.price - a.price);
+                    break;
+                case 'title-asc':
+                    listToRender.sort((a, b) => a.title.localeCompare(b.title, 'ar'));
+                    break;
+                case 'title-desc':
+                    listToRender.sort((a, b) => b.title.localeCompare(a.title, 'ar'));
+                    break;
+                case 'newest':
+                    listToRender.sort((a, b) => b.year - a.year);
+                    break;
+                case 'rating-desc':
+                    listToRender.sort((a, b) => b.rating - a.rating);
+                    break;
+                default:
+                    // الترتيب الافتراضي حسب الأحدث
+                    listToRender.sort((a, b) => b.year - a.year);
+            }
 
-// فلاتر البحث
-function filterBooks() {
-    const searchValue = document.getElementById('bookSearchInput').value.toLowerCase();
-    const stats = document.getElementById('searchStats');
+            const displayLimit = filteredBooksList ? listToRender.length : booksToShow;
+            const booksToDisplay = listToRender.slice(0, displayLimit);
 
-    if (searchValue.trim() === "") {
-        filteredBooksList = null;
-        if (stats) stats.innerText = "";
-    } else {
-        filteredBooksList = allBooks.filter(book =>
-            book.title.toLowerCase().includes(searchValue) ||
-            book.author.toLowerCase().includes(searchValue) ||
-            book.category.toLowerCase().includes(searchValue)
-        );
-        if (stats) stats.innerText = `تم العثور على ${filteredBooksList.length} نتيجة`;
-    }
-
-    renderBooks();
-}
-
-// عرض الكتب
-function renderBooks() {
-    const booksGrid = document.getElementById('booksGrid');
-    if (!booksGrid) return;
-    
-    booksGrid.innerHTML = '';
-
-    let listToRender = filteredBooksList ? filteredBooksList : [...allBooks];
-
-    // فرز الكتب
-    switch (currentSort) {
-        case 'price-asc': listToRender.sort((a, b) => a.price - b.price); break;
-        case 'price-desc': listToRender.sort((a, b) => b.price - a.price); break;
-        case 'title-asc': listToRender.sort((a, b) => a.title.localeCompare(b.title)); break;
-        case 'title-desc': listToRender.sort((a, b) => b.title.localeCompare(a.title)); break;
-        case 'newest': listToRender.sort((a, b) => b.year - a.year); break;
-        default: listToRender.sort((a, b) => b.year - a.year);
-    }
-
-    const displayLimit = filteredBooksList ? listToRender.length : booksToShow;
-    const booksToDisplay = listToRender.slice(0, displayLimit);
-
-    if (booksToDisplay.length === 0) {
-        booksGrid.innerHTML = `<div style="grid-column: 1/-1; text-align: center; padding: 40px; color: #666;">
+            if (booksToDisplay.length === 0) {
+                booksGrid.innerHTML = `<div style="grid-column: 1/-1; text-align: center; padding: 40px; color: #666;">
             <i class="fas fa-search-minus" style="font-size: 3rem; display: block; margin-bottom: 10px;"></i>
             لا توجد كتب تطابق بحثك حالياً.
         </div>`;
-        const loadMoreBtn = document.getElementById('loadMoreBtn');
-        if (loadMoreBtn) loadMoreBtn.style.display = 'none';
-        return;
-    }
+                const loadMoreBtn = document.getElementById('loadMoreBtn');
+                if (loadMoreBtn) loadMoreBtn.style.display = 'none';
+                return;
+            }
 
-    booksToDisplay.forEach(book => {
-        const bookCard = document.createElement('div');
-        bookCard.className = 'book-card';
-        const ratingStars = getRatingStars(book.rating);
+            booksToDisplay.forEach(book => {
+                const bookCard = document.createElement('div');
+                bookCard.className = 'book-card';
+                const ratingStars = getRatingStars(book.rating);
 
-        bookCard.innerHTML = `
-            <div class="book-image">
-                <img src="${book.image}" alt="${book.title}" onerror="this.src='https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80'">
-                ${book.isNew ? '<div class="new-badge">جديد</div>' : ''}
-                ${!book.inStock ? '<div class="out-of-stock-badge">نفذ من المخزون</div>' : ''}
-            </div>
-            <div class="book-info">
-                <div class="book-category">${book.category}</div>
-                <h3 class="book-title">${book.title}</h3>
-                <div class="book-author">${book.author}</div>
-                <div style="display: flex; align-items: center; gap: 5px; margin-bottom: 10px;">
-                    <div class="stars">${ratingStars}</div>
-                    <span style="color: var(--gray-color); font-size: 0.9rem;">${book.rating}</span>
+                // إصلاح الرابط هنا: استخدم <a> tag مباشرة
+                bookCard.innerHTML = `
+            <a href="book-details.html?id=${book.id}" style="text-decoration: none; color: inherit; display: block;">
+                <div class="book-image">
+                    <img src="${book.image}" alt="${book.title}" onerror="this.src='https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80'">
+                    ${book.isNew ? '<div class="new-badge">جديد</div>' : ''}
+                    ${!book.inStock ? '<div class="out-of-stock-badge">نفذ من المخزون</div>' : ''}
                 </div>
-                <div class="book-footer">
-                    <div class="book-price">${book.price} ج.م</div>
-                    <button class="add-to-cart" data-id="${book.id}" ${!book.inStock ? 'disabled style="opacity: 0.5; cursor: not-allowed;"' : ''}>
-                        <i class="fas fa-cart-plus"></i>
-                        ${book.inStock ? 'أضف للسلة' : 'نفذ من المخزون'}
-                    </button>
-                </div>
-            </div>
-        `;
-        booksGrid.appendChild(bookCard);
-    });
-
-    const loadMoreBtn = document.getElementById('loadMoreBtn');
-    if (loadMoreBtn) {
-        if (filteredBooksList || booksToShow >= allBooks.length) {
-            loadMoreBtn.style.display = 'none';
-        } else {
-            loadMoreBtn.style.display = 'block';
-        }
-    }
-}
-
-// الحصول على نجوم التقييم
-function getRatingStars(rating) {
-    let stars = '';
-    const fullStars = Math.floor(rating);
-    const hasHalfStar = rating % 1 >= 0.5;
-
-    for (let i = 0; i < fullStars; i++) {
-        stars += '<i class="fas fa-star"></i>';
-    }
-
-    if (hasHalfStar) {
-        stars += '<i class="fas fa-star-half-alt"></i>';
-    }
-
-    const emptyStars = 5 - fullStars - (hasHalfStar ? 1 : 0);
-    for (let i = 0; i < emptyStars; i++) {
-        stars += '<i class="far fa-star"></i>';
-    }
-
-    return stars;
-}
-
-// تحديث عدد الكتب
-function updateBooksCount() {
-    const visibleBooks = document.getElementById('visibleBooks');
-    const totalBooks = document.getElementById('totalBooks');
-    
-    if (visibleBooks) {
-        visibleBooks.textContent = Math.min(booksToShow, allBooks.length);
-    }
-    
-    if (totalBooks) {
-        totalBooks.textContent = allBooks.length;
-    }
-}
-
-// إضافة كتاب إلى العربة
-function addToCart(bookId) {
-    console.log('Adding to cart, book ID:', bookId);
-    
-    // التحقق من تسجيل الدخول باستخدام Netlify Identity
-    if (typeof netlifyIdentity === 'undefined') {
-        showNotification('نظام تسجيل الدخول غير متاح حالياً', 'error');
-        return;
-    }
-
-    const user = netlifyIdentity.currentUser();
-    console.log('Current user for cart:', user);
-    
-    if (!user) {
-        showNotification('يجب تسجيل الدخول أولاً لإضافة كتب إلى عربة التسوق', 'info');
-        netlifyIdentity.open('login');
-        return;
-    }
-
-    const book = allBooks.find(b => b.id === bookId);
-
-    if (!book) {
-        showNotification('الكتاب غير موجود', 'error');
-        return;
-    }
-
-    if (!book.inStock) {
-        showNotification('عذراً، هذا الكتاب غير متوفر في المخزون حالياً', 'error');
-        return;
-    }
-
-    const existingItem = cart.find(item => item.id === bookId);
-
-    if (existingItem) {
-        existingItem.quantity += 1;
-    } else {
-        cart.push({
-            id: book.id,
-            title: book.title,
-            author: book.author,
-            price: book.price,
-            image: book.image,
-            quantity: 1
-        });
-    }
-
-    try {
-        localStorage.setItem('cart', JSON.stringify(cart));
-        updateCartCount();
-        showNotification(`تم إضافة "${book.title}" إلى عربة التسوق`, 'success');
-        
-        // تحديث عرض العربة إذا كانت مفتوحة
-        const cartModal = document.getElementById('cartModal');
-        if (cartModal && cartModal.style.display === 'flex') {
-            showCart();
-        }
-    } catch (e) {
-        console.error('خطأ في حفظ العربة:', e);
-        showNotification('حدث خطأ أثناء إضافة المنتج للعربة', 'error');
-    }
-}
-
-// تحديث عداد العربة
-function updateCartCount() {
-    const cartCount = document.querySelector('.cart-count');
-    if (cartCount) {
-        const totalItems = cart.reduce((total, item) => total + item.quantity, 0);
-        cartCount.textContent = totalItems;
-    }
-}
-
-// عرض عربة التسوق
-function showCart() {
-    const cartModal = document.getElementById('cartModal');
-    const cartItems = document.getElementById('cartItems');
-    const cartSummary = document.getElementById('cartSummary');
-
-    if (!cartModal || !cartItems) {
-        console.error('Cart modal elements not found');
-        return;
-    }
-
-    // التحقق من تسجيل الدخول
-    if (typeof netlifyIdentity !== 'undefined') {
-        const user = netlifyIdentity.currentUser();
-        if (!user) {
-            showNotification('يجب تسجيل الدخول لعرض عربة التسوق', 'info');
-            netlifyIdentity.open('login');
-            return;
-        }
-    }
-
-    // عرض عناصر العربة
-    if (cart.length === 0) {
-        cartItems.innerHTML = `
-            <div class="empty-cart">
-                <i class="fas fa-shopping-cart"></i>
-                <h3>عربة التسوق فارغة</h3>
-                <p>لم تقم بإضافة أي منتجات إلى عربة التسوق بعد.</p>
-            </div>
-        `;
-        if (cartSummary) cartSummary.innerHTML = '';
-    } else {
-        cartItems.innerHTML = '';
-
-        cart.forEach(item => {
-            const cartItem = document.createElement('div');
-            cartItem.className = 'cart-item';
-            cartItem.innerHTML = `
-                <div class="cart-item-image">
-                    <img src="${item.image}" alt="${item.title}" style="width:100%; height:100%; object-fit:cover;">
-                </div>
-                <div class="cart-item-details">
-                    <div class="cart-item-title">${item.title}</div>
-                    <div class="cart-item-author">${item.author}</div>
-                    <div class="cart-item-actions">
-                        <button class="quantity-btn decrease-btn" data-id="${item.id}">-</button>
-                        <span class="cart-item-quantity">${item.quantity}</span>
-                        <button class="quantity-btn increase-btn" data-id="${item.id}">+</button>
-                        <button class="remove-item" data-id="${item.id}">
-                            <i class="fas fa-trash"></i>
+                <div class="book-info">
+                    <div class="book-category">${book.category}</div>
+                    <h3 class="book-title">${book.title}</h3>
+                    <div class="book-author">${book.author}</div>
+                    <div style="display: flex; align-items: center; gap: 5px; margin-bottom: 10px;">
+                        <div class="stars">${ratingStars}</div>
+                        <span style="color: var(--gray-color); font-size: 0.9rem;">${book.rating}</span>
+                    </div>
+                    <div class="book-footer">
+                        <div class="book-price">${book.price} ج.م</div>
+                        <button class="add-to-cart" data-id="${book.id}" ${!book.inStock ? 'disabled style="opacity: 0.5; cursor: not-allowed;"' : ''}>
+                            <i class="fas fa-cart-plus"></i>
+                            ${book.inStock ? 'أضف للسلة' : 'نفذ من المخزون'}
                         </button>
                     </div>
                 </div>
-                <div class="cart-item-price">${item.price * item.quantity} ج.م</div>
-            `;
-            cartItems.appendChild(cartItem);
-        });
+            </a>
+        `;
+                booksGrid.appendChild(bookCard);
+            });
 
-        // حساب الإجمالي
-        const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-
-        // عرض ملخص الطلب
-        if (cartSummary) {
-            cartSummary.innerHTML = `
-                <div class="cart-total">
-                    <span>الإجمالي:</span>
-                    <span>${total} ج.م</span>
-                </div>
-                <div class="cart-actions">
-                    <button class="continue-shopping" id="continueShopping">مواصلة التسوق</button>
-                    <button class="checkout-btn" id="checkoutBtn">إتمام الشراء</button>
-                </div>
-            `;
+            const loadMoreBtn = document.getElementById('loadMoreBtn');
+            if (loadMoreBtn) {
+                if (filteredBooksList || booksToShow >= allBooks.length) {
+                    loadMoreBtn.style.display = 'none';
+                } else {
+                    loadMoreBtn.style.display = 'inline-flex';
+                }
+            }
         }
 
-        // إضافة مستمعي الأحداث للأزرار في العربة
-        setTimeout(() => {
-            document.querySelectorAll('.decrease-btn').forEach(btn => {
-                btn.addEventListener('click', function () {
-                    const itemId = parseInt(this.getAttribute('data-id'));
-                    updateCartItemQuantity(itemId, -1);
-                });
-            });
+        // الحصول على نجوم التقييم
+        function getRatingStars(rating) {
+            let stars = '';
+            const fullStars = Math.floor(rating);
+            const hasHalfStar = rating % 1 >= 0.5;
 
-            document.querySelectorAll('.increase-btn').forEach(btn => {
-                btn.addEventListener('click', function () {
-                    const itemId = parseInt(this.getAttribute('data-id'));
-                    updateCartItemQuantity(itemId, 1);
-                });
-            });
+            for (let i = 0; i < fullStars; i++) {
+                stars += '<i class="fas fa-star"></i>';
+            }
 
-            document.querySelectorAll('.remove-item').forEach(btn => {
-                btn.addEventListener('click', function () {
-                    const itemId = parseInt(this.getAttribute('data-id'));
-                    removeFromCart(itemId);
-                });
-            });
+            if (hasHalfStar) {
+                stars += '<i class="fas fa-star-half-alt"></i>';
+            }
 
-            const continueShoppingBtn = document.getElementById('continueShopping');
-            if (continueShoppingBtn) {
-                continueShoppingBtn.addEventListener('click', function () {
-                    const closeCartModalBtn = document.getElementById('closeCartModal');
-                    if (closeCartModalBtn) closeCartModalBtn.click();
+            const emptyStars = 5 - fullStars - (hasHalfStar ? 1 : 0);
+            for (let i = 0; i < emptyStars; i++) {
+                stars += '<i class="far fa-star"></i>';
+            }
+
+            return stars;
+        }
+
+        // تحديث عدد الكتب
+        function updateBooksCount() {
+            const visibleBooks = document.getElementById('visibleBooks');
+            const totalBooks = document.getElementById('totalBooks');
+
+            if (visibleBooks) {
+                const displayCount = filteredBooksList ?
+                    Math.min(booksToShow, filteredBooksList.length) :
+                    Math.min(booksToShow, allBooks.length);
+                visibleBooks.textContent = displayCount;
+            }
+
+            if (totalBooks) {
+                totalBooks.textContent = filteredBooksList ? filteredBooksList.length : allBooks.length;
+            }
+        }
+
+        // إضافة كتاب إلى العربة
+        function addToCart(bookId) {
+            console.log('Adding to cart, book ID:', bookId);
+
+            // التحقق من تسجيل الدخول باستخدام Netlify Identity
+            if (typeof netlifyIdentity === 'undefined') {
+                showNotification('نظام تسجيل الدخول غير متاح حالياً', 'error');
+                return;
+            }
+
+            const user = netlifyIdentity.currentUser();
+            console.log('Current user for cart:', user);
+
+            if (!user) {
+                showNotification('يجب تسجيل الدخول أولاً لإضافة كتب إلى عربة التسوق', 'info');
+                if (typeof netlifyIdentity !== 'undefined') {
+                    netlifyIdentity.open('login');
+                }
+                return;
+            }
+
+            const book = allBooks.find(b => b.id === bookId);
+
+            if (!book) {
+                showNotification('الكتاب غير موجود', 'error');
+                return;
+            }
+
+            if (!book.inStock) {
+                showNotification('عذراً، هذا الكتاب غير متوفر في المخزون حالياً', 'error');
+                return;
+            }
+
+            const existingItem = cart.find(item => item.id === bookId);
+
+            if (existingItem) {
+                existingItem.quantity += 1;
+            } else {
+                cart.push({
+                    id: book.id,
+                    title: book.title,
+                    author: book.author,
+                    price: book.price,
+                    image: book.image,
+                    quantity: 1
                 });
             }
 
-            const checkoutBtn = document.getElementById('checkoutBtn');
-            if (checkoutBtn) {
-                checkoutBtn.addEventListener('click', function () {
-                    checkoutCart();
-                });
+            try {
+                localStorage.setItem('cart', JSON.stringify(cart));
+                updateCartCount();
+                showNotification(`تم إضافة "${book.title}" إلى عربة التسوق`, 'success');
+            } catch (e) {
+                console.error('خطأ في حفظ العربة:', e);
+                showNotification('حدث خطأ أثناء إضافة المنتج للعربة', 'error');
             }
-        }, 100);
-    }
-
-    // عرض نافذة العربة
-    cartModal.style.display = 'flex';
-}
-
-// تحديث كمية عنصر في العربة
-function updateCartItemQuantity(itemId, change) {
-    const itemIndex = cart.findIndex(item => item.id === itemId);
-
-    if (itemIndex !== -1) {
-        cart[itemIndex].quantity += change;
-
-        // إذا كانت الكمية صفر أو أقل، إزالة العنصر من العربة
-        if (cart[itemIndex].quantity <= 0) {
-            cart.splice(itemIndex, 1);
         }
 
-        // تحديث التخزين المحلي والعرض
-        localStorage.setItem('cart', JSON.stringify(cart));
-        updateCartCount();
-        showCart();
-    }
-}
-
-// إزالة عنصر من العربة
-function removeFromCart(itemId) {
-    cart = cart.filter(item => item.id !== itemId);
-    localStorage.setItem('cart', JSON.stringify(cart));
-    updateCartCount();
-    showCart();
-    showNotification('تم إزالة المنتج من عربة التسوق', 'info');
-}
-
-// إتمام عملية الشراء - تم التعديل لتوجيه المستخدم إلى cart.html
-function checkoutCart() {
-    // التحقق من تسجيل الدخول
-    if (typeof netlifyIdentity !== 'undefined') {
-        const user = netlifyIdentity.currentUser();
-        if (!user) {
-            showNotification('يجب تسجيل الدخول أولاً لإتمام الشراء', 'info');
-            const closeCartModalBtn = document.getElementById('closeCartModal');
-            if (closeCartModalBtn) closeCartModalBtn.click();
-            netlifyIdentity.open('login');
-            return;
-        }
-    }
-
-    if (cart.length === 0) {
-        showNotification('عربة التسوق فارغة', 'error');
-        return;
-    }
-
-    // إغلاق نافذة العربة
-    const closeCartModalBtn = document.getElementById('closeCartModal');
-    if (closeCartModalBtn) closeCartModalBtn.click();
-    
-    // توجيه المستخدم إلى صفحة عربة التسوق (cart.html)
-    window.location.href = 'cart.html';
-}
-
-// إظهار إشعار
-function showNotification(message, type = 'info') {
-    const notificationContainer = document.getElementById('notificationContainer');
-    if (!notificationContainer) return;
-    
-    // إزالة الإشعارات القديمة
-    const oldNotifications = notificationContainer.querySelectorAll('.notification');
-    oldNotifications.forEach(notification => {
-        if (notification.parentNode === notificationContainer) {
-            notification.remove();
-        }
-    });
-
-    const notification = document.createElement('div');
-    notification.className = `notification ${type}`;
-
-    let icon = 'info-circle';
-    if (type === 'success') icon = 'check-circle';
-    if (type === 'error') icon = 'exclamation-circle';
-
-    notification.innerHTML = `
-        <div class="notification-icon">
-            <i class="fas fa-${icon}"></i>
-        </div>
-        <div class="notification-content">
-            <div class="notification-title">${type === 'success' ? 'تم بنجاح' : type === 'error' ? 'خطأ' : 'ملاحظة'}</div>
-            <div>${message}</div>
-        </div>
-        <button class="close-notification">
-            <i class="fas fa-times"></i>
-        </button>
-    `;
-
-    notificationContainer.appendChild(notification);
-
-    setTimeout(() => {
-        notification.classList.add('show');
-    }, 10);
-
-    notification.querySelector('.close-notification').addEventListener('click', function () {
-        notification.classList.remove('show');
-        setTimeout(() => {
-            if (notification.parentNode) {
-                notification.remove();
+        // تحديث عداد العربة
+        function updateCartCount() {
+            const cartCount = document.querySelector('.cart-count');
+            if (cartCount) {
+                const totalItems = cart.reduce((total, item) => total + item.quantity, 0);
+                cartCount.textContent = totalItems;
             }
-        }, 300);
-    });
+        }
 
-    setTimeout(() => {
-        if (notification.parentNode) {
-            notification.classList.remove('show');
-            setTimeout(() => {
-                if (notification.parentNode) {
+        // إظهار إشعار
+        function showNotification(message, type = 'info') {
+            const notificationContainer = document.getElementById('notificationContainer');
+            if (!notificationContainer) return;
+
+            // إزالة الإشعارات القديمة
+            const oldNotifications = notificationContainer.querySelectorAll('.notification');
+            oldNotifications.forEach(notification => {
+                if (notification.parentNode === notificationContainer) {
                     notification.remove();
                 }
-            }, 300);
-        }
-    }, 4000);
-}
+            });
 
-// تغيير الفرز
-function changeSort(sortType) {
-    currentSort = sortType;
-    booksToShow = 4;
+            const notification = document.createElement('div');
+            notification.className = `notification ${type}`;
 
-    // تحديث الأيقونات النشطة
-    document.querySelectorAll('.sort-icon').forEach(icon => {
-        icon.classList.remove('active');
-    });
-    const sortIcon = document.querySelector(`.sort-icon[data-sort="${sortType}"]`);
-    if (sortIcon) sortIcon.classList.add('active');
+            let icon = 'info-circle';
+            if (type === 'success') icon = 'check-circle';
+            if (type === 'error') icon = 'exclamation-circle';
 
-    // تحديث القائمة المنسدلة
-    document.querySelectorAll('.sort-option').forEach(option => {
-        option.classList.remove('active');
-    });
-    const sortOption = document.querySelector(`.sort-option[data-sort="${sortType}"]`);
-    if (sortOption) sortOption.classList.add('active');
+            notification.innerHTML = `
+                <div class="notification-icon">
+                    <i class="fas fa-${icon}"></i>
+                </div>
+                <div class="notification-content">
+                    <div class="notification-title">${type === 'success' ? 'تم بنجاح' : type === 'error' ? 'خطأ' : 'ملاحظة'}</div>
+                    <div>${message}</div>
+                </div>
+                <button class="close-notification">
+                    <i class="fas fa-times"></i>
+                </button>
+            `;
 
-    // تحديث نص الزر
-    const sortText = sortOption ? sortOption.querySelector('span').textContent : '';
-    const sortDropdownBtn = document.querySelector('#sortDropdownBtn span');
-    if (sortDropdownBtn && sortText) {
-        sortDropdownBtn.textContent = `الترتيب حسب: ${sortText.split(': ')[1] || sortText}`;
-    }
+            notificationContainer.appendChild(notification);
 
-    // إعادة عرض الكتب
-    renderBooks();
-    updateBooksCount();
+            setTimeout(() => {
+                notification.classList.add('show');
+            }, 10);
 
-    // إغلاق القائمة المنسدلة
-    const sortDropdownContent = document.getElementById('sortDropdownContent');
-    if (sortDropdownContent) sortDropdownContent.classList.remove('show');
-}
+            notification.querySelector('.close-notification').addEventListener('click', function () {
+                notification.classList.remove('show');
+                setTimeout(() => {
+                    if (notification.parentNode) {
+                        notification.remove();
+                    }
+                }, 300);
+            });
 
-// عرض المزيد من الكتب
-function loadMoreBooks() {
-    booksToShow += booksIncrement;
-    renderBooks();
-    updateBooksCount();
-
-    // تمرير الصفحة إلى قسم الكتب بعد تحميل المزيد
-    const booksSection = document.getElementById('books');
-    if (booksSection) {
-        booksSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }
-
-    // إظهار إشعار
-    showNotification('تم تحميل المزيد من الكتب', 'success');
-}
-
-// إعداد مستمعي الأحداث
-function setupEventListeners() {
-    console.log('Setting up event listeners...');
-    
-    // أزرار تسجيل الدخول والتسجيل مع Netlify Identity
-    const loginBtn = document.getElementById('loginBtn');
-    if (loginBtn) {
-        loginBtn.addEventListener('click', function (e) {
-            e.preventDefault();
-            console.log('Login button clicked');
-            if (typeof netlifyIdentity !== 'undefined') {
-                netlifyIdentity.open('login');
-            } else {
-                showNotification('نظام تسجيل الدخول غير متاح حالياً', 'error');
-            }
-        });
-    }
-
-    const registerBtn = document.getElementById('registerBtn');
-    if (registerBtn) {
-        registerBtn.addEventListener('click', function (e) {
-            e.preventDefault();
-            console.log('Register button clicked');
-            if (typeof netlifyIdentity !== 'undefined') {
-                netlifyIdentity.open('signup');
-            } else {
-                showNotification('نظام التسجيل غير متاح حالياً', 'error');
-            }
-        });
-    }
-
-    // زر تسجيل الخروج
-    const logoutBtn = document.getElementById('logoutBtn');
-    if (logoutBtn) {
-        logoutBtn.addEventListener('click', function (e) {
-            e.preventDefault();
-            console.log('Logout button clicked');
-            if (typeof netlifyIdentity !== 'undefined') {
-                netlifyIdentity.logout();
-            }
-        });
-    }
-
-    // إغلاق النماذج
-    const closeLoginModal = document.getElementById('closeLoginModal');
-    if (closeLoginModal) {
-        closeLoginModal.addEventListener('click', function () {
-            const loginModal = document.getElementById('loginModal');
-            if (loginModal) loginModal.style.display = 'none';
-        });
-    }
-
-    const closeRegisterModal = document.getElementById('closeRegisterModal');
-    if (closeRegisterModal) {
-        closeRegisterModal.addEventListener('click', function () {
-            const registerModal = document.getElementById('registerModal');
-            if (registerModal) registerModal.style.display = 'none';
-        });
-    }
-
-    const closeCartModal = document.getElementById('closeCartModal');
-    if (closeCartModal) {
-        closeCartModal.addEventListener('click', function () {
-            const cartModal = document.getElementById('cartModal');
-            if (cartModal) cartModal.style.display = 'none';
-        });
-    }
-
-    // زر استعراض الكتب في قسم البطل
-    const exploreBooksBtn = document.getElementById('exploreBooks');
-    if (exploreBooksBtn) {
-        exploreBooksBtn.addEventListener('click', function () {
-            const booksSection = document.getElementById('books');
-            if (booksSection) {
-                booksSection.scrollIntoView({ behavior: 'smooth' });
-            }
-        });
-    }
-
-    // إغلاق النماذج بالنقر خارجها
-    window.addEventListener('click', function (event) {
-        const loginModal = document.getElementById('loginModal');
-        const registerModal = document.getElementById('registerModal');
-        const cartModal = document.getElementById('cartModal');
-        
-        if (event.target === loginModal) {
-            if (loginModal) loginModal.style.display = 'none';
-        }
-        if (event.target === registerModal) {
-            if (registerModal) registerModal.style.display = 'none';
-        }
-        if (event.target === cartModal) {
-            if (cartModal) cartModal.style.display = 'none';
+            setTimeout(() => {
+                if (notification.parentNode) {
+                    notification.classList.remove('show');
+                    setTimeout(() => {
+                        if (notification.parentNode) {
+                            notification.remove();
+                        }
+                    }, 300);
+                }
+            }, 4000);
         }
 
-        // إغلاق قائمة الفرز عند النقر خارجها
-        if (!event.target.matches('.sort-dropdown-btn') && !event.target.closest('.sort-dropdown-content')) {
+        // تغيير الفرز - نظام مصلح
+        function changeSort(sortType) {
+            currentSort = sortType;
+            booksToShow = 8;
+
+            // تحديث الأيقونات النشطة
+            document.querySelectorAll('.sort-icon').forEach(icon => {
+                icon.classList.remove('active');
+            });
+            const sortIcon = document.querySelector(`.sort-icon[data-sort="${sortType}"]`);
+            if (sortIcon) sortIcon.classList.add('active');
+
+            // تحديث القائمة المنسدلة
+            document.querySelectorAll('.sort-option').forEach(option => {
+                option.classList.remove('active');
+            });
+            const sortOption = document.querySelector(`.sort-option[data-sort="${sortType}"]`);
+            if (sortOption) sortOption.classList.add('active');
+
+            // تحديث نص الزر
+            const sortText = sortOption ? sortOption.querySelector('span').textContent : '';
+            const sortDropdownText = document.getElementById('sortDropdownText');
+            if (sortDropdownText && sortText) {
+                sortDropdownText.textContent = `الترتيب حسب: ${sortText}`;
+            }
+
+            // إعادة عرض الكتب
+            renderBooks();
+            updateBooksCount();
+
+            // إغلاق القائمة المنسدلة
             const sortDropdownContent = document.getElementById('sortDropdownContent');
             if (sortDropdownContent) sortDropdownContent.classList.remove('show');
         }
-    });
 
-    // أيقونة العربة - تم التعديل للانتقال إلى صفحة العربة
-    const cartIcon = document.getElementById('cartIcon');
-    if (cartIcon) {
-        cartIcon.addEventListener('click', function () {
-            console.log('Cart icon clicked');
-            // الانتقال إلى صفحة عربة التسوق
-            window.location.href = 'cart.html';
-        });
-    }
+        // عرض المزيد من الكتب
+        function loadMoreBooks() {
+            booksToShow += booksIncrement;
+            renderBooks();
+            updateBooksCount();
 
-    // زر "عرض المزيد"
-    const loadMoreBtn = document.getElementById('loadMoreBtn');
-    if (loadMoreBtn) {
-        loadMoreBtn.addEventListener('click', function () {
-            loadMoreBooks();
-        });
-    }
-
-    // قائمة الفرز المنسدلة
-    const sortDropdownBtn = document.getElementById('sortDropdownBtn');
-    if (sortDropdownBtn) {
-        sortDropdownBtn.addEventListener('click', function (e) {
-            e.stopPropagation();
-            const sortDropdownContent = document.getElementById('sortDropdownContent');
-            if (sortDropdownContent) sortDropdownContent.classList.toggle('show');
-        });
-    }
-
-    // خيارات الفرز في القائمة المنسدلة
-    document.querySelectorAll('.sort-option').forEach(option => {
-        option.addEventListener('click', function () {
-            const sortType = this.getAttribute('data-sort');
-            changeSort(sortType);
-        });
-    });
-
-    // أيقونات الفرز الصغيرة
-    document.querySelectorAll('.sort-icon').forEach(icon => {
-        icon.addEventListener('click', function () {
-            const sortType = this.getAttribute('data-sort');
-            changeSort(sortType);
-        });
-    });
-
-    // خيارات العرض
-    const gridViewBtn = document.getElementById('gridView');
-    const listViewBtn = document.getElementById('listView');
-    
-    if (gridViewBtn) {
-        gridViewBtn.addEventListener('click', function () {
-            gridViewBtn.classList.add('active');
-            if (listViewBtn) listViewBtn.classList.remove('active');
-        });
-    }
-    
-    if (listViewBtn) {
-        listViewBtn.addEventListener('click', function () {
-            listViewBtn.classList.add('active');
-            if (gridViewBtn) gridViewBtn.classList.remove('active');
-            showNotification('عرض القائمة غير متاح حالياً، سيتم تفعيله قريباً', 'info');
-        });
-    }
-
-    // إرسال النموذج في التذييل
-    const newsletterButton = document.querySelector('.newsletter-form button');
-    if (newsletterButton) {
-        newsletterButton.addEventListener('click', function () {
-            const emailInput = document.querySelector('.newsletter-form input');
-            if (emailInput && emailInput.value) {
-                showNotification('شكراً على اشتراكك في نشرتنا البريدية!', 'success');
-                emailInput.value = '';
-            } else {
-                showNotification('يرجى إدخال بريدك الإلكتروني', 'error');
+            // تمرير الصفحة إلى قسم الكتب بعد تحميل المزيد
+            const booksSection = document.getElementById('books');
+            if (booksSection) {
+                booksSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
             }
-        });
-    }
 
-    // البحث أثناء الكتابة
-    const bookSearchInput = document.getElementById('bookSearchInput');
-    if (bookSearchInput) {
-        bookSearchInput.addEventListener('input', function() {
-            filterBooks();
-        });
-        
-        bookSearchInput.addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') {
-                filterBooks();
-            }
-        });
-    }
-}
-
-// تهيئة Netlify Identity للروابط
-if (window.netlifyIdentity) {
-    window.netlifyIdentity.on("init", user => {
-        console.log('Netlify Identity init from widget');
-        if (!user) {
-            window.netlifyIdentity.on("login", () => {
-                console.log('User logged in from widget');
-                document.location.href = "/";
-            });
+            // إظهار إشعار
+            showNotification('تم تحميل المزيد من الكتب', 'success');
         }
-    });
-}
-    </script>
 
+        // إعداد مستمعي الأحداث
+        function setupEventListeners() {
+            console.log('Setting up event listeners...');
+
+            // زر القائمة المتنقلة للهواتف
+            const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+            const mainNav = document.getElementById('mainNav');
+            const navOverlay = document.getElementById('navOverlay');
+
+            if (mobileMenuBtn && mainNav) {
+                mobileMenuBtn.addEventListener('click', function (e) {
+                    e.stopPropagation();
+                    mainNav.classList.toggle('active');
+                    if (navOverlay) navOverlay.classList.toggle('active');
+
+                    // تغيير الأيقونة
+                    const icon = this.querySelector('i');
+                    if (mainNav.classList.contains('active')) {
+                        icon.className = 'fas fa-times';
+                        document.body.style.overflow = 'hidden';
+                    } else {
+                        icon.className = 'fas fa-bars';
+                        document.body.style.overflow = '';
+                    }
+                });
+
+                // إغلاق القائمة عند النقر على طبقة التعتيم
+                if (navOverlay) {
+                    navOverlay.addEventListener('click', function () {
+                        mainNav.classList.remove('active');
+                        this.classList.remove('active');
+                        mobileMenuBtn.querySelector('i').className = 'fas fa-bars';
+                        document.body.style.overflow = '';
+                    });
+                }
+
+                // إغلاق القائمة عند النقر على رابط
+                mainNav.querySelectorAll('a').forEach(link => {
+                    link.addEventListener('click', function () {
+                        mainNav.classList.remove('active');
+                        if (navOverlay) navOverlay.classList.remove('active');
+                        mobileMenuBtn.querySelector('i').className = 'fas fa-bars';
+                        document.body.style.overflow = '';
+                    });
+                });
+            }
+
+            // أزرار تسجيل الدخول والتسجيل مع Netlify Identity
+            const loginBtn = document.getElementById('loginBtn');
+            if (loginBtn) {
+                loginBtn.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    console.log('Login button clicked');
+                    if (typeof netlifyIdentity !== 'undefined') {
+                        netlifyIdentity.open('login');
+                    } else {
+                        showNotification('نظام تسجيل الدخول غير متاح حالياً', 'error');
+                    }
+                });
+            }
+
+            const registerBtn = document.getElementById('registerBtn');
+            if (registerBtn) {
+                registerBtn.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    console.log('Register button clicked');
+                    if (typeof netlifyIdentity !== 'undefined') {
+                        netlifyIdentity.open('signup');
+                    } else {
+                        showNotification('نظام التسجيل غير متاح حالياً', 'error');
+                    }
+                });
+            }
+
+            // زر تسجيل الخروج
+            const logoutBtn = document.getElementById('logoutBtn');
+            if (logoutBtn) {
+                logoutBtn.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    console.log('Logout button clicked');
+                    if (typeof netlifyIdentity !== 'undefined') {
+                        netlifyIdentity.logout();
+                    }
+                });
+            }
+
+            // زر استعراض الكتب في قسم البطل
+            const exploreBooksBtn = document.getElementById('exploreBooks');
+            if (exploreBooksBtn) {
+                exploreBooksBtn.addEventListener('click', function () {
+                    const booksSection = document.getElementById('books');
+                    if (booksSection) {
+                        booksSection.scrollIntoView({ behavior: 'smooth' });
+                    }
+                });
+            }
+
+            // أيقونة العربة
+            const cartIcon = document.getElementById('cartIcon');
+            if (cartIcon) {
+                cartIcon.addEventListener('click', function () {
+                    console.log('Cart icon clicked');
+                    window.location.href = 'cart.html';
+                });
+            }
+
+            // زر "عرض المزيد"
+            const loadMoreBtn = document.getElementById('loadMoreBtn');
+            if (loadMoreBtn) {
+                loadMoreBtn.addEventListener('click', function () {
+                    loadMoreBooks();
+                });
+            }
+
+            // قائمة الفرز المنسدلة
+            const sortDropdownBtn = document.getElementById('sortDropdownBtn');
+            if (sortDropdownBtn) {
+                sortDropdownBtn.addEventListener('click', function (e) {
+                    e.stopPropagation();
+                    const sortDropdownContent = document.getElementById('sortDropdownContent');
+                    if (sortDropdownContent) sortDropdownContent.classList.toggle('show');
+                });
+            }
+
+            // خيارات الفرز في القائمة المنسدلة
+            document.querySelectorAll('.sort-option').forEach(option => {
+                option.addEventListener('click', function () {
+                    const sortType = this.getAttribute('data-sort');
+                    changeSort(sortType);
+                });
+            });
+
+            // أيقونات الفرز الصغيرة
+            document.querySelectorAll('.sort-icon').forEach(icon => {
+                icon.addEventListener('click', function () {
+                    const sortType = this.getAttribute('data-sort');
+                    changeSort(sortType);
+                });
+            });
+
+            // البحث أثناء الكتابة
+            const bookSearchInput = document.getElementById('bookSearchInput');
+            if (bookSearchInput) {
+                bookSearchInput.addEventListener('input', function () {
+                    filterBooks();
+                });
+
+                bookSearchInput.addEventListener('keypress', function (e) {
+                    if (e.key === 'Enter') {
+                        filterBooks();
+                    }
+                });
+            }
+        }
+    </script>
 </body>
 
 </html>

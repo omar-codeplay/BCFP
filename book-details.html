@@ -1,0 +1,919 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تفاصيل الكتاب - مركز الكتاب للنشر</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://identity.netlify.com/v1/netlify-identity-widget.js" defer></script>
+    <script src="books.js" defer></script>
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        :root {
+            --primary-color: #1a5f7a;
+            --secondary-color: #57a6c2;
+            --accent-color: #ff7b54;
+            --light-color: #f8f9fa;
+            --dark-color: #343a40;
+            --gray-color: #6c757d;
+            --border-radius: 8px;
+            --box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+
+        body {
+            background-color: #f5f7fa;
+            color: var(--dark-color);
+            line-height: 1.6;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* أنماط الهيدر */
+        header {
+            background-color: white;
+            box-shadow: var(--box-shadow);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--primary-color);
+            font-weight: 700;
+            font-size: 1.5rem;
+            text-decoration: none;
+        }
+
+        .logo i {
+            font-size: 1.8rem;
+        }
+
+        .back-btn {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* قسم تفاصيل الكتاب */
+        .book-details-section {
+            padding: 60px 0;
+        }
+
+        .breadcrumb {
+            margin-bottom: 30px;
+            color: var(--gray-color);
+            font-size: 0.9rem;
+        }
+
+        .breadcrumb a {
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+
+        .book-details-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            background-color: white;
+            border-radius: var(--border-radius);
+            padding: 40px;
+            box-shadow: var(--box-shadow);
+        }
+
+        @media (max-width: 992px) {
+            .book-details-container {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+        }
+
+        /* صورة الكتاب */
+        .book-image-container {
+            text-align: center;
+        }
+
+        .main-book-image {
+            width: 100%;
+            max-width: 400px;
+            height: 500px;
+            object-fit: cover;
+            border-radius: var(--border-radius);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+
+        .thumbnail-container {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .thumbnail {
+            width: 80px;
+            height: 100px;
+            object-fit: cover;
+            border-radius: 5px;
+            cursor: pointer;
+            opacity: 0.7;
+            transition: var(--transition);
+            border: 2px solid transparent;
+        }
+
+        .thumbnail:hover,
+        .thumbnail.active {
+            opacity: 1;
+            border-color: var(--primary-color);
+        }
+
+        /* معلومات الكتاب */
+        .book-info-container {
+            padding: 20px 0;
+        }
+
+        .book-category {
+            color: var(--secondary-color);
+            font-weight: 600;
+            margin-bottom: 10px;
+            font-size: 0.9rem;
+        }
+
+        .book-title {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+            color: var(--dark-color);
+        }
+
+        .book-author {
+            color: var(--gray-color);
+            margin-bottom: 20px;
+            font-size: 1.1rem;
+        }
+
+        .book-rating {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .stars {
+            color: #FFD700;
+        }
+
+        .rating-text {
+            color: var(--gray-color);
+        }
+
+        .book-description {
+            margin-bottom: 30px;
+            line-height: 1.8;
+        }
+
+        /* تفاصيل إضافية */
+        .book-specs {
+            background-color: #f8f9fa;
+            border-radius: var(--border-radius);
+            padding: 25px;
+            margin-bottom: 30px;
+        }
+
+        .specs-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+
+        @media (max-width: 576px) {
+            .specs-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .spec-item {
+            margin-bottom: 15px;
+        }
+
+        .spec-label {
+            color: var(--gray-color);
+            font-weight: 500;
+            margin-bottom: 5px;
+            font-size: 0.9rem;
+        }
+
+        .spec-value {
+            font-weight: 600;
+            color: var(--dark-color);
+        }
+
+        /* السعر والشراء */
+        .price-section {
+            padding: 25px;
+            background-color: rgba(26, 95, 122, 0.05);
+            border-radius: var(--border-radius);
+            margin-bottom: 30px;
+        }
+
+        .price-container {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .current-price {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+
+        .original-price {
+            font-size: 1.5rem;
+            color: var(--gray-color);
+            text-decoration: line-through;
+        }
+
+        .discount-badge {
+            background-color: var(--accent-color);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .availability {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 25px;
+        }
+
+        .in-stock {
+            color: #28a745;
+            font-weight: 600;
+        }
+
+        .out-of-stock {
+            color: #dc3545;
+            font-weight: 600;
+        }
+
+        /* أزرار الشراء */
+        .action-buttons {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 15px 30px;
+            border-radius: var(--border-radius);
+            border: none;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1rem;
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+            color: white;
+            flex: 2;
+        }
+
+        .btn-primary:hover {
+            background-color: #0d4d65;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(26, 95, 122, 0.3);
+        }
+
+        .btn-secondary {
+            background-color: white;
+            color: var(--primary-color);
+            border: 2px solid var(--primary-color);
+            flex: 1;
+        }
+
+        .btn-secondary:hover {
+            background-color: rgba(26, 95, 122, 0.05);
+            transform: translateY(-3px);
+        }
+
+        .btn-wishlist {
+            background-color: #e9ecef;
+            color: var(--dark-color);
+            padding: 15px;
+            min-width: 60px;
+        }
+
+        .btn-wishlist:hover {
+            background-color: #dee2e6;
+        }
+
+        /* قسم التقييمات */
+        .reviews-section {
+            margin-top: 50px;
+            padding: 40px;
+            background-color: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+        }
+
+        .section-title {
+            font-size: 1.8rem;
+            color: var(--primary-color);
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #eee;
+        }
+
+        .review-item {
+            padding: 20px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .review-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .reviewer-name {
+            font-weight: 600;
+        }
+
+        .review-date {
+            color: var(--gray-color);
+            font-size: 0.9rem;
+        }
+
+        /* التذييل */
+        footer {
+            background-color: var(--dark-color);
+            color: white;
+            padding: 60px 0 30px;
+            margin-top: 80px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: white;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            opacity: 0.7;
+            font-size: 0.9rem;
+        }
+
+        /* إشعارات */
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background-color: white;
+            color: var(--dark-color);
+            padding: 15px 25px;
+            border-radius: var(--border-radius);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            z-index: 3000;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            transform: translateX(150%);
+            transition: transform 0.5s ease;
+            max-width: 400px;
+        }
+
+        .notification.show {
+            transform: translateX(0);
+        }
+
+        .notification.success {
+            border-right: 5px solid #28a745;
+        }
+
+        .notification.error {
+            border-right: 5px solid #dc3545;
+        }
+
+        /* Netlify Identity */
+        #netlify-identity-widget {
+            z-index: 10000 !important;
+        }
+
+        .netlify-identity-modal {
+            position: fixed !important;
+            top: 50% !important;
+            left: 50% !important;
+            transform: translate(-50%, -50%) !important;
+            z-index: 10001 !important;
+        }
+    </style>
+</head>
+<body>
+    <!-- الهيدر -->
+    <header>
+        <div class="container header-container">
+            <a href="index.html" class="logo">
+                <i class="fas fa-book-open"></i>
+                مركز الكتاب للنشر
+            </a>
+            
+            <a href="index.html" class="back-btn">
+                <i class="fas fa-arrow-right"></i>
+                العودة إلى المتجر
+            </a>
+            
+            <div class="cart-icon" id="cartIcon">
+                <i class="fas fa-shopping-cart"></i>
+                <span class="cart-count">0</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- منطقة الإشعارات -->
+    <div id="notificationContainer"></div>
+
+    <!-- قسم تفاصيل الكتاب -->
+    <section class="book-details-section">
+        <div class="container">
+            <!-- مسار التنقل -->
+            <div class="breadcrumb">
+                <a href="index.html">الرئيسية</a> / 
+                <a href="index.html#books">الكتب</a> / 
+                <span id="bookBreadcrumb">تفاصيل الكتاب</span>
+            </div>
+
+            <!-- تفاصيل الكتاب -->
+            <div class="book-details-container" id="bookDetails">
+                <!-- سيتم ملؤها بواسطة JavaScript -->
+            </div>
+
+            <!-- قسم التقييمات -->
+            <div class="reviews-section" id="reviewsSection">
+                <h2 class="section-title">تقييمات القراء</h2>
+                <div id="bookReviews">
+                    <!-- سيتم ملؤها بواسطة JavaScript -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- التذييل -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-about">
+                    <div class="footer-logo">
+                        <i class="fas fa-book-open"></i>
+                        مركز الكتاب للنشر
+                    </div>
+                    <p>دار نشر مصرية رائدة منذ عام 1989، متخصصة في نشر الكتب الأكاديمية وكتب التربية الرياضية وعلوم الرياضة.</p>
+                </div>
+                
+                <div class="footer-contact">
+                    <h3>تواصل معنا</h3>
+                    <p><i class="fas fa-envelope"></i> Markazelkitab@gmail.com</p>
+                    <p><i class="fas fa-phone"></i> +20-101-852-6963</p>
+                    <p><i class="fas fa-map-marker-alt"></i> القاهرة، مصر</p>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                © 2025 مركز الكتاب للنشر. جميع الحقوق محفوظة.
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // بيانات العربة
+        let cart = [];
+
+        // تهيئة الصفحة
+        document.addEventListener('DOMContentLoaded', function() {
+            // التحقق من تحميل بيانات الكتب
+            if (typeof allBooks === 'undefined') {
+                console.error('بيانات الكتب غير محملة!');
+                showError('حدث خطأ في تحميل بيانات الكتب');
+                return;
+            }
+            
+            // الحصول على معرّف الكتاب من الرابط
+            const urlParams = new URLSearchParams(window.location.search);
+            const bookId = parseInt(urlParams.get('id'));
+            
+            if (bookId) {
+                loadBookDetails(bookId);
+            } else {
+                showError("لم يتم العثور على الكتاب");
+            }
+
+            // تحميل العربة من التخزين المحلي
+            if (localStorage.getItem('cart')) {
+                try {
+                    cart = JSON.parse(localStorage.getItem('cart'));
+                    updateCartCount();
+                } catch (e) {
+                    console.error('خطأ في تحميل العربة:', e);
+                    cart = [];
+                }
+            }
+
+            // إعداد Netlify Identity
+            initNetlifyIdentity();
+        });
+
+        // تحميل تفاصيل الكتاب
+        function loadBookDetails(bookId) {
+            const book = allBooks.find(b => b.id === bookId);
+            
+            if (!book) {
+                showError("الكتاب غير موجود");
+                return;
+            }
+
+            // تحديث عنوان الصفحة
+            document.title = `${book.title} - مركز الكتاب للنشر`;
+            
+            // تحديث مسار التنقل
+            document.getElementById('bookBreadcrumb').textContent = book.title;
+
+            // إنشاء النجوم للتقييم
+            const ratingStars = getRatingStars(book.rating);
+
+            // عرض تفاصيل الكتاب
+            const bookDetails = document.getElementById('bookDetails');
+            bookDetails.innerHTML = `
+                <!-- قسم الصور -->
+                <div class="book-image-container">
+                    <img src="${book.image}" alt="${book.title}" class="main-book-image" id="mainBookImage">
+                    <div class="thumbnail-container">
+                        <img src="${book.image}" alt="${book.title}" class="thumbnail active" onclick="changeMainImage(this.src)">
+                        ${book.additionalImages.map(img => 
+                            `<img src="${img}" alt="${book.title}" class="thumbnail" onclick="changeMainImage(this.src)">`
+                        ).join('')}
+                    </div>
+                </div>
+
+                <!-- قسم المعلومات -->
+                <div class="book-info-container">
+                    <div class="book-category">${book.category}</div>
+                    <h1 class="book-title">${book.title}</h1>
+                    <div class="book-author">تأليف: ${book.author}</div>
+                    
+                    <div class="book-rating">
+                        <div class="stars">${ratingStars}</div>
+                        <div class="rating-text">${book.rating} (${book.reviews.length} تقييم)</div>
+                    </div>
+                    
+                    <div class="book-description">
+                        <p>${book.description}</p>
+                    </div>
+
+                    <!-- المواصفات -->
+                    <div class="book-specs">
+                        <h3 style="margin-bottom: 20px; color: var(--primary-color);">معلومات الكتاب</h3>
+                        <div class="specs-grid">
+                            <div class="spec-item">
+                                <div class="spec-label">الرقم التسلسلي</div>
+                                <div class="spec-value">${book.serialNumber}</div>
+                            </div>
+                            <div class="spec-item">
+                                <div class="spec-label">النوع</div>
+                                <div class="spec-value">${book.type}</div>
+                            </div>
+                            <div class="spec-item">
+                                <div class="spec-label">الوزن</div>
+                                <div class="spec-value">${book.weight}</div>
+                            </div>
+                            <div class="spec-item">
+                                <div class="spec-label">عدد الصفحات</div>
+                                <div class="spec-value">${book.pages} صفحة</div>
+                            </div>
+                            <div class="spec-item">
+                                <div class="spec-label">سنة النشر</div>
+                                <div class="spec-value">${book.year}</div>
+                            </div>
+                            <div class="spec-item">
+                                <div class="spec-label">اللغة</div>
+                                <div class="spec-value">${book.language}</div>
+                            </div>
+                            <div class="spec-item">
+                                <div class="spec-label">الناشر</div>
+                                <div class="spec-value">${book.publisher}</div>
+                            </div>
+                            <div class="spec-item">
+                                <div class="spec-label">الرقم الدولي (ISBN)</div>
+                                <div class="spec-value">${book.isbn}</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- السعر والشراء -->
+                    <div class="price-section">
+                        ${book.discount > 0 ? `
+                            <div class="price-container">
+                                <div class="current-price">${book.price} ج.م</div>
+                                <div class="original-price">${book.originalPrice} ج.م</div>
+                                <div class="discount-badge">خصم ${book.discount}%</div>
+                            </div>
+                        ` : `
+                            <div class="price-container">
+                                <div class="current-price">${book.price} ج.م</div>
+                            </div>
+                        `}
+                        
+                        <div class="availability">
+                            ${book.inStock ? 
+                                `<span class="in-stock"><i class="fas fa-check-circle"></i> متوفر في المخزون (${book.stock} نسخة)</span>` :
+                                `<span class="out-of-stock"><i class="fas fa-times-circle"></i> غير متوفر حالياً</span>`
+                            }
+                        </div>
+
+                        <div class="action-buttons">
+                            <button class="btn btn-primary" onclick="addToCart(${book.id})" ${!book.inStock ? 'disabled style="opacity: 0.5;"' : ''}>
+                                <i class="fas fa-cart-plus"></i>
+                                ${book.inStock ? 'أضف إلى عربة التسوق' : 'نفذ من المخزون'}
+                            </button>
+                            <button class="btn btn-secondary" onclick="addToWishlist(${book.id})">
+                                <i class="far fa-heart"></i>
+                                المفضلة
+                            </button>
+                            <button class="btn btn-wishlist" onclick="shareBook(${book.id})">
+                                <i class="fas fa-share-alt"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            // عرض التقييمات
+            displayReviews(book.reviews);
+        }
+
+        // تغيير الصورة الرئيسية
+        function changeMainImage(src) {
+            document.getElementById('mainBookImage').src = src;
+            
+            // تحديث الصور المصغرة النشطة
+            document.querySelectorAll('.thumbnail').forEach(thumb => {
+                thumb.classList.remove('active');
+                if (thumb.src === src) {
+                    thumb.classList.add('active');
+                }
+            });
+        }
+
+        // عرض التقييمات
+        function displayReviews(reviews) {
+            const reviewsContainer = document.getElementById('bookReviews');
+            
+            if (reviews.length === 0) {
+                reviewsContainer.innerHTML = `
+                    <div style="text-align: center; padding: 40px; color: var(--gray-color);">
+                        <i class="far fa-comment-dots" style="font-size: 3rem; margin-bottom: 15px;"></i>
+                        <p>لا توجد تقييمات لهذا الكتاب بعد. كن أول من يقيم!</p>
+                    </div>
+                `;
+                return;
+            }
+
+            reviewsContainer.innerHTML = reviews.map(review => `
+                <div class="review-item">
+                    <div class="review-header">
+                        <div class="reviewer-name">${review.name}</div>
+                        <div class="review-date">${review.date}</div>
+                    </div>
+                    <div class="stars" style="margin-bottom: 10px;">
+                        ${getRatingStars(review.rating)}
+                    </div>
+                    <p>${review.comment}</p>
+                </div>
+            `).join('');
+        }
+
+        // إضافة إلى عربة التسوق
+        function addToCart(bookId) {
+            if (typeof netlifyIdentity === 'undefined') {
+                showNotification('نظام تسجيل الدخول غير متاح حالياً', 'error');
+                return;
+            }
+
+            const user = netlifyIdentity.currentUser();
+            if (!user) {
+                showNotification('يجب تسجيل الدخول أولاً', 'info');
+                netlifyIdentity.open('login');
+                return;
+            }
+
+            const book = allBooks.find(b => b.id === bookId);
+            if (!book || !book.inStock) {
+                showNotification('الكتاب غير متوفر حالياً', 'error');
+                return;
+            }
+
+            const existingItem = cart.find(item => item.id === bookId);
+            if (existingItem) {
+                existingItem.quantity += 1;
+            } else {
+                cart.push({
+                    id: book.id,
+                    title: book.title,
+                    author: book.author,
+                    price: book.price,
+                    image: book.image,
+                    quantity: 1
+                });
+            }
+
+            try {
+                localStorage.setItem('cart', JSON.stringify(cart));
+                updateCartCount();
+                showNotification(`تم إضافة "${book.title}" إلى عربة التسوق`, 'success');
+            } catch (e) {
+                console.error('خطأ في حفظ العربة:', e);
+                showNotification('حدث خطأ أثناء إضافة المنتج للعربة', 'error');
+            }
+        }
+
+        // إضافة إلى المفضلة
+        function addToWishlist(bookId) {
+            const user = netlifyIdentity?.currentUser();
+            if (!user) {
+                showNotification('يجب تسجيل الدخول أولاً', 'info');
+                netlifyIdentity.open('login');
+                return;
+            }
+
+            const book = allBooks.find(b => b.id === bookId);
+            showNotification(`تم إضافة "${book.title}" إلى المفضلة`, 'success');
+        }
+
+        // مشاركة الكتاب
+        function shareBook(bookId) {
+            const book = allBooks.find(b => b.id === bookId);
+            const url = window.location.href;
+            const text = `اطلع على كتاب "${book.title}" على موقع مركز الكتاب للنشر`;
+            
+            if (navigator.share) {
+                navigator.share({
+                    title: book.title,
+                    text: text,
+                    url: url
+                });
+            } else {
+                navigator.clipboard.writeText(url);
+                showNotification('تم نسخ رابط الكتاب', 'success');
+            }
+        }
+
+        // تحديث عداد العربة
+        function updateCartCount() {
+            const cartCount = document.querySelector('.cart-count');
+            if (cartCount) {
+                const totalItems = cart.reduce((total, item) => total + item.quantity, 0);
+                cartCount.textContent = totalItems;
+            }
+        }
+
+        // الحصول على نجوم التقييم
+        function getRatingStars(rating) {
+            let stars = '';
+            const fullStars = Math.floor(rating);
+            const hasHalfStar = rating % 1 >= 0.5;
+
+            for (let i = 0; i < fullStars; i++) {
+                stars += '<i class="fas fa-star"></i>';
+            }
+
+            if (hasHalfStar) {
+                stars += '<i class="fas fa-star-half-alt"></i>';
+            }
+
+            const emptyStars = 5 - fullStars - (hasHalfStar ? 1 : 0);
+            for (let i = 0; i < emptyStars; i++) {
+                stars += '<i class="far fa-star"></i>';
+            }
+
+            return stars;
+        }
+
+        // عرض خطأ
+        function showError(message) {
+            document.getElementById('bookDetails').innerHTML = `
+                <div style="grid-column: 1/-1; text-align: center; padding: 60px;">
+                    <i class="fas fa-exclamation-triangle" style="font-size: 4rem; color: #dc3545; margin-bottom: 20px;"></i>
+                    <h2 style="color: #dc3545; margin-bottom: 15px;">${message}</h2>
+                    <a href="index.html" style="color: var(--primary-color); text-decoration: none; font-weight: 600;">
+                        <i class="fas fa-arrow-right"></i> العودة إلى المتجر
+                    </a>
+                </div>
+            `;
+        }
+
+        // إظهار إشعار
+        function showNotification(message, type = 'info') {
+            const notificationContainer = document.getElementById('notificationContainer');
+            if (!notificationContainer) return;
+            
+            const oldNotifications = notificationContainer.querySelectorAll('.notification');
+            oldNotifications.forEach(notification => notification.remove());
+
+            const notification = document.createElement('div');
+            notification.className = `notification ${type}`;
+
+            let icon = 'info-circle';
+            if (type === 'success') icon = 'check-circle';
+            if (type === 'error') icon = 'exclamation-circle';
+
+            notification.innerHTML = `
+                <div class="notification-icon">
+                    <i class="fas fa-${icon}"></i>
+                </div>
+                <div class="notification-content">
+                    <div class="notification-title">${type === 'success' ? 'تم بنجاح' : type === 'error' ? 'خطأ' : 'ملاحظة'}</div>
+                    <div>${message}</div>
+                </div>
+                <button class="close-notification">
+                    <i class="fas fa-times"></i>
+                </button>
+            `;
+
+            notificationContainer.appendChild(notification);
+
+            setTimeout(() => notification.classList.add('show'), 10);
+
+            notification.querySelector('.close-notification').addEventListener('click', () => {
+                notification.classList.remove('show');
+                setTimeout(() => notification.remove(), 300);
+            });
+
+            setTimeout(() => {
+                notification.classList.remove('show');
+                setTimeout(() => notification.remove(), 300);
+            }, 4000);
+        }
+
+        // تهيئة Netlify Identity
+        function initNetlifyIdentity() {
+            if (typeof netlifyIdentity === 'undefined') return;
+            
+            netlifyIdentity.on('login', user => {
+                console.log('User logged in:', user);
+            });
+
+            netlifyIdentity.on('logout', () => {
+                console.log('User logged out');
+            });
+        }
+    </script>
+</body>
+</html>
