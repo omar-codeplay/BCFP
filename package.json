@@ -1,11 +1,16 @@
 {
-  "name": "book-store",
+  "name": "markaz-elkitab",
   "version": "1.0.0",
-  "description": "متجر الكتب الإلكتروني - مركز الكتاب للنشر",
+  "description": "متجر مركز الكتاب للنشر",
+  "main": "index.html",
   "scripts": {
-    "build": "echo 'Building project...'",
-    "test": "echo 'No tests specified'"
+    "build": "echo 'بناء الموقع...'"
   },
+
+    "keywords": ["كتاب", "نشر", "متجر", "كتب"],
+  "author": "مركز الكتاب للنشر",
+  "license": "MIT"
+  ,
   "dependencies": {
     "@neondatabase/serverless": "^0.8.0",
     "axios": "^1.13.4"
