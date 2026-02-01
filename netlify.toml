@@ -6,9 +6,5 @@
   to = "/index.html"
   status = 200
 
-# دعم PHP
-[[plugins]]
-  package = "netlify-plugin-php"
-
 [functions]
   directory = "functions"
