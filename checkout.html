@@ -1,0 +1,862 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>إتمام عملية الشراء - مركز الكتاب للنشر</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* أنماط CSS من index.html */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        :root {
+            --primary-color: #1a5f7a;
+            --secondary-color: #57a6c2;
+            --accent-color: #ff7b54;
+            --light-color: #f8f9fa;
+            --dark-color: #343a40;
+            --gray-color: #6c757d;
+            --border-radius: 8px;
+            --box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+
+        body {
+            background-color: #f5f7fa;
+            color: var(--dark-color);
+            line-height: 1.6;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* أنماط رأس الصفحة */
+        header {
+            background-color: white;
+            box-shadow: var(--box-shadow);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--primary-color);
+            font-weight: 700;
+            font-size: 1.5rem;
+            text-decoration: none;
+        }
+
+        .logo i {
+            font-size: 1.8rem;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 25px;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: var(--dark-color);
+            font-weight: 500;
+            transition: var(--transition);
+            padding: 5px 0;
+            position: relative;
+        }
+
+        nav a:hover,
+        nav a.active {
+            color: var(--primary-color);
+        }
+
+        nav a.active::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 3px;
+            background-color: var(--primary-color);
+            bottom: -5px;
+            left: 0;
+            border-radius: 2px;
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        /* صفحة الدفع */
+        .checkout-page {
+            padding: 40px 0;
+        }
+
+        .page-title {
+            text-align: center;
+            margin-bottom: 40px;
+            color: var(--primary-color);
+            position: relative;
+            padding-bottom: 15px;
+        }
+
+        .page-title::after {
+            content: '';
+            position: absolute;
+            width: 80px;
+            height: 4px;
+            background-color: var(--accent-color);
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            border-radius: 2px;
+        }
+
+        .checkout-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+        }
+
+        @media (max-width: 992px) {
+            .checkout-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .checkout-form-container,
+        .order-summary-container {
+            background-color: white;
+            border-radius: var(--border-radius);
+            padding: 30px;
+            box-shadow: var(--box-shadow);
+        }
+
+        .order-summary-container {
+            height: fit-content;
+            position: sticky;
+            top: 100px;
+        }
+
+        .section-title {
+            color: var(--primary-color);
+            margin-bottom: 25px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #eee;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--dark-color);
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: var(--border-radius);
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 2px rgba(26, 95, 122, 0.1);
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        @media (max-width: 576px) {
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .order-items {
+            max-height: 300px;
+            overflow-y: auto;
+            margin-bottom: 20px;
+        }
+
+        .order-item {
+            display: flex;
+            align-items: center;
+            padding: 15px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .order-item:last-child {
+            border-bottom: none;
+        }
+
+        .order-item-image {
+            width: 60px;
+            height: 80px;
+            background-color: #e9ecef;
+            margin-left: 15px;
+            border-radius: 5px;
+            overflow: hidden;
+            flex-shrink: 0;
+        }
+
+        .order-item-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .order-item-details {
+            flex: 1;
+        }
+
+        .order-item-title {
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .order-item-quantity {
+            color: var(--gray-color);
+            font-size: 0.9rem;
+        }
+
+        .order-item-price {
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            color: var(--dark-color);
+        }
+
+        .summary-row.total {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 2px solid #eee;
+        }
+
+        .submit-btn {
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            width: 100%;
+            padding: 15px;
+            border-radius: var(--border-radius);
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            margin-top: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .submit-btn:hover {
+            background-color: #ff6b3d;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(255, 123, 84, 0.3);
+        }
+
+        .back-btn {
+            display: inline-block;
+            background-color: #e9ecef;
+            color: var(--dark-color);
+            text-decoration: none;
+            padding: 12px 25px;
+            border-radius: var(--border-radius);
+            font-weight: 500;
+            transition: var(--transition);
+            margin-top: 15px;
+            text-align: center;
+            width: 100%;
+        }
+
+        .back-btn:hover {
+            background-color: #ddd;
+        }
+
+        /* تذييل الصفحة */
+        footer {
+            background-color: var(--dark-color);
+            color: white;
+            padding: 60px 0 30px;
+            margin-top: 60px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: white;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .footer-about p {
+            margin-bottom: 20px;
+            opacity: 0.8;
+        }
+
+        .footer-links h3,
+        .footer-contact h3 {
+            font-size: 1.3rem;
+            margin-bottom: 25px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .footer-links h3::after,
+        .footer-contact h3::after {
+            content: '';
+            position: absolute;
+            width: 40px;
+            height: 3px;
+            background-color: var(--accent-color);
+            bottom: 0;
+            right: 0;
+        }
+
+        .footer-links ul {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 12px;
+        }
+
+        .footer-links a {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .footer-links a:hover {
+            color: white;
+            padding-right: 5px;
+        }
+
+        .footer-contact p {
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            opacity: 0.8;
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            opacity: 0.7;
+            font-size: 0.9rem;
+        }
+
+        /* إشعارات */
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background-color: white;
+            color: var(--dark-color);
+            padding: 15px 25px;
+            border-radius: var(--border-radius);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            z-index: 3000;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            transform: translateX(150%);
+            transition: transform 0.5s ease;
+            max-width: 400px;
+        }
+
+        .notification.show {
+            transform: translateX(0);
+        }
+
+        .notification.success {
+            border-right: 5px solid #28a745;
+        }
+
+        .notification.error {
+            border-right: 5px solid #dc3545;
+        }
+
+        .notification.info {
+            border-right: 5px solid var(--primary-color);
+        }
+
+        .notification-icon {
+            font-size: 1.5rem;
+        }
+
+        .notification.success .notification-icon {
+            color: #28a745;
+        }
+
+        .notification.error .notification-icon {
+            color: #dc3545;
+        }
+
+        .notification.info .notification-icon {
+            color: var(--primary-color);
+        }
+
+        .notification-content {
+            flex: 1;
+        }
+
+        .notification-title {
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .close-notification {
+            background: none;
+            border: none;
+            color: var(--gray-color);
+            cursor: pointer;
+            font-size: 1.2rem;
+        }
+
+        /* أنماط متجاوبة */
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: column;
+                gap: 15px;
+                padding: 15px 0;
+            }
+
+            nav ul {
+                gap: 15px;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .checkout-page {
+                padding: 20px 0;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .header-actions {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .checkout-form-container,
+            .order-summary-container {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- رأس الصفحة -->
+    <header>
+        <div class="container header-container">
+            <a href="index.html" class="logo">
+                <i class="fas fa-book-open"></i>
+                مركز الكتاب للنشر
+            </a>
+
+            <nav>
+                <ul>
+                    <li><a href="index.html">الرئيسية</a></li>
+                    <li><a href="index.html#books">الكتب</a></li>
+                    <li><a href="cart.html">عربة التسوق</a></li>
+                    <li><a href="orders.html">طلباتي</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- منطقة الإشعارات -->
+    <div id="notificationContainer"></div>
+
+    <!-- صفحة الدفع -->
+    <section class="checkout-page">
+        <div class="container">
+            <h1 class="page-title">إتمام عملية الشراء</h1>
+            
+            <form id="checkoutForm" action="checkout.php" method="POST">
+                <div class="checkout-container">
+                    <!-- نموذج بيانات الشحن -->
+                    <div class="checkout-form-container">
+                        <h2 class="section-title">بيانات الشحن</h2>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="first_name">الاسم الأول *</label>
+                                <input type="text" id="first_name" name="first_name" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="last_name">الاسم الأخير *</label>
+                                <input type="text" id="last_name" name="last_name" required>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="email">البريد الإلكتروني *</label>
+                            <input type="email" id="email" name="email" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="phone">رقم الهاتف *</label>
+                            <input type="tel" id="phone" name="phone" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="street">الشارع *</label>
+                            <input type="text" id="street" name="street" required>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="building">المبنى *</label>
+                                <input type="text" id="building" name="building" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="city">المدينة *</label>
+                                <input type="text" id="city" name="city" required>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="country">الدولة *</label>
+                            <select id="country" name="country" required>
+                                <option value="مصر">مصر</option>
+                                <option value="السعودية">السعودية</option>
+                                <option value="الإمارات">الإمارات</option>
+                                <option value="الكويت">الكويت</option>
+                                <option value="قطر">قطر</option>
+                            </select>
+                        </div>
+                        
+                        <input type="hidden" id="amount" name="amount" value="0">
+                        <input type="hidden" id="currency" name="currency" value="EGP">
+                        <input type="hidden" id="items" name="items" value="[]">
+                    </div>
+
+                    <!-- ملخص الطلب -->
+                    <div class="order-summary-container">
+                        <h2 class="section-title">ملخص الطلب</h2>
+                        
+                        <div class="order-items" id="orderItems">
+                            <!-- سيتم ملء العناصر هنا -->
+                        </div>
+                        
+                        <div class="summary-row">
+                            <span>المجموع:</span>
+                            <span id="subtotal">0 ج.م</span>
+                        </div>
+                        <div class="summary-row">
+                            <span>الشحن:</span>
+                            <span id="shipping">30 ج.م</span>
+                        </div>
+                        <div class="summary-row total">
+                            <span>الإجمالي:</span>
+                            <span id="total">0 ج.م</span>
+                        </div>
+                        
+                        <button type="submit" class="submit-btn" id="submitBtn">
+                            <i class="fas fa-lock"></i>
+                            الانتقال إلى الدفع
+                        </button>
+                        
+                        <a href="cart.html" class="back-btn">
+                            <i class="fas fa-arrow-right"></i>
+                            العودة إلى العربة
+                        </a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </section>
+
+    <!-- تذييل الصفحة -->
+    <footer id="contact">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-about">
+                    <div class="footer-logo">
+                        <i class="fas fa-book-open"></i>
+                        مركز الكتاب للنشر
+                    </div>
+                    <p>دار نشر مصرية رائدة منذ عام 1989، متخصصة في نشر الكتب الأكاديمية وكتب التربية الرياضية وعلوم
+                        الرياضة. كما نتشرف بطباعة المصحف الشريف بجودة عالية.</p>
+                </div>
+
+                <div class="footer-links">
+                    <h3>روابط سريعة</h3>
+                    <ul>
+                        <li><a href="index.html">الرئيسية</a></li>
+                        <li><a href="index.html#books">الكتب</a></li>
+                        <li><a href="index.html#services">الخدمات</a></li>
+                        <li><a href="index.html#about">من نحن</a></li>
+                        <li><a href="index.html#reviews">التقييمات</a></li>
+                        <li><a href="index.html#contact">تواصل معنا</a></li>
+                        <li><a href="cart.html">عربة التسوق</a></li>
+                        <li><a href="orders.html">طلباتي</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-contact">
+                    <h3>تواصل معنا</h3>
+                    <p><i class="fas fa-envelope"></i> Markazelkitab@gmail.com</p>
+                    <p><i class="fas fa-phone"></i> +20-101-852-6963</p>
+                    <p><i class="fas fa-map-marker-alt"></i> القاهرة، مصر</p>
+                </div>
+            </div>
+
+            <div class="copyright">
+                © 2025 مركز الكتاب للنشر. جميع الحقوق محفوظة.
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // تهيئة الصفحة
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('Checkout page loaded');
+            
+            // تحميل بيانات الطلب من localStorage
+            const orderData = JSON.parse(localStorage.getItem('currentOrder'));
+            
+            if (!orderData || !orderData.items || orderData.items.length === 0) {
+                showNotification('لا توجد عناصر في الطلب', 'error');
+                setTimeout(() => {
+                    window.location.href = 'cart.html';
+                }, 2000);
+                return;
+            }
+            
+            // عرض تفاصيل الطلب
+            displayOrderSummary(orderData);
+            
+            // تعبئة النموذج ببيانات افتراضية
+            populateForm();
+            
+            // إعداد مستمع الأحداث للنموذج
+            setupFormListener();
+        });
+
+        // عرض ملخص الطلب
+        function displayOrderSummary(orderData) {
+            const orderItemsContainer = document.getElementById('orderItems');
+            let itemsHTML = '';
+            
+            orderData.items.forEach(item => {
+                const itemTotal = item.price * item.quantity;
+                itemsHTML += `
+                    <div class="order-item">
+                        <div class="order-item-image">
+                            <img src="${item.image}" alt="${item.title}" onerror="this.src='https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80'">
+                        </div>
+                        <div class="order-item-details">
+                            <div class="order-item-title">${item.title}</div>
+                            <div class="order-item-quantity">الكمية: ${item.quantity}</div>
+                        </div>
+                        <div class="order-item-price">${itemTotal} ج.م</div>
+                    </div>
+                `;
+            });
+            
+            orderItemsContainer.innerHTML = itemsHTML;
+            
+            // تحديث المبالغ
+            document.getElementById('subtotal').textContent = orderData.subtotal + ' ج.م';
+            document.getElementById('total').textContent = orderData.total + ' ج.م';
+            
+            // تحديث الحقول المخفية
+            document.getElementById('amount').value = orderData.total;
+            document.getElementById('items').value = JSON.stringify(orderData.items);
+        }
+
+        // تعبئة النموذج ببيانات افتراضية
+        function populateForm() {
+            // هذه بيانات تجريبية للتسهيل
+            if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+                document.getElementById('first_name').value = 'أحمد';
+                document.getElementById('last_name').value = 'محمد';
+                document.getElementById('email').value = 'test@example.com';
+                document.getElementById('phone').value = '01012345678';
+                document.getElementById('street').value = 'شارع النصر';
+                document.getElementById('building').value = 'مبنى 15';
+                document.getElementById('city').value = 'القاهرة';
+            }
+        }
+
+        // إعداد مستمع الأحداث للنموذج
+        function setupFormListener() {
+            const form = document.getElementById('checkoutForm');
+            
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // التحقق من صحة البيانات
+                if (!validateForm()) {
+                    return;
+                }
+                
+                // عرض رسالة تحميل
+                const submitBtn = document.getElementById('submitBtn');
+                const originalText = submitBtn.innerHTML;
+                submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> جاري التجهيز...';
+                submitBtn.disabled = true;
+                
+                // إرسال النموذج
+                setTimeout(() => {
+                    form.submit();
+                }, 1000);
+            });
+        }
+
+        // التحقق من صحة النموذج
+        function validateForm() {
+            const firstName = document.getElementById('first_name').value.trim();
+            const lastName = document.getElementById('last_name').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const phone = document.getElementById('phone').value.trim();
+            const street = document.getElementById('street').value.trim();
+            const building = document.getElementById('building').value.trim();
+            const city = document.getElementById('city').value.trim();
+            
+            if (!firstName || !lastName) {
+                showNotification('الرجاء إدخال الاسم الكامل', 'error');
+                return false;
+            }
+            
+            if (!email || !validateEmail(email)) {
+                showNotification('الرجاء إدخال بريد إلكتروني صحيح', 'error');
+                return false;
+            }
+            
+            if (!phone || phone.length < 10) {
+                showNotification('الرجاء إدخال رقم هاتف صحيح', 'error');
+                return false;
+            }
+            
+            if (!street || !building || !city) {
+                showNotification('الرجاء إدخال العنوان الكامل', 'error');
+                return false;
+            }
+            
+            return true;
+        }
+
+        // التحقق من صحة البريد الإلكتروني
+        function validateEmail(email) {
+            const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return re.test(email);
+        }
+
+        // إظهار إشعار
+        function showNotification(message, type = 'info') {
+            const notificationContainer = document.getElementById('notificationContainer');
+            if (!notificationContainer) return;
+            
+            // إزالة الإشعارات القديمة
+            const oldNotifications = notificationContainer.querySelectorAll('.notification');
+            oldNotifications.forEach(notification => {
+                if (notification.parentNode === notificationContainer) {
+                    notification.remove();
+                }
+            });
+            
+            const notification = document.createElement('div');
+            notification.className = `notification ${type}`;
+            
+            let icon = 'info-circle';
+            if (type === 'success') icon = 'check-circle';
+            if (type === 'error') icon = 'exclamation-circle';
+            
+            notification.innerHTML = `
+                <div class="notification-icon">
+                    <i class="fas fa-${icon}"></i>
+                </div>
+                <div class="notification-content">
+                    <div class="notification-title">${type === 'success' ? 'تم بنجاح' : type === 'error' ? 'خطأ' : 'ملاحظة'}</div>
+                    <div>${message}</div>
+                </div>
+                <button class="close-notification">
+                    <i class="fas fa-times"></i>
+                </button>
+            `;
+            
+            notificationContainer.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.classList.add('show');
+            }, 10);
+            
+            notification.querySelector('.close-notification').addEventListener('click', function() {
+                notification.classList.remove('show');
+                setTimeout(() => {
+                    if (notification.parentNode) {
+                        notification.remove();
+                    }
+                }, 300);
+            });
+            
+            setTimeout(() => {
+                if (notification.parentNode) {
+                    notification.classList.remove('show');
+                    setTimeout(() => {
+                        if (notification.parentNode) {
+                            notification.remove();
+                        }
+                    }, 300);
+                }
+            }, 4000);
+        }
+    </script>
+</body>
+</html>

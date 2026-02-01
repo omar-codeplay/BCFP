@@ -1,16 +1,14 @@
 [build]
-  command = "npm install && npm run build" # Ensures dependencies are ready
-  functions = "netlify/functions"
   publish = "."
-
-[functions]
-  external_node_modules = ["axios"] # Explicitly tells Netlify to include axios
-  node_bundler = "esbuild"          # Faster, modern way to package functions
-
-[build.environment]
-  NODE_VERSION = "18"
 
 [[redirects]]
   from = "/*"
   to = "/index.html"
   status = 200
+
+# دعم PHP
+[[plugins]]
+  package = "netlify-plugin-php"
+
+[functions]
+  directory = "functions"
