@@ -60,10 +60,6 @@
             padding: 15px 0;
         }
 
-        .header-top {
-            display: none;
-        }
-
         .logo {
             display: flex;
             align-items: center;
@@ -112,7 +108,8 @@
         .header-actions {
             display: flex;
             align-items: center;
-            gap: 15px;
+            gap: 20px; /* زيادة التباعد هنا */
+            padding-right: 10px; /* إضافة تباعد من اليمين */
         }
 
         .cart-icon {
@@ -120,6 +117,8 @@
             cursor: pointer;
             font-size: 1.3rem;
             color: var(--dark-color);
+            padding: 5px;
+            margin-left: 5px; /* إضافة مسافة من اليسار */
         }
 
         .cart-count {
@@ -140,16 +139,17 @@
         .user-actions {
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 12px; /* زيادة التباعد بين الأزرار */
         }
 
         .user-actions button {
-            padding: 8px 15px;
+            padding: 8px 18px; /* زيادة التباعد الداخلي */
             border-radius: var(--border-radius);
             border: none;
             cursor: pointer;
             font-weight: 500;
             transition: var(--transition);
+            min-width: 120px; /* عرض أدنى للأزرار */
         }
 
         .login-btn {
@@ -168,6 +168,41 @@
             transform: translateY(-2px);
         }
 
+        .user-profile {
+            display: none;
+            align-items: center;
+            gap: 12px;
+            padding-right: 5px; /* إضافة تباعد */
+        }
+
+        .user-avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background-color: var(--primary-color);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            margin-left: 5px; /* إضافة مسافة */
+        }
+
+        .user-name {
+            font-weight: 500;
+            color: var(--dark-color);
+        }
+
+        .logout-btn {
+            background: none;
+            border: none;
+            color: var(--primary-color);
+            cursor: pointer;
+            font-size: 1.2rem;
+            padding: 5px;
+            margin-right: 5px; /* إضافة مسافة */
+        }
+
         /* زر القائمة للهواتف */
         .mobile-menu-btn {
             display: none;
@@ -177,6 +212,7 @@
             color: var(--primary-color);
             cursor: pointer;
             padding: 5px 10px;
+            margin-left: 10px; /* إضافة مسافة من اليسار */
         }
 
         /* أنماط Netlify Identity */
@@ -909,6 +945,22 @@
             text-align: center;
         }
 
+        /* طبقة التعتيم للقائمة المتنقلة */
+        .nav-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+        }
+
+        .nav-overlay.active {
+            display: block;
+        }
+
         /* أنماط متجاوبة */
         @media (max-width: 992px) {
             .header-container {
@@ -941,16 +993,19 @@
                 width: 100%;
                 justify-content: space-between;
             }
+
+            .header-actions {
+                gap: 15px;
+                padding-right: 5px;
+            }
+
+            .user-actions button {
+                padding: 8px 15px;
+                min-width: 110px;
+            }
         }
 
         @media (max-width: 768px) {
-            .header-top {
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-                width: 100%;
-            }
-
             .mobile-menu-btn {
                 display: block;
             }
@@ -964,7 +1019,7 @@
                 height: 100vh;
                 background-color: white;
                 box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
-                z-index: 1001;
+                z-index: 1000;
                 transition: right 0.3s ease;
                 overflow-y: auto;
                 padding-top: 70px;
@@ -979,6 +1034,7 @@
                 padding: 0;
                 margin: 0;
                 width: 100%;
+                gap: 0;
             }
 
             nav li {
@@ -995,21 +1051,6 @@
 
             nav a.active::after {
                 display: none;
-            }
-
-            .nav-overlay {
-                display: none;
-                position: fixed;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 100%;
-                background-color: rgba(0, 0, 0, 0.5);
-                z-index: 1000;
-            }
-
-            .nav-overlay.active {
-                display: block;
             }
 
             .hero {
@@ -1069,27 +1110,35 @@
             .header-actions {
                 width: 100%;
                 justify-content: space-between;
+                padding: 0 10px;
+                gap: 10px;
+            }
+
+            /* إخفاء أزرار تسجيل الدخول/التسجيل على الهاتف عند تسجيل الدخول */
+            .user-profile.active ~ .user-actions {
+                display: none !important;
             }
 
             .user-actions {
-                display: flex !important;
-                order: 1;
+                gap: 8px;
+            }
+
+            .user-actions button {
+                padding: 8px 12px;
+                min-width: 100px;
+                font-size: 0.85rem;
             }
 
             .cart-icon {
-                order: 2;
+                margin-left: 10px;
             }
         }
 
         @media (max-width: 576px) {
             .header-actions {
-                flex-direction: column;
-                gap: 10px;
-            }
-
-            .user-actions {
-                width: 100%;
-                justify-content: center;
+                flex-direction: row;
+                gap: 8px;
+                padding: 0 8px;
             }
 
             .books-grid {
@@ -1111,8 +1160,48 @@
             }
 
             .user-actions button {
-                padding: 10px 15px;
-                font-size: 0.9rem;
+                padding: 8px 10px;
+                font-size: 0.8rem;
+                min-width: 90px;
+            }
+
+            .cart-icon {
+                margin-left: 8px;
+                padding: 3px;
+            }
+
+            .container {
+                padding: 0 15px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .header-actions {
+                gap: 5px;
+            }
+
+            .user-actions button {
+                padding: 7px 8px;
+                font-size: 0.75rem;
+                min-width: 80px;
+            }
+
+            .logo {
+                font-size: 1.3rem;
+            }
+
+            .logo i {
+                font-size: 1.5rem;
+            }
+
+            .cart-icon {
+                font-size: 1.2rem;
+                margin-left: 5px;
+            }
+
+            .mobile-menu-btn {
+                margin-left: 5px;
+                padding: 5px 8px;
             }
         }
     </style>
@@ -1122,22 +1211,16 @@
     <!-- رأس الصفحة -->
     <header>
         <div class="container header-container">
-            <!-- الجزء العلوي للهواتف -->
-            <div class="header-top">
-                <a href="index.html" class="logo">
-                    <i class="fas fa-book-open"></i>
-                    مركز الكتاب للنشر
-                </a>
-                <button class="mobile-menu-btn" id="mobileMenuBtn">
-                    <i class="fas fa-bars"></i>
-                </button>
-            </div>
-
-            <!-- الشعار (للشاشات الكبيرة) -->
-            <a href="index.html" class="logo desktop-logo">
+            <!-- الشعار -->
+            <a href="index.html" class="logo">
                 <i class="fas fa-book-open"></i>
                 مركز الكتاب للنشر
             </a>
+
+            <!-- زر القائمة للهواتف -->
+            <button class="mobile-menu-btn" id="mobileMenuBtn">
+                <i class="fas fa-bars"></i>
+            </button>
 
             <!-- القائمة الرئيسية -->
             <nav id="mainNav">
@@ -1155,25 +1238,25 @@
 
             <!-- الأزرار والأيقونات -->
             <div class="header-actions">
+                <!-- أيقونة العربة -->
                 <div class="cart-icon" id="cartIcon">
                     <i class="fas fa-shopping-cart"></i>
                     <span class="cart-count">0</span>
+                </div>
+
+                <!-- الملف الشخصي للمستخدم المسجل -->
+                <div class="user-profile" id="userProfile">
+                    <div class="user-avatar" id="userAvatar">م</div>
+                    <div class="user-name" id="userName">محمد</div>
+                    <button class="logout-btn" id="logoutBtn">
+                        <i class="fas fa-sign-out-alt"></i>
+                    </button>
                 </div>
 
                 <!-- أزرار تسجيل الدخول/التسجيل -->
                 <div class="user-actions" id="userActions">
                     <button class="login-btn" id="loginBtn">تسجيل الدخول</button>
                     <button class="register-btn" id="registerBtn">إنشاء حساب</button>
-                </div>
-
-                <!-- الملف الشخصي للمستخدم المسجل -->
-                <div class="user-profile" id="userProfile" style="display: none;">
-                    <div class="user-avatar" id="userAvatar">م</div>
-                    <div class="user-name" id="userName">محمد</div>
-                    <button class="logout-btn" id="logoutBtn"
-                        style="background: none; border: none; color: var(--primary-color); cursor: pointer;">
-                        <i class="fas fa-sign-out-alt"></i>
-                    </button>
                 </div>
             </div>
         </div>
@@ -1629,6 +1712,7 @@
                 // المستخدم مسجل الدخول
                 userActions.style.display = 'none';
                 userProfile.style.display = 'flex';
+                userProfile.classList.add('active');
 
                 // تحديث اسم المستخدم والصورة
                 let userName = user.email.split('@')[0];
@@ -1650,6 +1734,7 @@
                 // المستخدم غير مسجل الدخول
                 userActions.style.display = 'flex';
                 userProfile.style.display = 'none';
+                userProfile.classList.remove('active');
                 console.log('User not logged in, showing login/register buttons');
             }
         }
